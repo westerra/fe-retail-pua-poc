@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Westerra Credit Union</title>
+    <base href="/" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+
+    <script>
+      let hostName = document.location.host;
+      let head = document.getElementsByTagName('head')[0];
+      let js = document.createElement('script');
+
+      js.type = 'text/javascript';
+      js.defer = true;
+
+      if (hostName.includes('auth.prd.bbwcu.westerracu.com') || hostName.includes('digitalservices.westerracu.com')) {
+        js.src = 'https://444f4282d156.us-east-2.sdk.awswaf.com/444f4282d156/c29ecc84f660/challenge.js';
+      } else {
+        js.src = 'https://444f4282d156.us-east-2.sdk.awswaf.com/444f4282d156/7cec583c621c/challenge.js';
+      }
+      window.awsWafCookieDomainList = ['.westerracu.com'];
+
+      head.appendChild(js);
+    </script>
+  </head>
+  <body onload="getWafResponse()">
+    <!-- Warning: Renaming "<bb-retail-app>" DOM element
+  may prevent automatic updates of this project in the future.
+  You are free to change the content of it.
+  More details: https://community.backbase.com/documentation/Retail-Apps/latest/web_app_upgradability_understand
+-->
+
+    <bb-app-root>
+      <!-- loading layout replaced by app after startupp -->
+      <div class="app-loading">
+        <div class="logo"></div>
+        <svg class="spinner" viewBox="25 25 50 50">
+          <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+        </svg>
+      </div>
+    </bb-app-root>
+
+    <script>
+      async function getWafResponse() {
+        console.log('Script Engaged !!');
+        await AwsWafIntegration.getToken()
+          .catch((e) => {
+            // Implement error handling logic for your use case
+            // setUpWafErrorMessage(e);
+          })
+          // The getToken call returns the token, and doesn't typically require special handling
+          .then((token) => {
+            if(localStorage.getItem("showclosingAccountAlert") === null) {
+              localStorage.setItem("showclosingAccountAlert", true);
+            }
+            // return removeWafErrorMessage();
+          });
+      }
+    </script>
+  </body>
+</html>

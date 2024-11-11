@@ -1,0 +1,83 @@
+<div id="order-checks-wrapper">
+  <bb-header-ui
+    headingType="h1"
+    i18n-heading="Order checks header|Header of the order checks@@bb-order-checks.header"
+    heading="Order Checks"
+  ></bb-header-ui>
+
+  <div class="bb-block bb-block" *ngIf="showError">
+    <bb-alert-ui #alertForApiError modifier="error" [dismissible]="false" [title]="errorMessage"> </bb-alert-ui>
+  </div>
+
+  <ng-container *ngIf="!(accountsList | async)?.length; else orderChecksDefaultTemplate">
+    <ng-container *ngTemplateOutlet="emptyTemplate"></ng-container>
+  </ng-container>
+
+  <ng-template #orderChecksDefaultTemplate>
+    <bb-header-ui
+      headingType="h3"
+      i18n-heading="Order checks selector header|Header of the order checks selector@@bb-order-checks.selector.header"
+      heading="Select an account"
+    ></bb-header-ui>
+
+    <form *ngIf="orderCheckForm" [formGroup]="orderCheckForm">
+      <bb-input-radio-group-ui
+        data-role="user-manage-profile-phone-manage-type"
+        formControlName="account"
+        label=" "
+        i18n-label="Order checks selector header|Header of the order checks selector@@bb-order-checks.selector.header"
+        [preselect]="false"
+        [required]="true"
+      >
+        <bb-input-radio-ui
+          *ngFor="let account of accountsList | async"
+          [value]="account"
+          [id]="account.id"
+          [labelTemplate]="customAccountTemplate"
+          [labelTemplateContext]="account"
+        >
+        </bb-input-radio-ui>
+      </bb-input-radio-group-ui>
+
+      <div [ngClass]="{ 'mb-5': !(orderCheckForm.controls.account.errors?.required && submitted) }">
+        <bb-input-validation-message-ui
+          class=""
+          role="alert"
+          [showErrors]="orderCheckForm.controls.account.errors?.required && submitted"
+        >
+          <span data-role="missing-account"> This field is required </span>
+        </bb-input-validation-message-ui>
+      </div>
+
+      <div class="bb-button-bar bb-button-bar--spacing-xl">
+        <button
+          bbButton
+          class="bb-button-bar__button"
+          type="submit"
+          color="primary"
+          name="save"
+          data-role="save-button"
+          (click)="submit()"
+        >
+          Next
+        </button>
+      </div>
+    </form>
+  </ng-template>
+</div>
+
+<ng-template #emptyTemplate>
+  <bb-empty-state-ui
+    iconSize="xxl"
+    iconModifier="error-outline"
+    iconClasses="text-muted"
+    [title]="''"
+    [subtitle]="'No accounts to be displayed'"
+  ></bb-empty-state-ui>
+</ng-template>
+
+<ng-template #customAccountTemplate let-account="labelTemplateContext">
+  <div class="order-checks-account-selector-item">
+    <bb-basic-account-item-ui [account]="account"></bb-basic-account-item-ui>
+  </div>
+</ng-template>

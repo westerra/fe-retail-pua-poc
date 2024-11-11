@@ -1,0 +1,71 @@
+<div data-role="user-manage-profile-address-add-container">
+  <bb-identity-back-button
+    page="Back to Personal information"
+    i18n-page="
+      Page description for personal information back
+      button@@bb-user-profile-features.add-address-view.back-button-text.back-link"
+    (backClick)="cancelAddEditAttribute()"
+  >
+  </bb-identity-back-button>
+  <div class="bb-block bb-block--lg">
+    <bb-header-ui
+      headingType="h1"
+      data-role="user-profile-add-address-heading"
+      heading="Add an address"
+      i18n-heading="Header for add address@@bb-user-profile-features.add-address-view.header-text.add-address"
+    >
+    </bb-header-ui>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <bb-identity-address-autocomplete-record-form
+        *ngIf="configService.isAddressSearchAutocompleteActive"
+        [addressTypeOptions]="configService.postalAddressTypes"
+        [postalAddressIsPrimaryEnabled]="configService.postalAddressIsPrimaryEditable"
+        [postalAddressSelectTypeEnabled]="configService.postalAddressIsTypeEditable"
+        [searchAddressDebounceTime]="configService.searchAddressDebounceTime"
+        [saveLoading]="(isSaveLoadingSubject$ | async) || false"
+        (saveClick)="addAddress($event)"
+        (cancelClick)="cancelAddEditAttribute()"
+        (formHasChanges)="setFormHasChanges($event)"
+      >
+      </bb-identity-address-autocomplete-record-form>
+      <bb-identity-address-record-form-custom
+        *ngIf="!configService.isAddressSearchAutocompleteActive"
+        [addressTypeOptions]="configService.postalAddressTypes"
+        [postalAddressIsPrimaryEnabled]="configService.postalAddressIsPrimaryEditable"
+        [postalAddressSelectTypeEnabled]="configService.postalAddressIsTypeEditable"
+        [saveLoading]="(isSaveLoadingSubject$ | async) || false"
+        (saveClick)="addAddress($event)"
+        (cancelClick)="cancelAddEditAttribute()"
+        (formHasChanges)="setFormHasChanges($event)"
+      >
+      </bb-identity-address-record-form-custom>
+    </div>
+  </div>
+</div>
+<bb-identity-discard-modal-component
+  [modalOpen]="modalOpen"
+  (cancelModalClick)="cancelModal()"
+  (discardChangesClick)="discardChanges()"
+></bb-identity-discard-modal-component
+><ng-template #notificationSuccessHeader>
+  <span
+    class="bb-text-bold"
+    data-role="user-manage-profile-address-add-success-notification"
+    i18n="
+      Add address save success notification
+      header@@bb-user-profile-features.add-address-view.notification-text.success-address"
+  >
+    Address added successfully
+  </span></ng-template
+><ng-template #notificationFailure>
+  <span
+    data-role="user-profile-add-address-error-notification"
+    i18n="
+      An unexpected error occurred
+      notification@@bb-user-profile-features.add-address-view.notification-text.unexpected-error-address"
+  >
+    An unexpected error occurred
+  </span></ng-template
+>

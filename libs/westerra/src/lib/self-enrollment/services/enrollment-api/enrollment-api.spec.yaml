@@ -1,0 +1,877 @@
+openapi: 3.0.3
+info:
+    title: Enrollment Client API
+    description: Specs for Enrollment Client API
+    version: 1.0.0
+    x-icon: enrollment
+servers:
+    - url: /enrollment/
+      description: The server
+tags:
+    - name: Retail
+paths:
+    /client-api/v2/enrollments/backbase:
+        summary: /backbase
+        description: Enrolls User in Backbase.
+        post:
+            tags:
+                - enrollments
+            summary: Enroll User in Backbase - Search Entity.
+            description: Search Enity via user identification and verification information
+            operationId: postBackbase
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/EnrollmentsBackbasePostRequest'
+            responses:
+                '201':
+                    description: List of entities (encrypted)
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/EnrollmentsBackbasePostPostResponseBody'
+                '400':
+                    description: BadRequest
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/BadRequestError'
+                '500':
+                    description: InternalServerError
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/InternalServerError'
+
+        put:
+            tags:
+                - enrollments
+            summary: Enroll User in Backbase - Finalize.
+            description: Prompts user to enter username and password
+            operationId: putBackbase
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/EnrollmentsBackbasePutRequest'
+            responses:
+                '201':
+                    description: No description available
+                '400':
+                    description: BadRequest
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/BadRequestError'
+                '500':
+                    description: InternalServerError
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/InternalServerError'
+        get:
+            tags:
+                - enrollments
+            summary: Get information about a user to use for enrollment
+            operationId: getEnrollmentInformation
+            parameters:
+                - name: uuid
+                  in: query
+                  description: The invite code for the given user
+                  required: true
+                  schema:
+                      type: string
+                - name: accountNumber
+                  in: query
+                  description: The unique core account number used for matching
+                  schema:
+                      type: string
+                - name: verifyType
+                  in: query
+                  description: Type of verification provided
+                  schema:
+                      type: string
+                      description: the type of verification
+                      default: SSN
+                      enum:
+                          - SSN
+                          - SSN_ACCOUNTNUMBER
+                          - DOB_ACCOUNTNUMBER
+                - name: verify
+                  in: query
+                  description: The verification matching the code provided.  If not provided, then only non secure data is returned
+                  schema:
+                      type: string
+            responses:
+                '201':
+                    description: Enrollment information matching the invite code.
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/EnrollmentInformation'
+                '400':
+                    description: BadRequest
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/BadRequestError'
+                '500':
+                    description: InternalServerError
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/InternalServerError'
+
+    /client-api/v2/enrollments/backbase/user/{username}:
+        summary: /backbase
+        description: Check enrollment and registration information by username
+        get:
+            tags:
+                - enrollments
+            summary: Check a user's enrollment and registration status in backbase
+            description: Returns a boolean `enrolled`, a uuid if they are registered (for use with auto-enrollment), or a 404 if they aren't found.
+            operationId: getEnrollmentStatusByUsername
+            parameters:
+                - in: path
+                  name: username
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                '200':
+                    description: A registered or enrolled user was found. `uuid` is provided if they are registered.
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/EnrollmentsBackbaseStatusGetResponseBody'
+                '404':
+                    description: The user is not found
+                '500':
+                    description: InternalServerError
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/InternalServerError'
+
+    /client-api/v2/enrollments/backbase/rebase:
+        summary: /backbase
+        description: Enrolls User in Backbase.
+        post:
+            tags:
+                - enrollments
+            summary: Identify all entities a user can be rebased with
+            description: Search Entity via user and entity look up information
+            operationId: postBackbaseRebase
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/EnrollmentsBackbaseRebasePostRequest'
+            responses:
+                '201':
+                    description: List of entities (encrypted)
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/EnrollmentsBackbaseRebasePostResponseBody'
+                '400':
+                    description: BadRequest
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/BadRequestError'
+                '500':
+                    description: InternalServerError
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/InternalServerError'
+        put:
+            tags:
+                - enrollments
+            summary: Rebase a existing users enrollment
+            description: Rebase a existing users enrollment (only allowed for authenticted)
+            operationId: putBackbaseRebase
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/EnrollmentsBackbaseRebaseClientPutRequest'
+            responses:
+                '201':
+                    description: No description available
+                '400':
+                    description: BadRequest
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/BadRequestError'
+                '500':
+                    description: InternalServerError
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/InternalServerError'
+
+    /client-api/v2/enrollments/mx:
+        summary: /mx
+        description: Enrolls User in MX.
+        get:
+            tags:
+                - enrollments
+            summary: Get Enrolled User from MX.
+            description: Return enrolled user from MX
+            operationId: getMX
+            responses:
+                '201':
+                    description: No description available
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/MXSession'
+                '400':
+                    description: BadRequest
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/BadRequestError'
+                '500':
+                    description: InternalServerError
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/InternalServerError'
+
+        post:
+            tags:
+                - enrollments
+            summary: Enroll User in MX.
+            description: Enrolls user in MX, and save MX User Id in Identity
+            operationId: postMX
+            responses:
+                '201':
+                    description: No description available
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/MXSession'
+                '400':
+                    description: BadRequest
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/BadRequestError'
+                '500':
+                    description: InternalServerError
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/InternalServerError'
+
+    /client-api/v2/enrollments/payveris:
+        summary: /payveris
+        description: Enrolls User in Payveris.
+        get:
+            tags:
+                - enrollments
+            summary: Get Enrolled User from Payveris.
+            description: Return enrolled user from Payveris
+            operationId: getPayveris
+            responses:
+                '201':
+                    description: No description available
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/PayverisSession'
+                '400':
+                    description: BadRequest
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/BadRequestError'
+                '500':
+                    description: InternalServerError
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/InternalServerError'
+
+        post:
+            tags:
+                - enrollments
+            summary: Enroll User in Payveris.
+            description: Enrolls user in Payveris,
+            operationId: postPayveris
+            responses:
+                '201':
+                    description: No description available
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/PayverisSession'
+                '400':
+                    description: BadRequest
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/BadRequestError'
+                '500':
+                    description: InternalServerError
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/InternalServerError'
+components:
+    schemas:
+        Attributes:
+            type: object
+            x-java-type: 'java.util.Map<java.lang.String, java.lang.String>'
+
+        ### Backbase Enrollment ###
+
+        EnrollmentsBackbasePostRequest:
+            required:
+                - identification
+                - verification
+            type: object
+            properties:
+                profile:
+                    $ref: '#/components/schemas/Profile'
+                identification:
+                    description: Unique identifier to look up a user for identify verification
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Identification'
+                verification:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Verification'
+                entityLookupRules:
+                    description: Optional list of entity lookup rules to used, as per server configuration.
+                    type: array
+                    items:
+                        type: string
+
+        EnrollmentsBackbasePostPostResponseBody:
+            type: object
+            properties:
+                preferredUsername:
+                    description: The username of a registered user matching the identification information
+                    type: string
+                entities:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/EncrypedEntitySummary'
+                isAuthorizedUser:
+                    type: boolean
+                    description: Indicate if the registered user is a authorized user
+
+        EnrollmentsBackbasePutRequest:
+            required:
+                - username
+                - password
+                - entities
+                - verification
+                - identification
+            type: object
+            properties:
+                username:
+                    type: string
+                password:
+                    type: string
+                entities:
+                    type: array
+                    items:
+                        type: string
+                        description: encrypted entity ids received from response on post
+                verification:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Verification'
+                identification:
+                    description: Unique identifier to look up a user for identify verification
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Identification'
+                profile:
+                    $ref: '#/components/schemas/Profile'
+                serviceAgreementType:
+                    $ref: '#/components/schemas/ServiceAgreementTypes'
+                jointServiceAgreementType:
+                    $ref: '#/components/schemas/JointServiceAgreementTypes'
+                    default: PERSONAL_BUSINESS
+                pin:
+                    type: string
+                    description: A pin code is set by administrator users, that is then used by Authorized users during auto enrollment to security identify they are allowed to proceed
+
+        EnrollmentsBackbaseLimitedPutRequest:
+            required:
+                - username
+                - password
+                - profile
+            type: object
+            properties:
+                username:
+                    type: string
+                password:
+                    type: string
+                profile:
+                    $ref: '#/components/schemas/Profile'
+                    description: Profile is required with limited users, since the user profile can't retrieved from the core
+
+        EnrollmentsBackbaseRebasePostRequest:
+            type: object
+            properties:
+                entityLookupRules:
+                    description: Optional list of entity lookup rules to used, as per server configuration.
+                    type: array
+                    items:
+                        type: string
+
+        EnrollmentsBackbaseRebaseClientPutRequest:
+            required:
+                - entities
+            type: object
+            properties:
+                entities:
+                    type: array
+                    items:
+                        type: string
+                        description: encrypted entity ids received from response on post
+                serviceAgreementType:
+                    $ref: '#/components/schemas/ServiceAgreementTypes'
+                jointServiceAgreementType:
+                    $ref: '#/components/schemas/JointServiceAgreementTypes'
+                    default: PERSONAL_BUSINESS
+
+        EnrollmentsBackbaseRebaseServicePutRequest:
+            required:
+                - username
+                - entities
+                - serviceAgreementType
+                - jointServiceAgreementType
+            type: object
+            properties:
+                username:
+                    type: string
+                    description: required for the service api
+                entities:
+                    type: array
+                    items:
+                        type: string
+                        description: encrypted entity ids received from response on post
+                serviceAgreementType:
+                    $ref: '#/components/schemas/ServiceAgreementTypes'
+                jointServiceAgreementType:
+                    $ref: '#/components/schemas/JointServiceAgreementTypes'
+                    default: PERSONAL_BUSINESS
+                identification:
+                    description: identification data, will overwrite if it exist
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Identification'
+                triggerIngestion:
+                    description: Indicate if ingestion should be triggered
+                    type: boolean
+                    default: true
+
+        EnrollmentsBackbaseRebasePostResponseBody:
+            type: object
+            properties:
+                limited:
+                    type: boolean
+                entities:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/EncrypedEntitySummary'
+
+        EnrollmentsBackbaseStatusGetResponseBody:
+            type: object
+            properties:
+                enrolled:
+                    type: boolean
+                invited:
+                    type: boolean
+                uuid:
+                    example: 1f6ea2cf-aa03-4978-9ac4-5f15ce6ff448
+                    type: string
+                isAuthorizedUser:
+                    type: boolean
+                    description: Indicate if the registered user is a authorized user
+
+        Profile:
+            type: object
+            properties:
+                firstName:
+                    type: string
+                lastName:
+                    type: string
+                emailAddress:
+                    type: string
+                phoneNumber:
+                    type: string
+        Identification:
+            type: object
+            properties:
+                key:
+                    type: string
+                value:
+                    type: string
+        Verification:
+            type: object
+            properties:
+                type:
+                    type: string
+                    description: Type of Verification
+                    enum:
+                        - SSN
+                        - EIN
+                        - ATIN
+                        - ITIN
+                        - DOB
+                        - STATEMENTBALANCE
+                        - DEBITCARD
+                        - AUTHORIZEDUSERPIN
+                        - FIRSTNAME
+                        - LASTNAME
+                        - ACCOUNTNUMBER
+                value:
+                    type: string
+                    description: Verification value to use
+                metadata:
+                    type: object
+                    additionalProperties:
+                        type: string
+                    description: Metadata as key/value pairs
+        EncrypedEntitySummary:
+            type: object
+            properties:
+                entityId:
+                    type: string
+                    description: base 64 encrypted Entity Id
+                entityFullname:
+                    type: string
+                    description: Fullname of Entity to display for selection
+                enrolled:
+                    type: boolean
+                    description: Indicate if the user is already enrolled in this entity
+
+        ServiceAgreementTypes:
+            description: Indicate if a joint service agreement should be created if more than one entity is being enrolled
+            type: string
+            enum:
+                - JOINT_ONLY
+                - ENTITIES_ONLY
+                - ENTITIES_JOINT
+                - ENTITIES_PERSONAL_JOINT
+                - ENTITIES_BUSINESS_JOINT
+        JointServiceAgreementTypes:
+            description: Indicate how joint agreements should be setup
+            type: string
+            enum:
+                - ALL
+                - ALL_BUSINESS
+                - ALL_PERSONAL
+                - ALL_PERSONAL_BUSINESS
+                - PERSONAL_BUSINESS
+                - PERSONAL_ONLY
+                - BUSINESS_ONLY
+        EnrollmentInformation:
+            type: object
+            properties:
+                username:
+                    type: string
+                status:
+                    type: string
+                metadata:
+                    type: object
+                    additionalProperties:
+                        type: string
+                isAuthorizedUser:
+                    type: boolean
+                    description: Indicate if the registered user is a authorized user
+
+        ### REGISTRATION ###
+        InvitePostRequest:
+            type: object
+            properties:
+                username:
+                    type: string
+                    description: A specific user to invite.  If username is provided, then batch is ignored.
+                batchNumber:
+                    type: integer
+                    description: The batch to find users to invite, default is 0.
+                isAuthorizedUser:
+                    type: boolean
+                    description: Indicate if the registered user is a authorized user
+        InvitePostResponse:
+            type: array
+            items:
+                $ref: '#/components/schemas/InviteUser'
+        InviteUser:
+            type: object
+            properties:
+                username:
+                    type: string
+                uuid:
+                    type: string
+                isAuthorizedUser:
+                    type: boolean
+                    description: Indicate if the registered user is a authorized user
+        RegisterPutPostRequest:
+            type: object
+            properties:
+                batchNumber:
+                    type: integer
+                users:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/RegisteredUser'
+        RegisteredUsers:
+            type: array
+            items:
+                $ref: '#/components/schemas/RegisteredUser'
+        RegisteredUser:
+            type: object
+            properties:
+                batchNumber:
+                    type: integer
+                username:
+                    type: string
+                uuid:
+                    type: string
+                email:
+                    type: string
+                enrollmentStatus:
+                    $ref: '#/components/schemas/EnrollmentStatusEnum'
+                inviteStatus:
+                    $ref: '#/components/schemas/InviteStatusEnum'
+                registerStatus:
+                    $ref: '#/components/schemas/RegisterStatusEnum'
+                message:
+                    type: string
+                identification:
+                    type: object
+                    additionalProperties:
+                        type: string
+                metadata:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/MetadataItem'
+                isAuthorizedUser:
+                    type: boolean
+                    description: Indicate if the registered user is a authorized user
+                adminUsername:
+                    type: string
+                    description: Username of the administrator for a given authorized user
+        RegisterStatusEnum:
+            type: string
+            enum:
+                - PENDING
+                - SUCCESS
+                - FAILED
+        InviteStatusEnum:
+            type: string
+            enum:
+                - DRAFT
+                - INVITED
+        EnrollmentStatusEnum:
+            type: string
+            enum:
+                - ENROLLED
+                - NOT_ENROLLED
+
+        MetadataItem:
+            type: object
+            properties:
+                key:
+                    type: string
+                value:
+                    type: string
+                secure:
+                    type: boolean
+
+        ### MX ###
+        MXSession:
+            type: object
+            properties:
+                userId:
+                    type: string
+                connectionsWidgetUrl:
+                    type: string
+
+        ### PAYVERIS ###
+        PayverisSession:
+            type: object
+            properties:
+                subscriberId:
+                    type: string
+                enrolled:
+                    type: boolean
+
+        BillpaySubscribeRequest:
+            required:
+                - userExternalId
+            type: object
+            properties:
+                userExternalId:
+                    description: The User External ID for the Subscribe request
+                    type: string
+
+        SsoPayverisGetGetResponseBody:
+            type: object
+            properties:
+                artifactId:
+                    type: string
+            example:
+                artifactId: test
+
+        ### ERRORS ###
+        BadRequestError:
+            required:
+                - message
+            type: object
+            properties:
+                message:
+                    type: string
+                    description: Any further information
+                errors:
+                    type: array
+                    description: Detailed error information
+                    items:
+                        $ref: '#/components/schemas/ErrorItem'
+            x-java-type: com.backbase.buildingblocks.presentation.errors.BadRequestException
+        BbAccessControl:
+            required:
+                - function
+                - privilege
+                - resource
+            type: object
+            properties:
+                resource:
+                    type: string
+                    description: "Resource being protected, e.g. 'User'"
+                function:
+                    type: string
+                    description: "Business function, e.g. 'Manage Users'"
+                privilege:
+                    type: string
+                    description: "The privilege required, e.g. 'view'"
+        BbApiDeprecation:
+            required:
+                - deprecatedFromVersion
+                - description
+                - reason
+                - removedFromVersion
+            type: object
+            properties:
+                deprecatedFromVersion:
+                    type: string
+                    description: Version of the product from which the endpoint has been deprecated
+                        and should no longer be used
+                    deprecated: true
+                removedFromVersion:
+                    type: string
+                    description: Version of the product from which the API endpoint will be
+                        removed
+                reason:
+                    type: string
+                    description: The reason the API endpoint was deprecated
+                    deprecated: true
+                description:
+                    type: string
+                    description: 'Any further information, e.g. migration information'
+        ErrorItem:
+            type: object
+            properties:
+                message:
+                    type: string
+                    description: Default Message. Any further information.
+                key:
+                    type: string
+                    description: "{capability-name}.api.{api-key-name}. For generated validation\
+                        \ errors this is the path in the document the error resolves to. e.g.\
+                        \ object name + '.' + field"
+                context:
+                    type: object
+                    description: Context can be anything used to construct localised messages.
+                    x-java-type: 'java.util.Map<String,String>'
+            description: A validation error
+        ForbiddenError:
+            type: object
+            properties:
+                message:
+                    type: string
+                    description: Any further information
+                errors:
+                    type: array
+                    description: Detailed error information
+                    items:
+                        $ref: '#/components/schemas/ErrorItem'
+            x-java-type: com.backbase.buildingblocks.presentation.errors.ForbiddenException
+        InternalServerError:
+            required:
+                - message
+            type: object
+            properties:
+                message:
+                    type: string
+                    description: Further Information
+            description: Represents HTTP 500 Internal Server Error
+            x-java-type: com.backbase.buildingblocks.presentation.errors.InternalServerErrorException
+        NotAcceptableError:
+            type: object
+            properties:
+                message:
+                    type: string
+                supportedMediaTypes:
+                    type: array
+                    description: List of supported media types for this endpoint
+                    items:
+                        type: string
+            x-java-type: com.backbase.buildingblocks.presentation.errors.NotAcceptableException
+        NotFoundError:
+            type: object
+            properties:
+                message:
+                    type: string
+                    description: Any further information
+                errors:
+                    type: array
+                    description: Detailed error information
+                    items:
+                        $ref: '#/components/schemas/ErrorItem'
+            x-java-type: com.backbase.buildingblocks.presentation.errors.NotFoundException
+        UnauthorizedAltError:
+            type: object
+            properties:
+                message:
+                    type: string
+                    description: Any further information
+                errors:
+                    type: array
+                    description: Detailed error information
+                    items:
+                        $ref: '#/components/schemas/ErrorItem'
+            x-java-type: com.backbase.buildingblocks.presentation.errors.UnauthorizedException
+        UnauthorizedError:
+            required:
+                - message
+            type: object
+            properties:
+                message:
+                    type: string
+        UnsupportedMediaTypeError:
+            type: object
+            properties:
+                message:
+                    type: string
+                    description: Any further information
+                errors:
+                    type: array
+                    description: Detailed error information
+                    items:
+                        $ref: '#/components/schemas/ErrorItem'
+            x-java-type: com.backbase.buildingblocks.presentation.errors.UnsupportedMediaTypeException

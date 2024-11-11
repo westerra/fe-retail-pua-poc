@@ -1,0 +1,44 @@
+<ng-container *ngIf="!!headerTitle">
+  <div class="bb-heading-widget heading-widget">
+    <bb-header-ui headingType="h1" headingClasses="bb-heading-widget__heading px-0" heading="{{ headerTitle }}">
+    </bb-header-ui>
+  </div>
+</ng-container>
+
+<div *ngIf="isLoading">
+  <bb-loading-indicator-ui loaderSize="lg" [showDelay]="750" [text]="'Loading....'"></bb-loading-indicator-ui>
+</div>
+
+<ng-container *ngIf="!isLoading && !error">
+  <div *ngIf="payverisWidgetUrls">
+    <iframe
+      width="1px"
+      frameborder="0"
+      scrolling="yes"
+      sandbox="allow-same-origin allow-top-navigation allow-scripts allow-forms allow-popups allow-modals allow-downloads"
+      style="min-width: 100%; min-height: 1250px; overflow: hidden"
+      [src]="payverisWidgetUrls"
+    ></iframe>
+  </div>
+</ng-container>
+
+<!-- If error show error banner message -->
+<!-- <div *ngIf="error && !restricted">
+    <bb-empty-state-ui
+    title="Unknown Error"
+    subtitle= "Bill Pay is currently unavailable, please try again later"
+    iconSize="xl"
+    iconModifier="error"
+  ></bb-empty-state-ui>
+  </div>
+  
+  <div *ngIf="restricted">
+    <bb-empty-state-ui
+        title="Unknown Error"
+        i18n-title="'Bill pay access is restricted for this type of account.'"
+        subtitle="'Bill pay access is restricted for this type of account.'"
+        i18n-subtitle="'Bill pay access is restricted for this type of account.'"
+        iconSize="xl"
+        iconModifier="error"
+      ></bb-empty-state-ui>
+  </div> -->

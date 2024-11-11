@@ -1,0 +1,55 @@
+/// Configures the horizontal padding for pagination
+/// Defaults to: $sizer-xs
+// $pagination-padding-horizontal:
+
+/// Configures the vertical padding for pagination
+/// Defaults to: 0
+// $pagination-padding-vertical:
+
+/// Configures the pagination line-height
+/// Defaults to: $sizer-lg
+// $pagination-line-height:
+
+/// Configures the pagination border-width
+/// Defaults to: 0
+// $pagination-border-width:
+
+/// Configures the pagination border-radius
+/// Defaults to: $sizer-sm
+// $pagination-border-radius:
+
+/// Configures the pagination border-color
+/// Defaults to: transparent
+// $pagination-border-color:
+
+/// Configures the pagination color
+/// Defaults to: $color-primary
+// $pagination-color:
+
+/// Configures the pagination background-color
+/// Defaults to: $color-neutral-white
+// $pagination-background-color:
+
+/// Configures the pagination:disabled background-color. Defaults to $pagination-background-color
+/// Defaults to: $pagination-background-color
+// $pagination-disabled-background-color:
+
+/// Configures the pagination:disabled color
+/// Defaults to: $color-neutral-grey
+// $pagination-disabled-color:
+
+/// Configures the pagination:disabled border-color. Defaults to $pagination-disabled-color
+/// Defaults to: $pagination-disabled-color
+// $pagination-disabled-border-color:
+
+/// Configures the pagination:active background-color
+/// Defaults to: $color-primary-lightest
+// $pagination-active-background-color:
+
+/// Configures the pagination:active border-color. Defaults to $pagination-active-background-color
+/// Defaults to: $pagination-active-background-color
+// $pagination-active-border-color:
+
+/// Configures the pagination:active color
+/// Defaults to: $color-info-darkest
+// $pagination-active-color:

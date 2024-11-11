@@ -1,0 +1,49 @@
+<th scope="col" data-role="checkbox-column">
+  <bb-checkbox-group-ui
+    aria-label="Select all conversations"
+    i18n-aria-label="Select all conversations@@messages.messagesConversationsList.messagesTable.checkboxGroupAriaLabel"
+    ngModelGroup="ids"
+  >
+  </bb-checkbox-group-ui>
+</th>
+
+<th scope="col" data-role="importance-column"></th>
+
+<th
+  data-role="from-column"
+  scope="col"
+  i18n="From|The name of the table head cell called 'From'@@messages.messagesConversationsList.messagesTable.headerFrom"
+  *ngIf="(mailboxType | async) !== mailboxTypeEnum.drafts"
+>
+  From
+</th>
+
+<th scope="col" data-role="attachments-column"></th>
+
+<th
+  data-role="subject-column"
+  scope="col"
+  i18n="
+    Subject|The name of the table head cell called
+    'Subject'@@messages.messagesConversationsList.messagesTable.headerSubject"
+>
+  Subject
+</th>
+
+<th
+  data-role="topic-column"
+  scope="col"
+  i18n="
+    Topic|The name of the table head cell called 'Topic'@@messages.messagesConversationsList.messagesTable.headerTopic"
+>
+  Topic
+</th>
+
+<th
+  data-role="date-column"
+  scope="col"
+  i18n="Date|The name of the table head cell called 'Date'@@messages.messagesConversationsList.messagesTable.headerDate"
+>
+  Date
+</th>
+<th data-role="dropdown-menu-column" scope="col"></th>

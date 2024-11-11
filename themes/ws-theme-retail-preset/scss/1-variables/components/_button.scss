@@ -1,0 +1,115 @@
+$button-border-color: #821720;
+$button-secondary-background-color: #101820;
+$button-primary-background-color: #E52921;
+$button-secondary-hover-background-color: #555;
+
+
+/// Configures the horizontal button padding
+/// Defaults to: $sizer-lg
+// $button-padding-horizontal:
+
+/// Configures the vertical button padding
+/// Defaults to: $sizer-sm
+// $button-padding-vertical:
+
+/// Configures the button font size
+/// Defaults to: $font-size-default
+// $button-font-size:
+
+/// Configures the button font weight
+/// Defaults to: $font-weight-regular
+// $button-font-weight:
+
+/// Configures the button:disabled opacity
+/// Defaults to: 1
+// $button-disabled-opacity:
+
+/// Configures the button border width
+/// Defaults to: $border-width
+// $button-border-width:
+$button-border-width: 1px;
+
+
+
+/// Configures the button border radius
+/// Defaults to: $border-radius-pill
+ $button-border-radius: 2px;
+
+
+/// Configures the button shadow offset-x
+/// /// Used to compose $button-box-shadow
+/// Defaults to: 0
+// $button-box-shadow-offset-x:
+
+/// Configures the button shadow offset-y
+/// /// Used to compose $button-box-shadow
+/// Defaults to: 0
+// $button-box-shadow-offset-y:
+
+/// Configures the button shadow blur-radius
+/// /// Used to compose $button-box-shadow
+/// Defaults to: 0
+// $button-box-shadow-blur-radius:
+
+/// Configures the button shadow spread-radius
+/// /// Used to compose $button-box-shadow
+/// Defaults to: 0
+// $button-box-shadow-spread-radius:
+
+/// Configures the button shadow color
+/// /// Used to compose $button-box-shadow
+/// Defaults to: $color-neutral-white
+// $button-box-shadow-color:
+
+/// Configures the button:active shadow offset-x
+/// ///  Used to compose $button-box-shadow
+/// Defaults to: $focus-box-shadow-offset-x
+// $button-active-box-shadow-offset-x:
+
+/// Configures the button:active shadow offset-y
+/// ///  Used to compose $button-box-shadow
+/// Defaults to: $focus-box-shadow-offset-y
+// $button-active-box-shadow-offset-y:
+
+/// Configures the button:active shadow blur-radius
+/// ///  Used to compose $button-box-shadow
+/// Defaults to: $focus-box-shadow-blur-radius
+// $button-active-box-shadow-blur-radius:
+
+/// Configures the button:active shadow spread-radius
+/// ///  Used to compose $button-box-shadow
+/// Defaults to: $focus-box-shadow-spread-radius
+// $button-active-box-shadow-spread-radius:
+
+/// Configures the button:active shadow color
+/// ///  Used to compose $button-box-shadow
+/// Defaults to: $focus-box-shadow-color
+// $button-active-box-shadow-color:
+
+/// Configures the button color-transition (experimental)
+/// /// Used to configure the default $button-transition
+/// Defaults to: color $motion-duration-default $motion-timing-ease-in-out
+// $button-color-transition:
+
+/// Configures the button background-color-transition (experimental)
+/// /// Used to configure the default $button-transition
+/// Defaults to: background-color $motion-duration-default
+///   $motion-timing-ease-in-out
+// $button-background-color-transition:
+
+/// Configures the button border-color-transition (experimental)
+/// /// Used to configure the default  $button-transition
+/// Defaults to: border-color $motion-duration-default $motion-timing-ease-in-out
+// $button-border-color-transition:
+
+/// Configures the button shadow-transition (experimental)
+/// /// Used to configure the default $button-transition
+/// Defaults to: box-shadow $motion-duration-default $motion-timing-ease-in-out
+// $button-box-shadow-transition:
+
+/// Configures all transitions used for button transitions (experimental)
+/// /// Defaults to transitions with $button-color-transition, $button-background-color-transition, $button-border-color-transition and $button-box-shadow-transition
+/// Defaults to: $button-color-transition, $button-background-color-transition,
+///   $button-border-color-transition, $button-box-shadow-transition
+// $button-transition:
+

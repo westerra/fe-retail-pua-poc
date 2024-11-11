@@ -1,0 +1,22 @@
+bb-user-manage-profile-widget{
+  .form-control{
+    border-radius: 0.2rem!important;
+    border-color: black!important;
+  }
+
+  .btn-primary{
+    background-color: white!important;
+    color: #E52921!important;
+  }
+
+  .bb-input-checkbox__input:checked + .bb-input-checkbox__content::before, .bb-input-checkbox__input:indeterminate + .bb-input-checkbox__content::before {
+    background-color: black!important;
+    border-color: black!important;
+  }
+
+  .bb-block > .ng-star-inserted {
+    display: inline;
+    margin-right: 5px;
+  }
+
+}

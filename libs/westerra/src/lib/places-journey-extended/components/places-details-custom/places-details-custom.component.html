@@ -1,0 +1,58 @@
+<div class="bb-place-details">
+  <div
+    class="bb-block bb-block--md"
+    aria-label="Get Directions on google maps"
+    i18n-aria-label="Get Directions button aria-label@@place.details.get.direction.button.aria-label"
+  >
+    <a
+      class="btn btn-sm btn-outline-primary"
+      [href]="'https://www.google.com/maps/dir//' + this.getFullAddress(place && place.address)"
+      target="_blank"
+      i18n="Get Directions|Get Directions redirect link@@places.directions.get"
+      rel="noopener"
+    >
+      <bb-icon-ui name="navigation" size="md"></bb-icon-ui> Get Directions
+    </a>
+  </div>
+  <div class="bb-block bb-block--md" *ngIf="place?.hours">
+    <div class="bb-stack bb-stack--density-sm">
+      <bb-icon-ui name="access-time" class="bb-stack__item"></bb-icon-ui>
+      <span
+        class="bb-stack__item bb-text-semi-bold"
+        i18n="Opening Hours|label for Opening Hours@@places.label.openingHours"
+      >
+        Opening Hours
+      </span>
+    </div>
+    <ul
+      class="bb-list bb-list--density-none"
+      aria-label="Opening Hours"
+      i18n-aria-label="Opening Hours list aria-label@@place.details.opening.hours.list.aria-label"
+      tabindex="0"
+    >
+      <li *ngFor="let day of weekDay">
+        <bb-work-times-custom [day]="day" [hours]="this.getWorkTimes(day, place?.hours || [])"></bb-work-times-custom>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="place?.services?.length">
+    <div class="bb-stack bb-stack--density-sm">
+      <bb-icon-ui name="supervisor-account" class="bb-stack__item"></bb-icon-ui>
+      <span
+        class="bb-stack__item bb-text-semi-bold"
+        i18n="Available Services|label for Available Services@@places.label.availableServices"
+      >
+        Available Services
+      </span>
+    </div>
+    <div
+      aria-label="Available Services"
+      i18n-aria-label="Available Services list aria-label@@place.details.available.services.list.aria-label"
+      tabindex="0"
+    >
+      <div class="bb-place-services bb-text-support" *ngFor="let service of place?.services">
+        {{ service | titlecase }}
+      </div>
+    </div>
+  </div>
+</div>

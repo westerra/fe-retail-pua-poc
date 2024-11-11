@@ -1,0 +1,121 @@
+bb-notifications-sticky-list-item{
+
+  @media screen and (min-width:1701px) and (max-width:2500px) {
+    .alert {
+      position: relative;
+      padding: 1rem 1rem;
+      margin-bottom: 1rem;
+      align-content: center;
+      margin-top: 1rem;
+      max-width: 59vw;
+      border: 0 solid transparent;
+      border-radius: 0.3rem;
+    }
+  }
+
+  @media screen and (min-width:1601px) and (max-width:1700px) {
+    .alert {
+      position: relative;
+      padding: 1rem 1rem;
+      margin-bottom: 1rem;
+      align-content: center;
+      margin-top: 1rem;
+      max-width: 64vw;
+      left: 16%;
+      border: 0 solid transparent;
+      border-radius: 0.3rem;
+    }
+  }
+
+  @media screen and (min-width:1501px) and (max-width:1600px) {
+    .alert {
+      position: relative;
+      padding: 1rem 1rem;
+      margin-bottom: 1rem;
+      align-content: center;
+      margin-top: 1rem;
+      max-width: 64vw;
+      left: 16%;
+      border: 0 solid transparent;
+      border-radius: 0.3rem;
+    }
+  }
+
+  @media screen and (min-width:1401px) and (max-width:1500px) {
+    .alert {
+      position: relative;
+      padding: 1rem 1rem;
+      margin-bottom: 1rem;
+      align-content: center;
+      margin-top: 1rem;
+      max-width: 75vw;
+      left: 10%;
+      border: 0 solid transparent;
+      border-radius: 0.3rem;
+    }
+  }
+
+  @media screen and (min-width:1301px) and (max-width:1400px) {
+    .alert {
+      position: relative;
+      padding: 1rem 1rem;
+      margin-bottom: 1rem;
+      align-content: center;
+      margin-top: 1rem;
+      max-width: 81vw;
+      left: 7%;
+      border: 0 solid transparent;
+      border-radius: 0.3rem;
+    }
+  }
+
+  @media screen and (min-width:992px) and (max-width:1299px) {
+    .alert {
+      position: relative;
+      padding: 1rem 1rem;
+      margin-bottom: 1rem;
+      align-content: center;
+      margin-top: 1rem;
+      max-width: 89vw;
+      left: 3%;
+      border: 0 solid transparent;
+      border-radius: 0.3rem;
+    }
+  }
+
+  @media screen and (min-width:875px) and (max-width:974px) {
+    .alert {
+      position: relative;
+      padding: 1rem 1rem;
+      margin-bottom: 1rem;
+      align-content: center;
+      margin-top: 1rem;
+      max-width: 74vw;
+      left: 10%;
+      border: 0 solid transparent;
+      border-radius: 0.3rem;
+    }
+  }
+
+  @media screen and (min-width:520px) and (max-width:874px) {
+    .alert {
+      position: relative;
+      padding: 1rem 1rem;
+      margin-bottom: 1rem;
+      align-content: center;
+      margin-top: 1rem;
+      max-width: 88vw;
+      left: 5%;
+      border: 0 solid transparent;
+      border-radius: 0.3rem;
+    }
+  }
+
+
+
+  .alert-heading {
+    font-weight: 700;
+    font-size: 1rem;
+  }
+
+}

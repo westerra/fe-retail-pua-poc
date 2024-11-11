@@ -1,0 +1,80 @@
+/// Configures the default font
+/// Defaults to: "Inter", "sans-serif"
+ $font-family: "CircularXXSub";
+
+/// Configures the font used for headings. Defaults to $font-family
+/// Defaults to: $font-family
+// $font-family-heading:
+
+/// Configures the font size base. NOTE: Use relative sizing like rem. This ensures user-specific settings, which create an accessible experience
+/// /// Browser default of 1rem is typically 16px
+/// Defaults to: 1rem
+// $font-size-base:
+
+/// Configures the font size used by the Hero font
+/// Defaults to: 2.5rem
+// $font-size-hero:
+
+/// Configures the font size used by page titles
+/// Defaults to: 2.125rem
+// $font-size-h1:
+
+/// Configures the font size used by subsection titles
+/// Defaults to: 1.5rem
+// $font-size-h2:
+
+/// Configures the font size used by sub-subsection titles
+/// Defaults to: 1.25rem
+// $font-size-h3:
+
+/// Configures the font size used for emphasizing amounts
+/// Defaults to: 1.125rem
+// $font-size-highlight:
+
+/// Configures the font size used as default. Defaults to $font-size-base
+/// Defaults to: $font-size-base
+// $font-size-default:
+
+/// Configures the font size used for descriptions and secondary text
+/// Defaults to: 0.875rem
+// $font-size-subtitle:
+
+/// Configures the font size used for subheaders
+/// Defaults to: 0.75rem
+// $font-size-subheader:
+
+/// Configures the font size used for table cells
+/// Defaults to: 0.875rem
+// $font-size-table-default:
+
+/// Configures the font size used for table header cells
+/// Defaults to: 0.75rem
+// $font-size-table-header:
+
+/// Configures the default font weight
+/// Defaults to: 400
+// $font-weight-regular:
+
+/// Configures the light font weight
+/// Defaults to: 300
+// $font-weight-light:
+
+/// Configures the semi-bold font-weight
+/// Defaults to: 600
+// $font-weight-semi-bold:
+
+/// Configures the bold font-weight
+/// Defaults to: 700
+// $font-weight-bold:
+
+/// Configures the font-weight used for headings. Defaults to $font-weight-bold
+/// Defaults to: $font-weight-bold
+// $font-weight-heading:
+
+/// Configures the default line-height
+/// Defaults to: 1.5
+// $line-height-base:
+
+/// Configures the line-height used by headings
+/// Defaults to: $line-height-headings
+// $line-height-heading:

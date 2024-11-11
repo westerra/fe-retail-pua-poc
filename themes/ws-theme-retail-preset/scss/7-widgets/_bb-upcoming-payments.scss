@@ -1,0 +1,11 @@
+bb-upcoming-payments-item {
+    div.bb-text-align-right {
+        button:first-of-type {
+            display: none;
+        }
+    }
+}
+
+[data-role="cancel-payment-btn"]+button {
+    display: none;
+}

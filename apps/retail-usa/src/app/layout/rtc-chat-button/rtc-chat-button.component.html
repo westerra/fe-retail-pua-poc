@@ -1,0 +1,21 @@
+<div class="bb-block bb-block--xl bb-rtc-chat-container">
+  <div class="bb-rtc-web-view-hide">
+    <button
+      bbButton
+      color="primary"
+      circle="true"
+      class="p-5"
+      [attr.data-role]="'chat-button'"
+      (click)="toggleChatWindow()"
+    >
+      <bb-icon-ui size="lg" [name]="chatIconName$ | async" aria-label="chat bubble icon"></bb-icon-ui>
+      <bb-badge-counter-ui
+        class="bb-notifications-badge-widget__dropdown-button-counter"
+        [count]="unreadCount$ | async"
+        maxCount="9"
+        color="danger"
+        data-role="notifications-unread-count"
+      ></bb-badge-counter-ui>
+    </button>
+  </div>
+</div>

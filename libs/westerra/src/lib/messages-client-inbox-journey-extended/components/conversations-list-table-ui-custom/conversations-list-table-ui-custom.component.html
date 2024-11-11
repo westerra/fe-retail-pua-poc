@@ -1,0 +1,251 @@
+<div
+  class="sr-only"
+  i18n="Mailbox tab of selected type is open announcement@@messages.messagesConversationsList.openTabType"
+>
+  { (mailboxType | async), select, inbox {inbox} outbox {outbox} drafts {drafts} } tab is open,
+</div>
+
+<div class="d-md-none">
+  <div class="bb-button-bar">
+    <ng-container *ngTemplateOutlet="reloadBtn"></ng-container>
+  </div>
+  <table class="table" role="presentation">
+    <tbody role="list">
+      <tr
+        role="listitem"
+        tabindex="0"
+        data-role="conversation-mobile"
+        *ngFor="let conversation of conversations"
+        [ngClass]="{ 'table-active': !conversation.read }"
+        (bbKeyboardClick)="callSelect($event, conversation)"
+      >
+        <td>
+          <div
+            class="text-truncate text-normal bb-text-semi-bold break-word"
+            *ngIf="conversation.subject; else noSubject"
+            [innerHTML]="conversation.subject"
+          ></div>
+
+          <div class="text-truncate text-small" *ngIf="conversation.sender">{{ conversation.sender.name }}</div>
+
+          <ng-template #noSubject>
+            <span
+              class="bb-text-support"
+              i18n="No subject@@messages.messagesConversationsList.messagesTableMobile.subjectEmptyState"
+              >No subject
+            </span>
+          </ng-template>
+        </td>
+
+        <td>
+          <div class="bb-stack">
+            <div class="bb-stack__item text-small" [attr.aria-label]="conversation.timestamp | date: 'mediumDate'">
+              <span aria-hidden="true">
+                {{ conversation.timestamp | date: 'shortDate' }}
+              </span>
+            </div>
+
+            <bb-icon-ui
+              *ngIf="conversation.important"
+              bbTooltip="High priority"
+              i18n-bbTooltip="High priority@@messages.messagesConversationsList.messagesTable.importantMessage"
+              container="body"
+              triggers="hover"
+              placement="bottom"
+              class="bb-stack__item"
+              name="error"
+              color="danger"
+              aria-label="High priority"
+              i18n-aria-label="@@messages.messagesConversationsList.messagesTable.importantMessage"
+            >
+            </bb-icon-ui>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="d-none d-md-block">
+  <div class="bb-stack">
+    <div class="bb-stack w-auto bb-stack__item--push-right">
+      <ng-container *ngIf="selectedIdsArray.length; else noneSelectedTpl">
+        <span class="bb-stack__item bb-text-support">
+          <span
+            data-role="selected-conversations-counter"
+            i18n="Selected|Selected conversations count@@messages.messagesConversationsList.selected"
+            [attr.aria-label]="selectedIdsArray.length + ' Selected'"
+          >
+            {{ selectedIdsArray.length }} Selected
+          </span>
+        </span>
+        <span class="bb-stack__item bb-text-support">|</span>
+        <a
+          data-role="clear-selection"
+          href="#"
+          class="bb-stack__item bb-text-semi-bold"
+          i18n="
+            Clear Selection|Clear selection button on the top of the table
+            list@@messages.messagesConversationsList.clearSelectionButton"
+          (click)="$event.preventDefault(); selectionsGroupForm.reset(); manageSelectionForm(selectionsGroupForm)"
+          >Clear Selection</a
+        >
+        <button
+          bbButton
+          color="link"
+          [circle]="true"
+          data-role="mark-as-read-unread"
+          i18n-aria-label="
+            Toggle read status@@messages.messagesConversationsList.messagesTableMobile.toggleReadStatusAriaLabel"
+          aria-label="Toggle read status"
+          i18n-bbTooltip="
+            Toggle read status@@messages.messagesConversationsList.messagesTable.ToggleReadStatusTooltipText"
+          bbTooltip="Toggle read status"
+          container="body"
+          triggers="hover"
+          *ngIf="!(isDraftView$ | async)"
+          (click)="selectedIdsArray.length && markAsReadUnread()"
+        >
+          <bb-icon-ui *ngIf="isUnread; else readIconTpl" class="bb-text-support" name="markunread"> </bb-icon-ui>
+          <ng-template #readIconTpl>
+            <bb-icon-ui class="bb-text-support" name="drafts"></bb-icon-ui>
+          </ng-template>
+        </button>
+        <button
+          bbButton
+          color="link"
+          data-role="Delete"
+          circle="true"
+          aria-label="Delete"
+          i18n-aria-label="Delete aria-label@@messages.messagesConversationsList.deleteButtonAriaLabel"
+          i18n="Delete|Delete button on the top of the table list@@messages.messagesConversationsList.deleteButton"
+          bbTooltip="Delete"
+          i18n-bbTooltip="
+            Delete|Delete button on the top of the table list tooltip@@messages.messagesConversationsList.deleteTooltip"
+          container="body"
+          triggers="hover"
+          (click)="openRemoveModal()"
+        >
+          <bb-icon-ui class="bb-text-support" name="delete"></bb-icon-ui>
+        </button>
+      </ng-container>
+      <ng-template #noneSelectedTpl>
+        <span
+          aria-live="assertive"
+          class="sr-only"
+          data-role="none-selected-conversations-counter"
+          i18n="None selected|None selected conversations count@@messages.messagesConversationsList.noneSelected"
+        >
+          None selected
+        </span>
+      </ng-template>
+      <ng-container *ngIf="!selectedIdsArray.length">
+        <ng-container *ngTemplateOutlet="reloadBtn"></ng-container>
+      </ng-container>
+    </div>
+  </div>
+  <form #selectionsGroupForm="ngForm">
+    <table class="table table-hover" data-role="conversations-list-table">
+      <caption class="sr-only" i18n="Conversations@@messages.messagesConversationsList.conversationsTable">
+        Conversations
+      </caption>
+      <thead>
+        <tr
+          bb-conversations-list-table-head-ui-custom
+          (change)="manageSelectionForm(selectionsGroupForm)"
+          [mailboxType]="mailboxType | async"
+        ></tr>
+      </thead>
+      <tbody ngModelGroup="ids">
+        <tr
+          [attr.aria-describedby]="'bb-cs-' + conversation.id"
+          bb-conversations-list-table-row-ui-custom
+          tabindex="0"
+          id="bb-cs-{{ conversation.id }}"
+          class="bb-messages-conversations-list-item"
+          data-role="conversation"
+          *ngFor="let conversation of conversations; trackBy: trackByFn"
+          [mailboxType]="mailboxType | async"
+          [conversation]="conversation"
+          [isDraftView]="isDraftView$ | async"
+          [customerServiceTitle$]="customerServiceTitle$"
+          [ngClass]="{ 'table-active bb-text-semi-bold': conversation.hasOwnProperty('read') && !conversation.read }"
+          (change)="manageSelectionForm(selectionsGroupForm)"
+          (bbKeyboardClick)="callSelect($event, conversation)"
+          (remove)="openRemoveModal(conversation.id)"
+          (read)="markAsReadUnread(conversation.id, conversation.read)"
+        ></tr>
+      </tbody>
+    </table>
+  </form>
+  <bb-modal-ui
+    [isOpen]="removeModalOpened"
+    (cancel)="closeRemoveModal()"
+    aria-describedby="messages-list-table-delete-conversation-modal-subtitle"
+  >
+    <bb-modal-header-ui>
+      <ng-template bbCustomModalHeader>
+        <span
+          class="text-large bb-text-semi-bold"
+          i18n="
+            Delete conversation(s)/draft(s)|Header title of the confirmation modal to delete conversation(s) or
+            draft(s)@@messages.messagesConversationsList.messagesDeleteModal.headerTitle"
+          >Delete {(isDraftView$ | async) + '', select, true {draft(s)} false {conversation(s)}}?</span
+        >
+      </ng-template>
+    </bb-modal-header-ui>
+    <bb-modal-body-ui>
+      <ng-template bbCustomModalBody>
+        <span
+          id="messages-list-table-delete-conversation-modal-subtitle"
+          i18n="
+            Are you sure you want to delete the selected conversation(s)?(s)|Body message of the confirmation modal to
+            delete conversation(s)@@messages.messagesConversationsList.messagesDeleteModal.bodyMessage"
+          >Are you sure you want to delete the selected {(isDraftView$ | async) + '', select, true {draft(s)} false
+          {conversation(s)}}?</span
+        >
+      </ng-template>
+    </bb-modal-body-ui>
+    <bb-modal-footer-ui>
+      <ng-template bbCustomModalFooter>
+        <bb-button-ui
+          color="secondary"
+          i18n="
+            Cancel|Cancel button inside the confirmation modal
+            footer@@messages.messagesConversationsList.messagesDeleteModal.cancelButton"
+          (click)="closeRemoveModal()"
+          >Cancel
+        </bb-button-ui>
+        <bb-button-ui
+          color="danger"
+          i18n="
+            Delete|Delete button inside the confirmation modal
+            footer@@messages.messagesConversationsList.messagesDeleteModal.deleteButton"
+          (click)="confirmRemoveModal()"
+          >Delete
+        </bb-button-ui>
+      </ng-template>
+    </bb-modal-footer-ui>
+  </bb-modal-ui>
+</div>
+<ng-template #reloadBtn>
+  <span
+    bbTooltip="Refresh"
+    i18n-bbTooltip="Refresh|Refresh button text@@messagesConversationsList.refreshButton"
+    triggers="hover focus"
+    placement="top"
+    container="body"
+  >
+    <button
+      bbButton
+      color="link"
+      circle="true"
+      data-role="refresh"
+      aria-label="Refresh"
+      i18n-aria-label="@@messagesConversationsList.refreshButton"
+      (click)="callUpdate()"
+    >
+      <bb-icon-ui class="bb-text-support" name="loading"></bb-icon-ui>
+    </button>
+  </span>
+</ng-template>

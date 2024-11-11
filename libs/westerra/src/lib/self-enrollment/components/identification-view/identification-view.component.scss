@@ -1,0 +1,13 @@
+#identification-title.h2 {
+    font-size: 1.5rem;
+}
+
+.instructional-text {
+    margin-bottom: 1.75rem;
+}
+
+@media (min-width: 768px) {
+    .bb-stack__break--md-up {
+        flex-basis: 100%;
+    }
+}

@@ -1,0 +1,48 @@
+/// Configures the padding for font-icons
+/// Defaults to: 0.5em
+// $font-icon-btn-padding:
+
+/// Configures the scale for Small icons
+/// Defaults to: 2/3
+// $icon-scale-sm:
+
+/// Configures the scale for Large icons
+/// Defaults to: 4/3
+// $icon-scale-lg:
+
+/// Configures the scale for Extra Large icons
+/// Defaults to: 5/3
+// $icon-scale-xl:
+
+/// Configures the scale for Extra Extra Large icons
+/// Defaults to: 3
+// $icon-scale-xxl:
+
+/// Configures the scale for Small round icons
+/// Defaults to: 1.6
+// $icon-scale-circle-sm:
+
+/// Configures the scale for Medium  round icons
+/// Defaults to: 2
+// $icon-scale-circle-md:
+
+/// Configures the contrasting icon color for icons with a background-color
+/// Defaults to: $color-neutral-white
+// $icon-contrast-color:
+
+/// Configures the border-radius for square icons, has some roundness by default
+/// Defaults to: $border-radius-sm
+// $icon-square-border-radius:
+
+/// Configures the default icon size
+/// Defaults to: 1.5rem
+// $font-icon-size:
+
+/// Configures the icon background size
+/// Defaults to: 2.5rem
+// $font-icon-background-size:
+
+/// Configures the toggle for outlining icons. Defaults to true
+/// /// When false, it will use the original icon-map definitions
+/// Defaults to: true
+// $enable-outlined-icons:

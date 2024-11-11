@@ -1,0 +1,86 @@
+<ng-container
+  *ngIf="
+    (isLoading$ | async) === false && !(error$ | async | bbIsDefined) && (account$ | async) as account;
+    else loadingTemplate
+  "
+>
+  <!-- Account Info header template -->
+  <div class="bb-stack bb-block bb-block--xl" data-role="product-summary-details-header">
+    <h2 class="bb-stack__item bb-stack__item--fill" data-role="product-summary-details-header-name">
+      {{ account ? account?.name : 'Details' }}
+    </h2>
+
+    <div *ngIf="isAccountLoanType">
+      <bb-load-button-ui
+        aria-label="filter your transactions"
+        *ngIf="getExternalTypeId(account.product)"
+        class="mx-3"
+        data-role="filter"
+        [isLoading]="isLoading"
+        color="primary"
+        aria-expanded="false"
+        (click)="ssoDMI(account, SSO.dmi)"
+      >
+        More Details</bb-load-button-ui
+      >
+    </div>
+
+    <button
+      bbButton
+      type="button"
+      color="secondary"
+      data-role="print"
+      class="bb-stack__item"
+      buttonSize="md"
+      [circle]="true"
+      (click)="print()"
+    >
+      <bb-icon-ui name="print"></bb-icon-ui>
+      <span class="sr-only" data-role="button-print" i18n="print button@@product.details.button.print">Print</span>
+    </button>
+  </div>
+  <div class="bb-block bb-block">
+    <bb-alert-ui *ngIf="showError" modifier="error" [dismissible]="false" [title]="errorMessage"> </bb-alert-ui>
+  </div>
+  <bb-account-info-container-extended
+    [account]="account"
+    [propertiesConfiguration]="getAccountProperties(account)"
+    [attributesConfiguration]="maskableAttributes"
+    (mask)="
+      $event.masked ? onMaskAttribute($event.attributeName, account) : onUnmaskAttribute($event.attributeName, account)
+    "
+  ></bb-account-info-container-extended>
+</ng-container>
+
+<!-- Account Info details loading template -->
+<ng-template #loadingTemplate>
+  <ng-container *ngIf="error$ | async as error; else loading">
+    <bb-empty-state-ui
+      iconSize="xxl"
+      iconModifier="error-outline"
+      iconClasses="text-muted"
+      [title]="''"
+      [subtitle]="error"
+    ></bb-empty-state-ui>
+  </ng-container>
+  <ng-template #loading>
+    <bb-loading-indicator-ui
+      i18n-text="@@product.details.loadingAccounts"
+      [text]="'Loading Accounts...'"
+    ></bb-loading-indicator-ui>
+  </ng-template>
+</ng-template>
+
+<!-- Account Info details no account selected template -->
+<ng-template #noAccountSelected>
+  <bb-empty-state-ui
+    i18n-title="
+      No accounts selected tittle|Empty state title label when there are no account details@@product.details.empty.title"
+    [title]="'No account(s) selected.'"
+    i18n-subtitle="
+      No accounts selected subtitle|Empty state subtitle label when there are no account
+      details@@product.details.empty.subtitle"
+    [subtitle]="'Please select an account first.'"
+  >
+  </bb-empty-state-ui>
+</ng-template>

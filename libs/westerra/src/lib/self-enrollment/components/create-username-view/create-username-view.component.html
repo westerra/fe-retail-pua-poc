@@ -1,0 +1,204 @@
+<bb-enrollment-header [userData]="userData" [isAutoEnrollment]="isAutoEnrollment"></bb-enrollment-header>
+<bb-enrollment-progress-indicator [steps]="progressSteps"></bb-enrollment-progress-indicator>
+
+<form [formGroup]="createAccountForm" (keyup.enter)="submit()" data-role="create-account-form">
+  <div class="card card-lg bb-block bb-block--lg">
+    <div class="card-body">
+      <div class="bb-block bb-block--lg">
+        <div class="card-title">
+          <h2>Create New Account</h2>
+        </div>
+      </div>
+
+      <bb-alert-ui
+        data-role="create-account-bad-request-error-message"
+        *ngIf="errorMsg"
+        title="{{ errorTitle }}"
+        message="{{ errorMsg }}"
+        modifier="error"
+      >
+      </bb-alert-ui>
+      <bb-alert-ui *ngIf="attempts > 2" title="{{ attemptsTitle }}" message="{{ attemptsMsg }}" modifier="info">
+      </bb-alert-ui>
+
+      <div class="bb-stack bb-stack--wrap no-gutters">
+        <div class="bb-stack__item bb-stack__item--align-top col-12 col-md-6">
+          <div class="bb-block bb-block--sm bb-stack bb-stack--wrap">
+            <bb-icon-ui class="bb-stack__item bb-stack__item--align-top" name="user" color="warning" size="xxl">
+            </bb-icon-ui>
+            <div class="bb-stack__break bb-stack__break--spacing-sm bb-stack__break--md-up"></div>
+            <p
+              class="bb-stack__item bb-stack__item--fill bb-text-support"
+              i18n="
+                Self enrollment create account intro text|Short explanation on how you can use your account once you
+                enroll@@self.enrollment.create-account.description"
+            >
+              Create your user account to be able to access your digital banking account.
+            </p>
+          </div>
+        </div>
+        <div class="bb-stack__break bb-stack__break--sm-down"></div>
+        <div class="bb-stack__item bb-stack__item--fill">
+          <div class="form-group" [formGroup]="createAccountForm">
+            <bb-input-text-ui
+              label="Choose Username"
+              formControlName="username"
+              [maxLength]="30"
+              i18n-label="
+                Choose Username|Label for username input field in create account
+                form@@self.enrollment.create-account.form.username"
+              data-role="username-input"
+            ></bb-input-text-ui>
+            <bb-input-validation-message-ui [showErrors]="createAccountForm.controls.username.touched">
+              <div>
+                <span *ngIf="createAccountForm.controls.username.errors?.required">Required.</span>
+                <span
+                  *ngIf="hasLengthError('username')"
+                  i18n="
+                    Username already exists|Error message stating that typed in username already exists in the
+                    system@@self.enrollment.create-account.form.error.unique.message"
+                  >Choose at least 6 characters.</span
+                >
+                <span *ngIf="createAccountForm.controls.username.errors?.pattern">
+                  Optional symbols include ! @ $ * - . _
+                </span>
+              </div>
+            </bb-input-validation-message-ui>
+          </div>
+
+          <div class="form-group" [formGroup]="createAccountForm">
+            <bb-input-password-ui
+              label="Choose Password"
+              formControlName="password"
+              maxlength="30"
+              i18n-label="
+                Choose Password|Label for password input field in create account
+                form@@self.enrollment.create-account.form.password"
+              data-role="password-input"
+              [showVisibilityControl]="true"
+              visibilityControlLabel="Toggle password visibility"
+              i18n-visibilityControlLabel="
+                Toggle password visibility|Aria label for password visibility toggle
+                button@@self.enrollment.create-account.form.password.toggle.ariaLabel"
+            >
+            </bb-input-password-ui>
+
+            <ng-container>
+              <div class="bb-block bb-block--lg m-0">
+                <div class="bb-block bb-block--lg m-0 p-0">Your password must contain:</div>
+                <ul>
+                  <li [ngStyle]="hasLengthError('password') ? { color: 'red' } : { color: 'green' }">
+                    a minimum of 9 characters
+                  </li>
+                  <li [ngStyle]="!hasLowerCaseLetter() ? { color: 'red' } : { color: 'green' }">
+                    at least one lowercase letter
+                  </li>
+                  <li [ngStyle]="!hasUpperCaseLetter() ? { color: 'red' } : { color: 'green' }">
+                    at least one UPPERCASE letter
+                  </li>
+                  <li [ngStyle]="!hasNumber() ? { color: 'red' } : { color: 'green' }">at least one number</li>
+                  <li [ngStyle]="!hasSpecialChar() ? { color: 'red' } : { color: 'green' }">
+                    at least one special character
+                  </li>
+                </ul>
+              </div>
+            </ng-container>
+          </div>
+
+          <div class="form-group" [formGroup]="createAccountForm">
+            <bb-input-password-ui
+              label="Confirm Password"
+              formControlName="passwordRepeat"
+              i18n-label="
+                Confirm Password|Label for confirm password input field in create account
+                form@@self.enrollment.create-account.form.passwordRepeat"
+              data-role="password-repeat-input"
+              [showVisibilityControl]="true"
+              visibilityControlLabel="Toggle password visibility"
+              i18n-visibilityControlLabel="
+                Toggle password visibility|Aria label for password visibility toggle
+                button@@self.enrollment.create-account.form.passwordRepeat.toggle.ariaLabel"
+            ></bb-input-password-ui>
+            <bb-input-validation-message-ui [showErrors]="createAccountForm.controls.passwordRepeat.touched">
+              <div
+                *ngIf="createAccountForm.controls.passwordRepeat.errors?.required"
+                data-role="password-repeat-validation-required-msg"
+                i18n="
+                  Required field|Error message stating that create account form field is
+                  required@@self.enrollment.create-account.form.error.required"
+              >
+                Required field
+              </div>
+              <div
+                *ngIf="!passwordsMatch"
+                data-role="password-repeat-validation-not-same-msg"
+                i18n="
+                  Passwords are not the same|Error message stating passwords in two password fields are not the
+                  same@@self.enrollment.create-account.form.error.not-same"
+              >
+                Passwords are not the same
+              </div>
+            </bb-input-validation-message-ui>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-lg bb-block bb-block--lg">
+    <div class="card-body">
+      <div class="bb-block bb-block--lg">
+        <div class="card-title">
+          <h2>Terms and Conditions</h2>
+        </div>
+      </div>
+
+      <div class="card-body scrollable-box-content bb-block bb-block--lg">
+        <div id="terms-and-conditions"></div>
+      </div>
+
+      <div class="form-group" [formGroup]="createAccountForm">
+        <bb-input-checkbox-ui
+          formControlName="acceptTerms"
+          label="Accept all terms and conditions"
+          i18n-label="
+            Accept all terms and conditions|Accept self enrollment terms and conditions checkbox
+            label@@self.enrollment.create-account.tc.accept"
+        >
+          <label class="bb-input-checkbox">
+            <input type="checkbox" class="bb-input-checkbox__input" formControlName="acceptTerms" />
+            <span class="bb-input-checkbox__content"> Accept all terms and conditions </span>
+          </label>
+        </bb-input-checkbox-ui>
+        <bb-input-validation-message-ui [showErrors]="createAccountForm.controls.acceptTerms.touched && isSubmitted">
+          <div>
+            <span *ngIf="!createAccountForm.controls.acceptTerms.value || isSubmitted">Required.</span>
+          </div>
+        </bb-input-validation-message-ui>
+      </div>
+    </div>
+  </div>
+
+  <div class="bb-button-bar">
+    <bb-load-button-ui
+      class="bb-button-bar__button"
+      color="primary"
+      i18n="Create|Self enrollment create account submission button label@@self.enrollment.create-account.create"
+      data-role="create-button"
+      [disabled]="createAccountForm.invalid || !createAccountForm.controls.acceptTerms.value"
+      [isLoading]="!!isCreating"
+      (click)="submit()"
+    >
+      Create
+    </bb-load-button-ui>
+    <button
+      bbButton
+      class="bb-button-bar__button"
+      color="link"
+      i18n="Cancel|Cancel self enrollment button label@@self.enrollment.create-account.cancel"
+      (click)="onCancel()"
+    >
+      Cancel
+    </button>
+  </div>
+</form>

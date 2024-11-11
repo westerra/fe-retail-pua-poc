@@ -1,0 +1,21 @@
+<!-- TODO: replace bootstrap classes -->
+<div class="heading-widget bb-heading-widget px-0 pt-4 pb-5 flex-column-reverse align-items-start">
+  <button class="bb-heading-widget__button btn btn-link pl-0 ml-0 mb-3" (click)="navigateBack()">
+    <i aria-hidden="true" class="bb-icon bb-icon-arrow-{{ isRtl ? 'forward' : 'back' }}"></i>
+    <span i18n="Product notifications settings button title@@product-notifications.settings.button.title"
+      >Back to Manage notifications</span
+    >
+  </button>
+  <bb-header-ui
+    heading="Notification details"
+    i18n-heading="Product notifications settings heading@@product-notifications.settings.heading"
+    headingType="h2"
+  >
+  </bb-header-ui>
+</div>
+
+<bb-actions-product-notifications-settings-container-custom
+  [selectedAccountId]="selectedAccountId$ | async"
+  [specificationIDs]="config.specificationIDs$ | async"
+  [notificationDismissTime]="config.notificationDismissTime$ | async"
+></bb-actions-product-notifications-settings-container-custom>

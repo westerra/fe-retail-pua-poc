@@ -1,0 +1,288 @@
+bb-messages-conversations-list-widget-ang{
+  .bb-input-checkbox__input:indeterminate + .bb-input-checkbox__content::after {
+    content: "remove";
+    background-color: black;
+   
+  }
+  .bb-messages-conversations-list-item {
+    height: 50px;
+    bb-dropdown-menu-ui {
+      display:none;
+    }
+  }
+
+  .bb-input-checkbox__input:checked + .bb-input-checkbox__content::after, .bb-input-checkbox__input:indeterminate + .bb-input-checkbox__content::after {
+    display: inline-block;
+    font-weight: normal;
+    font-size: 1.5rem;
+    font-family: "Material Icons Outlined";
+    font-style: normal;
+    line-height: 0.9;
+    direction: ltr;
+    letter-spacing: normal;
+    white-space: nowrap;
+    text-transform: none;
+    word-wrap: normal;
+    font-feature-settings: "liga";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    color: white;
+    background-color: black;
+    font-weight: bold;
+    font-size: 1.3rem;
+    line-height: 1.5rem;
+    text-align: center;
+  }
+
+  .badge {
+    line-height: 1.2;
+    background-color: lightblue;
+  }
+
+}
+
+bb-heading-widget{
+  .bb-heading-widget__button {
+    color: $color-primary !important;
+  }
+
+  .btn-primary:focus {
+    outline: 1pt dashed $color-secondary !important;
+    background-color: white !important;
+    border-width: 1pt;
+}
+
+  .btn-primary {
+    background-color: white;
+    border-color: $color-primary;
+  }
+
+}
+
+@media screen and (min-width:575px){
+  bb-create-message-form-ui{
+
+    .was-validated .form-control:invalid, .was-validated .bb-country-selector.ng-select.ng-select-multiple .ng-select-container:invalid, .bb-country-selector.ng-select.ng-select-multiple .was-validated .ng-select-container:invalid, .was-validated .bb-select-list.ng-select.ng-select-single .ng-select-container:invalid, .bb-select-list.ng-select.ng-select-single .was-validated .ng-select-container:invalid, .was-validated .bb-select-list.ng-select.ng-select-multiple .ng-select-container:invalid, .bb-select-list.ng-select.ng-select-multiple .was-validated .ng-select-container:invalid, .form-control.is-invalid, .bb-country-selector.ng-select.ng-select-multiple .is-invalid.ng-select-container, .bb-country-selector.ng-select.ng-select-multiple .ng-invalid.ng-touched > .input-group > input.ng-select-container:not(:focus), .bb-country-selector.ng-select.ng-select-multiple .ng-invalid.ng-touched > input.ng-select-container:not(:focus), .bb-country-selector.ng-select.ng-select-multiple .ng-invalid.ng-touched > select.ng-select-container:not(:focus), .bb-country-selector.ng-select.ng-select-multiple bb-dropdown-multi-select-ui.ng-invalid.ng-touched .ng-select-container.bb-dropdown-multi-select__toggle, bb-dropdown-multi-select-ui.ng-invalid.ng-touched .bb-country-selector.ng-select.ng-select-multiple .ng-select-container.bb-dropdown-multi-select__toggle, .ng-invalid.ng-touched > .input-group > input.form-control:not(:focus), .bb-select-list.ng-select.ng-select-single .ng-invalid.ng-touched > .input-group > input.ng-select-container:not(:focus), .bb-select-list.ng-select.ng-select-multiple .ng-invalid.ng-touched > .input-group > input.ng-select-container:not(:focus), .ng-invalid.ng-touched > input.form-control:not(:focus), .bb-select-list.ng-select.ng-select-single .ng-invalid.ng-touched > input.ng-select-container:not(:focus), .bb-select-list.ng-select.ng-select-multiple .ng-invalid.ng-touched > input.ng-select-container:not(:focus), .ng-invalid.ng-touched > select.form-control:not(:focus), .bb-select-list.ng-select.ng-select-single .ng-invalid.ng-touched > select.ng-select-container:not(:focus), .bb-select-list.ng-select.ng-select-multiple .ng-invalid.ng-touched > select.ng-select-container:not(:focus), bb-dropdown-multi-select-ui.ng-invalid.ng-touched .form-control.bb-dropdown-multi-select__toggle, bb-dropdown-multi-select-ui.ng-invalid.ng-touched .bb-select-list.ng-select.ng-select-single .bb-dropdown-multi-select__toggle.ng-select-container, .bb-select-list.ng-select.ng-select-single bb-dropdown-multi-select-ui.ng-invalid.ng-touched .bb-dropdown-multi-select__toggle.ng-select-container, bb-dropdown-multi-select-ui.ng-invalid.ng-touched .bb-select-list.ng-select.ng-select-multiple .bb-dropdown-multi-select__toggle.ng-select-container, .bb-select-list.ng-select.ng-select-multiple bb-dropdown-multi-select-ui.ng-invalid.ng-touched .bb-dropdown-multi-select__toggle.ng-select-container, .bb-select-list.ng-select.ng-select-single .is-invalid.ng-select-container, .bb-select-list.ng-select.ng-select-multiple .is-invalid.ng-select-container {
+      border-radius: 0.17rem;
+      outline: 0.17rem solid lightblue;
+      outline-offset: 4px;
+    }
+
+    .form-control[type="text"]:focus, .bb-country-selector.ng-select.ng-select-multiple .ng-select-container[type="text"]:focus, .bb-select-list.ng-select.ng-select-single .ng-select-container[type="text"]:focus, .bb-select-list.ng-select.ng-select-multiple .ng-select-container[type="text"]:focus, .form-control[type="number"]:focus, .bb-country-selector.ng-select.ng-select-multiple .ng-select-container[type="number"]:focus, .bb-select-list.ng-select.ng-select-single .ng-select-container[type="number"]:focus, .bb-select-list.ng-select.ng-select-multiple .ng-select-container[type="number"]:focus, .form-control[type="email"]:focus, .bb-country-selector.ng-select.ng-select-multiple .ng-select-container[type="email"]:focus, .bb-select-list.ng-select.ng-select-single .ng-select-container[type="email"]:focus, .bb-select-list.ng-select.ng-select-multiple .ng-select-container[type="email"]:focus, .form-control[type="password"]:focus, .bb-country-selector.ng-select.ng-select-multiple .ng-select-container[type="password"]:focus, .bb-select-list.ng-select.ng-select-single .ng-select-container[type="password"]:focus, .bb-select-list.ng-select.ng-select-multiple .ng-select-container[type="password"]:focus, .form-control[type="tel"]:focus, .bb-country-selector.ng-select.ng-select-multiple .ng-select-container[type="tel"]:focus, .bb-select-list.ng-select.ng-select-single .ng-select-container[type="tel"]:focus, .bb-select-list.ng-select.ng-select-multiple .ng-select-container[type="tel"]:focus, .form-control[type="search"]:focus, .bb-country-selector.ng-select.ng-select-multiple .ng-select-container[type="search"]:focus, .bb-select-list.ng-select.ng-select-single .ng-select-container[type="search"]:focus, .bb-select-list.ng-select.ng-select-multiple .ng-select-container[type="search"]:focus {
+      border-style: solid;
+      border-width: 1px;
+      border-color: $border-color;
+      outline: 0.17rem solid lightblue;
+      outline-offset: 4px;
+      box-shadow: none;
+    }
+
+    .form-control, .bb-country-selector.ng-select.ng-select-multiple .ng-select-container, .bb-select-list.ng-select.ng-select-single .ng-select-container, .bb-select-list.ng-select.ng-select-multiple .ng-select-container {
+      border-radius: 0.17rem;
+    }
+
+    .btn-primary {
+      background-color: white !important;
+      border-color: $color-primary !important;
+      color: $color-primary !important;
+    }
+
+
+
+    button:not(:disabled), [type="button"]:not(:disabled), [type="reset"]:not(:disabled), [type="submit"]:not(:disabled) {
+      cursor: pointer;
+      color: black;
+    }
+
+
+
+    button.bb-button-bar__button--across.btn-link.btn.btn-md {
+      content: "Save as draft";
+      visibility: hidden;
+    }
+
+    button.bb-button-bar__button--across.btn-link.btn.btn-md:before {
+      content: "Save as draft";
+      color: $color-primary;
+      visibility: visible;
+    }
+
+    button.bb-block.bb-block--xs.btn-link.btn-md.btn {
+      content: "Attach file";
+    }
+
+  }
+}
+
+@media screen and (max-width:574px) {
+  bb-create-message-form-ui{
+
+    bb-load-button-ui{
+      width: 100%;
+      .bb-load-button{
+        margin-bottom: 1rem;
+        width: 100%;
+      }
+
+    }
+
+    .was-validated .form-control:invalid, .was-validated .bb-country-selector.ng-select.ng-select-multiple .ng-select-container:invalid, .bb-country-selector.ng-select.ng-select-multiple .was-validated .ng-select-container:invalid, .was-validated .bb-select-list.ng-select.ng-select-single .ng-select-container:invalid, .bb-select-list.ng-select.ng-select-single .was-validated .ng-select-container:invalid, .was-validated .bb-select-list.ng-select.ng-select-multiple .ng-select-container:invalid, .bb-select-list.ng-select.ng-select-multiple .was-validated .ng-select-container:invalid, .form-control.is-invalid, .bb-country-selector.ng-select.ng-select-multiple .is-invalid.ng-select-container, .bb-country-selector.ng-select.ng-select-multiple .ng-invalid.ng-touched > .input-group > input.ng-select-container:not(:focus), .bb-country-selector.ng-select.ng-select-multiple .ng-invalid.ng-touched > input.ng-select-container:not(:focus), .bb-country-selector.ng-select.ng-select-multiple .ng-invalid.ng-touched > select.ng-select-container:not(:focus), .bb-country-selector.ng-select.ng-select-multiple bb-dropdown-multi-select-ui.ng-invalid.ng-touched .ng-select-container.bb-dropdown-multi-select__toggle, bb-dropdown-multi-select-ui.ng-invalid.ng-touched .bb-country-selector.ng-select.ng-select-multiple .ng-select-container.bb-dropdown-multi-select__toggle, .ng-invalid.ng-touched > .input-group > input.form-control:not(:focus), .bb-select-list.ng-select.ng-select-single .ng-invalid.ng-touched > .input-group > input.ng-select-container:not(:focus), .bb-select-list.ng-select.ng-select-multiple .ng-invalid.ng-touched > .input-group > input.ng-select-container:not(:focus), .ng-invalid.ng-touched > input.form-control:not(:focus), .bb-select-list.ng-select.ng-select-single .ng-invalid.ng-touched > input.ng-select-container:not(:focus), .bb-select-list.ng-select.ng-select-multiple .ng-invalid.ng-touched > input.ng-select-container:not(:focus), .ng-invalid.ng-touched > select.form-control:not(:focus), .bb-select-list.ng-select.ng-select-single .ng-invalid.ng-touched > select.ng-select-container:not(:focus), .bb-select-list.ng-select.ng-select-multiple .ng-invalid.ng-touched > select.ng-select-container:not(:focus), bb-dropdown-multi-select-ui.ng-invalid.ng-touched .form-control.bb-dropdown-multi-select__toggle, bb-dropdown-multi-select-ui.ng-invalid.ng-touched .bb-select-list.ng-select.ng-select-single .bb-dropdown-multi-select__toggle.ng-select-container, .bb-select-list.ng-select.ng-select-single bb-dropdown-multi-select-ui.ng-invalid.ng-touched .bb-dropdown-multi-select__toggle.ng-select-container, bb-dropdown-multi-select-ui.ng-invalid.ng-touched .bb-select-list.ng-select.ng-select-multiple .bb-dropdown-multi-select__toggle.ng-select-container, .bb-select-list.ng-select.ng-select-multiple bb-dropdown-multi-select-ui.ng-invalid.ng-touched .bb-dropdown-multi-select__toggle.ng-select-container, .bb-select-list.ng-select.ng-select-single .is-invalid.ng-select-container, .bb-select-list.ng-select.ng-select-multiple .is-invalid.ng-select-container {
+      border-radius: 0.17rem;
+      outline: 0.17rem solid lightblue;
+      outline-offset: 4px;
+    }
+
+    .form-control[type="text"]:focus, .bb-country-selector.ng-select.ng-select-multiple .ng-select-container[type="text"]:focus, .bb-select-list.ng-select.ng-select-single .ng-select-container[type="text"]:focus, .bb-select-list.ng-select.ng-select-multiple .ng-select-container[type="text"]:focus, .form-control[type="number"]:focus, .bb-country-selector.ng-select.ng-select-multiple .ng-select-container[type="number"]:focus, .bb-select-list.ng-select.ng-select-single .ng-select-container[type="number"]:focus, .bb-select-list.ng-select.ng-select-multiple .ng-select-container[type="number"]:focus, .form-control[type="email"]:focus, .bb-country-selector.ng-select.ng-select-multiple .ng-select-container[type="email"]:focus, .bb-select-list.ng-select.ng-select-single .ng-select-container[type="email"]:focus, .bb-select-list.ng-select.ng-select-multiple .ng-select-container[type="email"]:focus, .form-control[type="password"]:focus, .bb-country-selector.ng-select.ng-select-multiple .ng-select-container[type="password"]:focus, .bb-select-list.ng-select.ng-select-single .ng-select-container[type="password"]:focus, .bb-select-list.ng-select.ng-select-multiple .ng-select-container[type="password"]:focus, .form-control[type="tel"]:focus, .bb-country-selector.ng-select.ng-select-multiple .ng-select-container[type="tel"]:focus, .bb-select-list.ng-select.ng-select-single .ng-select-container[type="tel"]:focus, .bb-select-list.ng-select.ng-select-multiple .ng-select-container[type="tel"]:focus, .form-control[type="search"]:focus, .bb-country-selector.ng-select.ng-select-multiple .ng-select-container[type="search"]:focus, .bb-select-list.ng-select.ng-select-single .ng-select-container[type="search"]:focus, .bb-select-list.ng-select.ng-select-multiple .ng-select-container[type="search"]:focus {
+      border-style: solid;
+      border-width: 1px;
+      border-color: #dedede;
+      outline: 0.17rem solid lightblue;
+      outline-offset: 4px;
+      box-shadow: none;
+    }
+
+    .form-control, .bb-country-selector.ng-select.ng-select-multiple .ng-select-container, .bb-select-list.ng-select.ng-select-single .ng-select-container, .bb-select-list.ng-select.ng-select-multiple .ng-select-container {
+      border-radius: 0.17rem;
+    }
+
+    .btn-primary {
+      background-color: white !important;
+      border-color: $color-primary !important;
+      color: $color-primary !important;
+    }
+
+    button:not(:disabled), [type="button"]:not(:disabled), [type="reset"]:not(:disabled), [type="submit"]:not(:disabled) {
+      cursor: pointer;
+      color: black;
+    }
+
+
+
+    button.bb-button-bar__button--across.btn-link.btn.btn-md {
+      content: "S";
+      visibility: hidden;
+    }
+
+    button.bb-button-bar__button--across.btn-link.btn.btn-md:before {
+      content: "Save as draft";
+      width: 100%;
+      color: $color-primary;
+      padding-left: 70%;
+      visibility: visible;
+    }
+
+    button.bb-block.bb-block--xs.btn-link.btn-md.btn {
+      content: "Attach file";
+      width: 100%;
+    }
+
+  }
+}
+
+  .modal-open .btn-secondary{
+    background-color: white !important;
+    color: $color-neutral-black !important;
+    border-color: $color-neutral-black !important;
+  }
+
+
+  bb-messages-conversation-thread-widget-ang{
+    .btn-primary {
+      background-color: white;
+      border-color: $color-primary;
+      color: $color-primary;
+    }
+
+    .btn-link.btn.btn-md{
+      color: black;
+    }
+
+    .form-control.bb-rich-text-editor__actionbar{
+      border-radius: 0.17rem;
+      outline: 0.17rem solid lightblue;
+      outline-offset: 4px;
+    }
+  }
+
+
+.bb-rich-text-editor__content {
+    height: 100px !important;
+    overflow-y: auto !important;
+    outline: 0;
+    display: contents;
+}
+
+.bb-rich-text-editor .bb-rich-text-editor__textbox {
+  height: auto;
+  overflow-y: auto !important;
+}
+
+quill-editor .ql-container.ql-snow {
+  .ql-editor {
+    display: block !important;
+    height: 100px;
+    max-height: 100px;
+    overflow-y: scroll;
+    outline: 0;
+  }
+  .ql-clipboard,.ql-tooltip {
+    display: none !important;
+    visibility: hidden;
+  }
+}
+
+div.ql-toolbar.ql-snow {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+
+bb-messages-conversations-list-widget-ang-custom {
+  .bb-input-checkbox__input:indeterminate + .bb-input-checkbox__content::after {
+    content: "remove";
+    background-color: black;
+   
+  }
+  .bb-messages-conversations-list-item {
+    height: 50px;
+    bb-dropdown-menu-ui {
+      display:none;
+    }
+  }
+
+  .bb-input-checkbox__input:checked + .bb-input-checkbox__content::after, .bb-input-checkbox__input:indeterminate + .bb-input-checkbox__content::after {
+    display: inline-block;
+    font-weight: normal;
+    font-size: 1.5rem;
+    font-family: "Material Icons Outlined";
+    font-style: normal;
+    line-height: 0.9;
+    direction: ltr;
+    letter-spacing: normal;
+    white-space: nowrap;
+    text-transform: none;
+    word-wrap: normal;
+    font-feature-settings: "liga";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    color: white;
+    background-color: black;
+    font-weight: bold;
+    font-size: 1.3rem;
+    line-height: 1.5rem;
+    text-align: center;
+  }
+
+  .badge {
+    line-height: 1.2;
+    background-color: lightblue;
+  }
+
+}
+
+
+tr.table-active, tr.table-active > th, tr.table-active > td {
+  background-color: #fff;
+}

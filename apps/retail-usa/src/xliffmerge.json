@@ -1,0 +1,8 @@
+{
+  "xliffmergeOptions": {
+    "apikey": "",
+    "autotranslate": [],
+    "srcDir": "apps/retail-usa/src/locale",
+    "genDir": "apps/retail-usa/src/locale"
+  }
+}

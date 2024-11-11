@@ -1,0 +1,20 @@
+{
+  "baseUrl": "https://app.stg.ref.live.backbaseservices.com/web/ ",
+  "baasKey": "X-PRDL-BAAS",
+  "baasToken": "prdl-stg-41786aed-ff53-4572-9762-0061e0cd1075",
+  "users": {
+    "userWithSingleContext": {
+      "username": "ref-stg-emily-autotest",
+      "password": "Pass1234",
+      "fullName": "emily-autotest Jones"
+    },
+    "userWithMultipleContexts": {
+      "username": "",
+      "password": "",
+      "fullName": "",
+      "userContext": "",
+      "defaultContext": "",
+      "debitCardHolder": ""
+    }
+  }
+}

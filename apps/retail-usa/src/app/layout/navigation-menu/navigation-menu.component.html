@@ -1,0 +1,552 @@
+<ul class="bb-layout__horizontal-nav no-print">
+  <li
+    class="bb-layout__horizontal-nav-item"
+    ngbDropdown
+    display="static"
+    #accountsDropdown="ngbDropdown"
+    bbLayoutNavDropdown
+    #accountsNavDropdown="bbLayoutNavDropdown"
+    *bbIfEntitlements="permissions.canViewMyAccounts"
+  >
+    <a
+      ngbDropdownToggle
+      class="bb-layout__horizontal-nav-link"
+      href="javascript:;"
+      tabindex="0"
+      [ngClass]="{
+        'bb-layout__horizontal-nav-link--expanded': accountsDropdown.isOpen() || accountsNavDropdown.isActive
+      }"
+      [attr.aria-expanded]="accountsDropdown.isOpen()"
+      id="bb-menu-header-button-1"
+      role="button"
+    >
+      <span class="bb-layout__horizontal-nav-item-description" i18n="@@accounts.nav.item.description">Accounts</span>
+      <bb-icon-ui
+        class="bb-layout__horizontal-nav-expand-marker bb-layout__horizontal-nav-expand-marker--vertical"
+        [name]="accountsDropdown.isOpen() ? 'toggle-up' : 'toggle-down'"
+      ></bb-icon-ui>
+      <bb-icon-ui
+        class="bb-layout__horizontal-nav-expand-marker bb-layout__horizontal-nav-expand-marker--horizontal"
+        name="chevron-right"
+      ></bb-icon-ui>
+    </a>
+    <div
+      ngbDropdownMenu
+      class="bb-layout__horizontal-nav-submenu"
+      role="region"
+      tabindex="-1"
+      aria-labelledby="bb-menu-header-button-1"
+    >
+      <button class="bb-layout__horizontal-nav-submenu-header" (click)="accountsDropdown.close()">
+        <bb-icon-ui class="bb-layout__horizontal-nav-submenu--close" name="angle-left" size="lg"></bb-icon-ui>
+        <div class="bb-layout__horizontal-nav-submenu--text" i18n="@@main.menu.nav.submenu.text">Main Menu</div>
+      </button>
+      <ul class="bb-layout__horizontal-nav-column">
+        <li *bbIfEntitlements="permissions.canViewMyAccountsAlone">
+          <a
+            class="bb-layout__horizontal-nav-submenu-link"
+            ngbDropdownItem
+            routerLinkActive="bb-layout__horizontal-nav-submenu-link--active"
+            routerLink="/my-accounts/list"
+            #myAccountsRouterLink="routerLinkActive"
+            [attr.aria-current]="myAccountsRouterLink.isActive ? 'page' : undefined"
+          >
+            <div class="bb-layout__bb-horizontal-nav-submenu-item-label">
+              <div class="bb-layout__bb-horizontal-nav-submenu-title" i18n="@@my.accounts.nav.submenu.title">
+                My Accounts
+              </div>
+            </div>
+          </a>
+        </li>
+
+        <li *bbIfEntitlements="permissions.canViewManageAccounts">
+          <a
+            class="bb-layout__horizontal-nav-submenu-link"
+            ngbDropdownItem
+            routerLinkActive="bb-layout__horizontal-nav-submenu-link--active"
+            routerLink="/my-accounts/manage"
+            #manageAccountsRouterLink="routerLinkActive"
+            [attr.aria-current]="manageAccountsRouterLink.isActive ? 'page' : undefined"
+          >
+            <div class="bb-layout__bb-horizontal-nav-submenu-item-label">
+              <div class="bb-layout__bb-horizontal-nav-submenu-title" i18n="@@manage.accounts.nav.submenu.title">
+                Manage Accounts
+              </div>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </li>
+
+  <li
+    class="bb-layout__horizontal-nav-item"
+    ngbDropdown
+    display="static"
+    #transfersDropdown="ngbDropdown"
+    bbLayoutNavDropdown
+    #transfersNavDropdown="bbLayoutNavDropdown"
+    *bbIfEntitlements="permissions.canViewTransfers"
+  >
+    <a
+      ngbDropdownToggle
+      class="bb-layout__horizontal-nav-link"
+      href="javascript:;"
+      tabindex="0"
+      [ngClass]="{
+        'bb-layout__horizontal-nav-link--expanded': transfersDropdown.isOpen() || transfersNavDropdown.isActive
+      }"
+      [attr.aria-expanded]="transfersDropdown.isOpen()"
+      id="bb-menu-header-button-1"
+      role="button"
+    >
+      <span class="bb-layout__horizontal-nav-item-description" i18n="@@transfers.nav.item.description">Move Money</span>
+      <bb-icon-ui
+        class="bb-layout__horizontal-nav-expand-marker bb-layout__horizontal-nav-expand-marker--vertical"
+        [name]="transfersDropdown.isOpen() ? 'toggle-up' : 'toggle-down'"
+      ></bb-icon-ui>
+      <bb-icon-ui
+        class="bb-layout__horizontal-nav-expand-marker bb-layout__horizontal-nav-expand-marker--horizontal"
+        name="chevron-right"
+      ></bb-icon-ui>
+    </a>
+    <div
+      ngbDropdownMenu
+      class="bb-layout__horizontal-nav-submenu"
+      role="region"
+      tabindex="-1"
+      aria-labelledby="bb-menu-header-button-1"
+    >
+      <button class="bb-layout__horizontal-nav-submenu-header" (click)="transfersDropdown.close()">
+        <bb-icon-ui class="bb-layout__horizontal-nav-submenu--close" name="angle-left" size="lg"></bb-icon-ui>
+        <div class="bb-layout__horizontal-nav-submenu--text" i18n="@@main.menu.nav.submenu.text">Main Menu</div>
+      </button>
+      <ul class="bb-layout__horizontal-nav-column">
+        <li *bbIfEntitlements="permissions.canViewMakeTransfer">
+          <a
+            class="bb-layout__horizontal-nav-submenu-link"
+            ngbDropdownItem
+            routerLinkActive="bb-layout__horizontal-nav-submenu-link--active"
+            routerLink="/transfers/make-a-transfer"
+            #makeTransferRouterLink="routerLinkActive"
+            [attr.aria-current]="makeTransferRouterLink.isActive ? 'page' : undefined"
+          >
+            <div class="bb-layout__bb-horizontal-nav-submenu-item-label">
+              <div class="bb-layout__bb-horizontal-nav-submenu-title" i18n="@@make.transfer.nav.submenu.title">
+                Make a Transfer
+              </div>
+            </div>
+          </a>
+        </li>
+        <li
+          *bbIfEntitlements="'Payments.A2ATransfer.view OR Payments.SEPACT.view AND ProductSummary.ProductSummary.view'"
+        >
+          <a
+            class="bb-layout__horizontal-nav-submenu-link"
+            ngbDropdownItem
+            routerLinkActive="bb-layout__horizontal-nav-submenu-link--active"
+            routerLink="/transfers/activity"
+            #scheduledTransfersRouterLink="routerLinkActive"
+            [attr.aria-current]="scheduledTransfersRouterLink.isActive ? 'page' : undefined"
+          >
+            <div class="bb-layout__bb-horizontal-nav-submenu-item-label">
+              <div class="bb-layout__bb-horizontal-nav-submenu-title" i18n="@@activity.nav.submenu.title">
+                Transfer Activity
+              </div>
+            </div>
+          </a>
+        </li>
+        <li
+          *bbIfEntitlements="'Payments.A2ATransfer.view OR Payments.SEPACT.view AND ProductSummary.ProductSummary.view'"
+        >
+          <a
+            class="bb-layout__horizontal-nav-submenu-link"
+            ngbDropdownItem
+            routerLinkActive="bb-layout__horizontal-nav-submenu-link--active"
+            routerLink="/transfers/ShowDashboard"
+            #billPayDashboardLink="routerLinkActive"
+            [attr.aria-current]="billPayDashboardLink.isActive ? 'page' : undefined"
+          >
+            <div class="bb-layout__bb-horizontal-nav-submenu-item-label">
+              <div class="bb-layout__bb-horizontal-nav-submenu-title" i18n="@@billPayDashboardLink.nav.submenu.title">
+                {{ payverisHeader.ShowDashboard }}
+              </div>
+            </div>
+          </a>
+        </li>
+        <li
+          *bbIfEntitlements="'Payments.A2ATransfer.view OR Payments.SEPACT.view AND ProductSummary.ProductSummary.view'"
+        >
+          <a
+            class="bb-layout__horizontal-nav-submenu-link"
+            ngbDropdownItem
+            routerLinkActive="bb-layout__horizontal-nav-submenu-link--active"
+            routerLink="/transfers/OneTimePayment"
+            #payBillsLink="routerLinkActive"
+            [attr.aria-current]="payBillsLink.isActive ? 'page' : undefined"
+          >
+            <div class="bb-layout__bb-horizontal-nav-submenu-item-label">
+              <div class="bb-layout__bb-horizontal-nav-submenu-title" i18n="@@pay.bills.nav.submenu.title">
+                {{ payverisHeader.OneTimePayment }}
+              </div>
+            </div>
+          </a>
+        </li>
+        <li
+          *bbIfEntitlements="'Payments.A2ATransfer.view OR Payments.SEPACT.view AND ProductSummary.ProductSummary.view'"
+        >
+          <a
+            class="bb-layout__horizontal-nav-submenu-link"
+            ngbDropdownItem
+            routerLinkActive="bb-layout__horizontal-nav-submenu-link--active"
+            routerLink="/transfers/ViewPaymentHistory"
+            #paymentActivityLink="routerLinkActive"
+            [attr.aria-current]="paymentActivityLink.isActive ? 'page' : undefined"
+          >
+            <div class="bb-layout__bb-horizontal-nav-submenu-item-label">
+              <div class="bb-layout__bb-horizontal-nav-submenu-title" i18n="@@paymentActivityLink.nav.submenu.title">
+                {{ payverisHeader.ViewPaymentHistory }}
+              </div>
+            </div>
+          </a>
+        </li>
+        <li
+          *bbIfEntitlements="'Payments.A2ATransfer.view OR Payments.SEPACT.view AND ProductSummary.ProductSummary.view'"
+        >
+          <a
+            class="bb-layout__horizontal-nav-submenu-link"
+            ngbDropdownItem
+            routerLinkActive="bb-layout__horizontal-nav-submenu-link--active"
+            routerLink="/transfers/SendMoneyDashboard"
+            #sendMoneyDashboardLink="routerLinkActive"
+            [attr.aria-current]="sendMoneyDashboardLink.isActive ? 'page' : undefined"
+          >
+            <div class="bb-layout__bb-horizontal-nav-submenu-item-label">
+              <div class="bb-layout__bb-horizontal-nav-submenu-title" i18n="@@ExternalTransfers.nav.submenu.title">
+                {{ payverisHeader.SendMoneyDashboard }}
+              </div>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </li>
+
+  <li
+    class="bb-layout__horizontal-nav-item"
+    ngbDropdown
+    display="static"
+    #analyticsDropdown="ngbDropdown"
+    bbLayoutNavDropdown
+    #analyticsDropdownState="bbLayoutNavDropdown"
+    *bbIfEntitlements="permissions.canViewTransactionsAnalytics"
+  >
+    <a
+      ngbDropdownToggle
+      class="bb-layout__horizontal-nav-link"
+      href="javascript:;"
+      tabindex="0"
+      [ngClass]="{
+        'bb-layout__horizontal-nav-link--expanded': analyticsDropdown.isOpen() || analyticsDropdownState.isActive
+      }"
+      [attr.aria-expanded]="analyticsDropdown.isOpen()"
+      id="bb-menu-header-button-3"
+      role="button"
+    >
+      <span class="bb-layout__horizontal-nav-item-description" i18n="@@analytics.nav.item.description">Analytics</span>
+      <bb-icon-ui
+        class="bb-layout__horizontal-nav-expand-marker bb-layout__horizontal-nav-expand-marker--vertical"
+        [name]="analyticsDropdown.isOpen() ? 'toggle-up' : 'toggle-down'"
+      ></bb-icon-ui>
+      <bb-icon-ui
+        class="bb-layout__horizontal-nav-expand-marker bb-layout__horizontal-nav-expand-marker--horizontal"
+        name="chevron-right"
+      ></bb-icon-ui>
+    </a>
+    <div
+      ngbDropdownMenu
+      class="bb-layout__horizontal-nav-submenu"
+      role="region"
+      tabindex="-1"
+      aria-labelledby="bb-menu-header-button-3"
+    >
+      <button class="bb-layout__horizontal-nav-submenu-header" (click)="analyticsDropdown.close()">
+        <bb-icon-ui class="bb-layout__horizontal-nav-submenu--close" name="angle-left" size="lg"></bb-icon-ui>
+        <div class="bb-layout__horizontal-nav-submenu--text" i18n="@@main.menu.nav.submenu.text">Main Menu</div>
+      </button>
+      <ul class="bb-layout__horizontal-nav-column">
+        <li>
+          <a
+            class="bb-layout__horizontal-nav-link"
+            ngbDropdownItem
+            routerLinkActive="bb-layout__horizontal-nav-link--active"
+            routerLink="/insights/cashflow"
+            #cashFlowRouterLink="routerLinkActive"
+            [attr.aria-current]="cashFlowRouterLink.isActive ? 'page' : undefined"
+          >
+            <div class="bb-layout__bb-horizontal-nav-submenu-item-label">
+              <div class="bb-layout__bb-horizontal-nav-submenu-title" i18n="@@cash.flow.nav.submenu.title">
+                Cash Flow
+              </div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a
+            class="bb-layout__horizontal-nav-submenu-link"
+            ngbDropdownItem
+            routerLinkActive="bb-layout__horizontal-nav-submenu-link--active"
+            routerLink="/insights/spending-analysis"
+            #spendingAnalysisRouterLink="routerLinkActive"
+            [attr.aria-current]="spendingAnalysisRouterLink.isActive ? 'page' : undefined"
+          >
+            <div class="bb-layout__bb-horizontal-nav-submenu-item-label">
+              <div class="bb-layout__bb-horizontal-nav-submenu-title" i18n="@@spending.analysis.nav.submenu.title">
+                Spending Analysis
+              </div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a
+            class="bb-layout__horizontal-nav-submenu-link"
+            ngbDropdownItem
+            routerLinkActive="bb-layout__horizontal-nav-submenu-link--active"
+            routerLink="/insights/income-analysis"
+            #incomeAnalysisRouterLink="routerLinkActive"
+            [attr.aria-current]="incomeAnalysisRouterLink.isActive ? 'page' : undefined"
+          >
+            <div class="bb-layout__bb-horizontal-nav-submenu-item-label">
+              <div class="bb-layout__bb-horizontal-nav-submenu-title" i18n="@@income.analysis.nav.submenu.title">
+                Income Analysis
+              </div>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </li>
+
+  <!-- Self service -->
+  <li
+    class="bb-layout__horizontal-nav-item"
+    ngbDropdown
+    display="static"
+    #selfServiceDropdown="ngbDropdown"
+    bbLayoutNavDropdown
+    #selfServiceNavItem="bbLayoutNavDropdown"
+    *bbIfEntitlements="permissions.canViewSelfServiceAlone"
+  >
+    <a
+      ngbDropdownToggle
+      class="bb-layout__horizontal-nav-link"
+      href="javascript:;"
+      tabindex="0"
+      [ngClass]="{
+        'bb-layout__horizontal-nav-link--expanded': selfServiceDropdown.isOpen() || selfServiceNavItem.isActive
+      }"
+      [attr.aria-expanded]="selfServiceDropdown.isOpen()"
+      id="bb-menu-header-button-4"
+      role="button"
+    >
+      <span class="bb-layout__horizontal-nav-item-description" i18n="@@self.service.nav.item.description"
+        >Self Service</span
+      >
+      <bb-icon-ui
+        class="bb-layout__horizontal-nav-expand-marker bb-layout__horizontal-nav-expand-marker--vertical"
+        [name]="selfServiceDropdown.isOpen() ? 'toggle-up' : 'toggle-down'"
+      ></bb-icon-ui>
+      <bb-icon-ui
+        class="bb-layout__horizontal-nav-expand-marker bb-layout__horizontal-nav-expand-marker--horizontal"
+        name="chevron-right"
+      ></bb-icon-ui>
+    </a>
+    <div
+      ngbDropdownMenu
+      class="bb-layout__horizontal-nav-submenu"
+      role="region"
+      tabindex="-1"
+      aria-labelledby="bb-menu-header-button-4"
+    >
+      <button class="bb-layout__horizontal-nav-submenu-header" (click)="selfServiceDropdown.close()">
+        <bb-icon-ui class="bb-layout__horizontal-nav-submenu--close" name="angle-left" size="lg"></bb-icon-ui>
+        <div class="bb-layout__horizontal-nav-submenu--text" i18n="@@main.menu.nav.submenu.text">Main Menu</div>
+      </button>
+      <ul class="bb-layout__horizontal-nav-column">
+        <li *bbIfEntitlements="permissions.canViewMyProfile">
+          <a
+            class="bb-layout__horizontal-nav-submenu-link"
+            ngbDropdownItem
+            routerLinkActive="bb-layout__horizontal-nav-submenu-link--active"
+            routerLink="/self-service/profile"
+            #myProfileRouterLink="routerLinkActive"
+            [attr.aria-current]="myProfileRouterLink.isActive ? 'page' : undefined"
+          >
+            <div class="bb-layout__bb-horizontal-nav-submenu-item-label">
+              <div class="bb-layout__bb-horizontal-nav-submenu-title" i18n="@@profile.nav.submenu.title">
+                My Profile
+              </div>
+            </div>
+          </a>
+        </li>
+        <li *bbIfEntitlements="permissions.canViewManageNotificationsAlone">
+          <a
+            class="bb-layout__horizontal-nav-submenu-link"
+            ngbDropdownItem
+            routerLinkActive="bb-layout__horizontal-nav-submenu-link--active"
+            routerLink="/self-service/product-list"
+            #manageNotificationsRouterLink="routerLinkActive"
+            [attr.aria-current]="manageNotificationsRouterLink.isActive ? 'page' : undefined"
+          >
+            <div class="bb-layout__bb-horizontal-nav-submenu-item-label">
+              <div class="bb-layout__bb-horizontal-nav-submenu-title" i18n="@@manage.notifications.nav.submenu.title">
+                Manage Notifications
+              </div>
+            </div>
+          </a>
+        </li>
+        <ng-container *ngIf="showManageContacts">
+          <li *bbIfEntitlements="permissions.canViewManageContacts">
+            <a
+              class="bb-layout__horizontal-nav-submenu-link"
+              ngbDropdownItem
+              routerLinkActive="bb-layout__horizontal-nav-submenu-link--active"
+              routerLink="/self-service/manage-contacts"
+              #manageContactsRouterLink="routerLinkActive"
+              [attr.aria-current]="manageContactsRouterLink.isActive ? 'page' : undefined"
+            >
+              <div class="bb-layout__bb-horizontal-nav-submenu-item-label">
+                <div class="bb-layout__bb-horizontal-nav-submenu-title" i18n="@@manage.contacts.nav.submenu.title">
+                  Manage Contacts
+                </div>
+              </div>
+            </a>
+          </li>
+        </ng-container>
+        <li *bbIfEntitlements="permissions.canViewAccountStatements">
+          <a
+            class="bb-layout__horizontal-nav-submenu-link"
+            ngbDropdownItem
+            routerLinkActive="bb-layout__horizontal-nav-submenu-link--active"
+            routerLink="/self-service/download-statements"
+            #downloadStatementsRouterLink="routerLinkActive"
+            [attr.aria-current]="downloadStatementsRouterLink.isActive ? 'page' : undefined"
+          >
+            <div class="bb-layout__bb-horizontal-nav-submenu-item-label">
+              <div class="bb-layout__bb-horizontal-nav-submenu-title" i18n="@@download.statements.nav.submenu.title">
+                Account Statements
+              </div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a
+            class="bb-layout__horizontal-nav-submenu-link"
+            ngbDropdownItem
+            routerLinkActive="bb-layout__horizontal-nav-submenu-link--active"
+            routerLink="/self-service/order-checks"
+            #orderChecksRouterLink="routerLinkActive"
+            [attr.aria-current]="orderChecksRouterLink.isActive ? 'page' : undefined"
+          >
+            <div class="bb-layout__bb-horizontal-nav-submenu-item-label">
+              <div class="bb-layout__bb-horizontal-nav-submenu-title" i18n="@@order.checks.nav.submenu.title">
+                Order Checks
+              </div>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </li>
+
+  <!-- More -->
+  <li
+    class="bb-layout__horizontal-nav-item bb-layout__horizontal-nav-item--secondary"
+    ngbDropdown
+    display="static"
+    #moreDropdown="ngbDropdown"
+    bbLayoutNavDropdown
+    #moreDropdownState="bbLayoutNavDropdown"
+  >
+    <a
+      ngbDropdownToggle
+      class="bb-layout__horizontal-nav-link"
+      href="javascript:;"
+      tabindex="0"
+      [ngClass]="{ 'bb-layout__horizontal-nav-link--expanded': moreDropdown.isOpen() || moreDropdownState.isActive }"
+      [attr.aria-expanded]="moreDropdown.isOpen()"
+      id="bb-menu-header-button-5"
+      role="button"
+    >
+      <bb-icon-ui class="bb-layout__horizontal-nav-item-icon" name="ellipsis-h"></bb-icon-ui>
+      <span class="bb-layout__horizontal-nav-item-description" i18n="@@more.nav.item.description">More</span>
+      <bb-icon-ui
+        class="bb-layout__horizontal-nav-expand-marker bb-layout__horizontal-nav-expand-marker--horizontal"
+        name="chevron-right"
+      ></bb-icon-ui>
+    </a>
+    <div
+      ngbDropdownMenu
+      class="bb-layout__horizontal-nav-submenu"
+      role="region"
+      tabindex="-1"
+      aria-labelledby="bb-menu-header-button-5"
+    >
+      <button class="bb-layout__horizontal-nav-submenu-header" (click)="moreDropdown.close()">
+        <bb-icon-ui class="bb-layout__horizontal-nav-submenu--close" name="angle-left" size="lg"></bb-icon-ui>
+        <div class="bb-layout__horizontal-nav-submenu--text" i18n="@@main.menu.nav.submenu.text">Main Menu</div>
+      </button>
+      <ul class="bb-layout__horizontal-nav-column">
+        <li *bbIfEntitlements="permissions.canViewBudgets">
+          <a
+            class="bb-layout__horizontal-nav-submenu-link"
+            ngbDropdownItem
+            routerLinkActive="bb-layout__horizontal-nav-submenu-link--active"
+            routerLink="/more/budgets"
+            #budgetsRouterLink="routerLinkActive"
+            [attr.aria-current]="budgetsRouterLink.isActive ? 'page' : undefined"
+          >
+            <div class="bb-layout__horizontal-nav-submenu-item-label">
+              <div class="bb-layout__horizontal-nav-submenu-title" i18n="@@budgets.nav.submenu.title">Budgets</div>
+            </div>
+          </a>
+        </li>
+
+        <li *bbIfEntitlements="permissions.canViewMessages">
+          <a
+            class="bb-layout__horizontal-nav-submenu-link"
+            ngbDropdownItem
+            routerLinkActive="bb-layout__horizontal-nav-submenu-link--active"
+            routerLink="/more/messages"
+            #messagesRouterLink="routerLinkActive"
+            [attr.aria-current]="messagesRouterLink.isActive ? 'page' : undefined"
+          >
+            <div class="bb-layout__horizontal-nav-submenu-item-label">
+              <div class="bb-layout__horizontal-nav-submenu-title" i18n="@@messages.nav.submenu.title">Messages</div>
+            </div>
+          </a>
+        </li>
+
+        <li *bbIfEntitlements="permissions.canViewSelfServiceAlone">
+          <!-- *bbIfEntitlements="permissions.canViewSelfServiceAlone"  -->
+          <a
+            class="bb-layout__horizontal-nav-submenu-link"
+            ngbDropdownItem
+            routerLinkActive="bb-layout__horizontal-nav-submenu-link--active"
+            routerLink="/more/find-us"
+            #findBranchesAndATMsRouterLink="routerLinkActive"
+            [attr.aria-current]="findBranchesAndATMsRouterLink.isActive ? 'page' : undefined"
+          >
+            <div class="bb-layout__horizontal-nav-submenu-item-label">
+              <div class="bb-layout__horizontal-nav-submenu-title" i18n="@@find-us.submenu.title">Find Us</div>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </li>
+</ul>
+
+<!-- class="bb-layout__horizontal-nav-link"
+            ngbDropdownItem
+            routerLinkActive="bb-layout__horizontal-nav-link--active" -->

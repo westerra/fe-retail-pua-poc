@@ -1,0 +1,8 @@
+<bb-retail-layout [displayNotificationSettingsButton]="displayNotificationSettingsButton$ | async">
+  <bb-navigation-menu></bb-navigation-menu>
+  <ng-container *bbIfEntitlements="permissions.canViewRealTimeCommunicationChat">
+    <bb-rtc-chat-button></bb-rtc-chat-button>
+    <bb-retail-chat-conversation></bb-retail-chat-conversation>
+  </ng-container>
+  <router-outlet></router-outlet>
+</bb-retail-layout>

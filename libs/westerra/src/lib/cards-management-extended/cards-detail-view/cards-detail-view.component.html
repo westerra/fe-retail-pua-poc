@@ -1,0 +1,21 @@
+<div class="heading-widget bb-heading-widget" [ngClass]=" configService.deElevatedHeader
+    ? 'bb-heading-widget bb-heading-widget--de-elevated'  : 'bb-cards-management-journey__heading'">
+    <bb-header-ui headingType="h1" headingClasses="bb-heading-widget__heading" heading="Cards Details"
+        i18n-heading="Card Details heading@@cards-management-journey.cards-details.heading.title"></bb-header-ui>
+    <button (click)="onNavigateBack()" class="bb-heading-widget__button btn btn-link"> 
+        <i aria-hidden="true" class="bb-icon bb-icon-keyboard-backspace"></i> 
+        <span i18n="Back to manage cards content@@cards-management-journey.cards-details.button.back"> Back to Manage cards </span>
+    </button>
+</div>
+
+<div *ngIf="configService.deElevatedHeader; else cardDetailsView" class="container--drag-up container-fluid">
+    <div class="bb-card bb-card--lg">
+        <div class="bb-card__body"> <ng-container [ngTemplateOutlet]="cardDetailsView"></ng-container>
+        </div>
+    </div>
+</div>
+
+<ng-template #cardDetailsView>
+    <bb-card-details [cardPinLength]="configService.cardPinLength" [notificationTtl]="configService.notificationTtl">
+    </bb-card-details>
+</ng-template>

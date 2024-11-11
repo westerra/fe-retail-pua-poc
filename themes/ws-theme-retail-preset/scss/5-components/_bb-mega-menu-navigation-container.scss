@@ -1,0 +1,49 @@
+.bb-layout.bb-layout--high-resolution-view .bb-layout__horizontal-nav .bb-layout__horizontal-nav-item .bb-layout__horizontal-nav-submenu {
+    background-color: #fdfdfd;
+    // background-color: #101820;
+    --base-font-family: CircularXXSub, "Helvetica Neue", Helvetica, -apple-system, system-ui, "system-ui", sans-serif,
+        -apple-system, system-ui, BlinkMacSystemFont, sans-serif;
+
+    li>a {
+
+        color: #101820;
+        // color: #fdfdfd;
+        font-family: var(--base-font-family);
+        font-size: 1.0rem;
+        line-height: 150%;
+        font-weight: var(--font-weight--regular);
+
+        &:hover {
+            background-color: #e0e0e0;
+            // background-color: rgba(255, 255, 255, 0.25);
+        }
+
+        &:focus {
+            color: #101820;
+            background-color: rgba(255, 255, 255, 0.85);
+        }
+    }
+
+}
+
+.bb-mega-menu__link,
+.bb-mega-menu__link:hover,
+.bb-mega-menu__link:focus,
+.bb-mega-menu__submenu-header,
+.bb-mega-menu__submenu-header:hover,
+.bb-mega-menu__submenu-header:focus,
+.bb-mega-menu__submenu-link,
+.bb-mega-menu__submenu-link:hover,
+.bb-mega-menu__submenu-link {
+    &:focus {
+        outline: #EB0505 auto 1px !important;
+        border: 1px solid #EB0505
+    }
+}
+
+.bb-layout.bb-layout--high-resolution-view .bb-layout__horizontal-nav .bb-layout__horizontal-nav-link {
+    &:focus {
+        border: 1px solid #EB0505;
+        outline: #EB0505 auto 1px !important;
+    }
+}

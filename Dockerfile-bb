@@ -1,0 +1,47 @@
+FROM nginx:latest
+
+ARG API_ROOT
+ARG AUTH_URL
+ARG AUTH_REDIRECT_PAGE
+ARG AUTH_REALM
+ARG AUTH_LANDING_PAGE
+
+ENV API_ROOT=${API_ROOT}
+ENV AUTH_URL=${AUTH_URL}
+ENV AUTH_REDIRECT_PAGE=${AUTH_REDIRECT_PAGE}
+ENV AUTH_REALM=${AUTH_REALM}
+ENV AUTH_LANDING_PAGE=${AUTH_LANDING_PAGE}
+ENV BASE_HREF=/retail-app/
+
+WORKDIR /app
+
+COPY ./nginx-config/default.conf /etc/nginx/conf.d/
+COPY ./nginx-config/nginx.conf /etc/nginx/
+
+COPY ./dist/apps/retail-usa/ /usr/share/nginx/html/retail-app/
+
+RUN chown -R nginx:nginx /app && chmod -R 755 /app && \
+        chown -R nginx:nginx /var/cache/nginx && \
+        chown -R nginx:nginx /var/log/nginx && \
+        chown -R nginx:nginx /etc/nginx/conf.d
+
+RUN touch /var/run/nginx.pid && mkdir -p /var/lib/nginx/tmp/client_body && \
+    chown -R nginx:nginx /var/run/nginx.pid
+
+RUN chown -R nginx:nginx /var/run /var/log
+
+RUN chmod -R 777 /app /var /usr /etc/nginx
+
+# Change ownership and permissions of necessary directories
+RUN chown -R nginx:nginx /var /app /usr /etc/nginx
+RUN chmod -R 777 /var/lib/nginx/tmp/client_body /var/run/nginx.pid /var/run
+
+
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+USER nginx
+
+EXPOSE 8080
+
+ENTRYPOINT ["/entrypoint.sh"]

@@ -1,0 +1,10 @@
+<bb-identification-view
+  (next)="onFormSubmit($event)"
+  (navigateToLogin)="onNavigateToLogin()"
+  [attempts]="identificationAttempts"
+  [errorStatus]="(userService.errorStatus$ | async)!"
+  [isAutoEnrollment]="isAutoEnrollment"
+  [userData]="userData"
+  [duplicatedMessage]="duplicatedMessage"
+>
+</bb-identification-view>

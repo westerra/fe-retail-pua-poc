@@ -1,0 +1,19 @@
+<bb-header-ui
+  heading="Manage Notifications"
+  i18n-heading="Actions retail notifications preferences heading@@actions-retail-notifications.preferences.heading"
+  customClassName="px-0"
+  headingType="h1"
+></bb-header-ui
+><bb-header-ui
+  heading="Select your account"
+  i18n-heading="
+    Actions retail notifications preferences subheading@@actions-retail-notifications.preferences.subheading"
+  customClassName="px-0"
+  headingType="h2"
+></bb-header-ui>
+<div>
+  <!-- <bb-product-summary-list-widget (selectedAccount)="onAccountSelect($event)"></bb-product-summary-list-widget> -->
+  <bb-product-summary-list-widget-custom
+    (selectedAccount)="onAccountSelect($event)"
+  ></bb-product-summary-list-widget-custom>
+</div>

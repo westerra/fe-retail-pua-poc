@@ -1,0 +1,23 @@
+<ng-container *ngFor="let productKind of productKinds">
+  <ng-container *ngIf="showOverdueAccounts && productKind.id === 'overdueAccounts'; else productKindTemplate">
+    <bb-product-needs-attention-ui
+      *ngIf="productKind.products?.length"
+      [attr.data-role]="productKind.id"
+      [(isExpanded)]="isProductKindExpanded[productKind.name || '']"
+      [showIcons]="showIcons"
+      [productKind]="$any(productKind)"
+      (selectProduct)="selectAccount.emit($event)"
+      (payNowClick)="payNow.emit($event)"
+    ></bb-product-needs-attention-ui>
+  </ng-container>
+  <ng-template #productKindTemplate>
+    <bb-product-kind-collapsible-ui-extended
+      *ngIf="productKind.products?.length"
+      [attr.data-role]="productKind.id"
+      [(isExpanded)]="isProductKindExpanded[productKind.name || '']"
+      [showIcons]="showIcons"
+      [productKind]="$any(productKind)"
+      (selectProduct)="selectAccount.emit($event)"
+    ></bb-product-kind-collapsible-ui-extended>
+  </ng-template>
+</ng-container>

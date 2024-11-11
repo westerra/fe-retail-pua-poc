@@ -1,0 +1,11 @@
+<bb-transactions-detail-modal-extended
+  *ngIf="currentTransaction | async as transaction"
+  [isDetailsOpen]="isDetailsOpen"
+  [transaction]="transaction"
+  [showChangeCategory]="config.showChangeCategory"
+  [checkImagesList]="checkImagesList"
+  [transactionDetailsLoadingStatus]="transactionDetailsLoadingStatus"
+  [inquireAndDisputeTopics]="inquireAndDisputeTopics"
+  [account]="accountDetailsService.details$"
+  (close)="closeDialog()"
+></bb-transactions-detail-modal-extended>

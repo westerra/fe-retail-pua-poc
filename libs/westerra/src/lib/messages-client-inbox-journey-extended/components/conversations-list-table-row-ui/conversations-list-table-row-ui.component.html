@@ -1,0 +1,179 @@
+<td (click)="$event.stopPropagation()" data-role="checkbox-cell">
+  <bb-input-checkbox-ui
+    aria-label="Checkbox to select conversation"
+    i18n-aria-label="
+      Checkbox to select conversation@@messages.messagesConversationsList.messagesTable.selectConversationCheckbox"
+    ngModel
+    [name]="conversation?.id"
+  ></bb-input-checkbox-ui>
+  <span
+    class="sr-only"
+    i18n="Conversation details@@messages.messagesConversationsList.messagesTable.conversation-details"
+  >
+    Click to open conversation thread, conversation details:
+  </span>
+</td>
+<td data-role="important-cell">
+  <div class="bb-stack">
+    <bb-icon-ui
+      class="bb-stack__item--push-right"
+      bbTooltip="High priority"
+      i18n-bbTooltip="High priority@@messages.messagesConversationsList.messagesTable.highPriorityMessage"
+      container="body"
+      triggers="hover"
+      placement="bottom"
+      *ngIf="$any(conversation)?.important"
+      name="error"
+      color="danger"
+      aria-label="High priority"
+      i18n-aria-label="@@messages.messagesConversationsList.messagesTable.highPriorityMessage"
+    ></bb-icon-ui>
+  </div>
+</td>
+<td *ngIf="!isDraftView" data-role="from-cell">
+  <span class="sr-only" i18n="Messages from@@messages.messagesConversationsList.messagesTable.messagesFrom">,From</span>
+  <ng-container [ngSwitch]="conversation?.sender?.id">
+    <span *ngSwitchCase="'customer.service'">{{ customerServiceTitle$ | async }}</span>
+    <span *ngSwitchDefault>{{ conversation?.sender?.name }}</span>
+  </ng-container>
+  <ng-container *ngIf="conversation?.hasDraft">
+    <span *ngIf="conversation?.sender?.id">, </span>
+    <span
+      aria-hidden="true"
+      class="text-danger"
+      i18n="Draft@@messages.messagesConversationsList.messagesTable.draftText"
+      >Draft</span
+    >
+    <span class="sr-only" i18n="Contains draft@@messages.messagesConversationsList.messagesTable.containsDraft"
+      >Contains draft</span
+    >
+  </ng-container>
+</td>
+<td data-role="has-attachments-cell">
+  <div class="bb-stack">
+    <bb-icon-ui
+      *ngIf="conversation?.hasAttachments"
+      bbTooltip="Contains attachments"
+      container="body"
+      i18n-bbTooltip="
+        Contains attachments|Contains file
+        attachments@@messages.messagesConversationsList.messagesTable.containsFileAttachments"
+      triggers="hover"
+      placement="bottom"
+      class="bb-stack__item--push-right bb-text-support"
+      name="attachment"
+      aria-label="Contains attachments,"
+      i18n-aria-label="@@messages.messagesConversationsList.messagesTable.containsFileAttachments"
+    ></bb-icon-ui>
+  </div>
+</td>
+<td>
+  <ng-container *ngIf="conversation?.subject; else noSubject">
+    <span class="sr-only" i18n="Subject@@messages.messagesConversationsList.messagesTable.subject">,Subject</span>
+    <span class="break-word" [innerHTML]="conversation?.subject"></span>
+  </ng-container>
+</td>
+<td data-role="topic-cell">
+  <span class="sr-only" i18n="Topic@@messages.messagesConversationsList.messagesTable.topic">,Topic</span>
+  <div class="bb-stack" *ngIf="conversation?.topic && conversation?.topic?.name; else noTopic">
+    <bb-badge-ui
+      class="bb-stack__item"
+      [text]="conversation?.topic?.name"
+      [color]="conversation?.topic?.deleted ? 'secondary' : 'primary'"
+      [breakWord]="true"
+    ></bb-badge-ui>
+    <bb-icon-ui
+      *ngIf="conversation?.topic?.deleted"
+      name="warning"
+      color="warning"
+      i18n-bbTooltip="
+        This topic no longer exists. Contact support for
+        details.@@messages.messagesConversationsList.messagesTable.deletedTopic"
+      bbTooltip="This topic no longer exists. Contact support for details"
+      aria-label="This topic no longer exists. Contact support for details,"
+      i18n-aria-label="@@messages.messagesConversationsList.messagesTable.deletedTopic"
+      container="body"
+      triggers="hover"
+      placement="bottom"
+    ></bb-icon-ui>
+  </div>
+</td>
+<td data-role="date-cell">
+  <span class="sr-only" i18n="Date@@messages.messagesConversationsList.messagesTable.date">,Date</span>
+  <span aria-hidden="true">{{ conversation?.timestamp | date: 'shortDate' }}</span>
+  <span class="sr-only">{{ conversation?.timestamp | date: 'mediumDate' }}</span>
+</td>
+
+<td data-role="dropdown-cell" tabindex="-1">
+  <span
+    class="sr-only"
+    i18n="Dropdown menu|Dropdown menu button tooltip@@messages.messagesConversationsList.messagesTable.dropdownMenu"
+    >Dropdown menu</span
+  >
+  <span
+    bbTooltip="Dropdown menu"
+    container="body"
+    tabindex="-1"
+    i18n-bbTooltip="@@messages.messagesConversationsList.messagesTable.dropdownMenu"
+    triggers="hover focus"
+    class="bb-d-inline-block"
+    placement="top {{ isRtl ? 'left' : 'right' }}"
+  >
+    <bb-dropdown-menu-ui
+      icon="ellipsis-h"
+      btnColor="link"
+      iconColor="dark"
+      tabindex="-1"
+      buttonSize="sm"
+      iconSize="md"
+      btnCircle="true"
+      [btnCircle]="true"
+      [dropDownButtonLabel]="'Dropdown menu for ' + conversation?.subject"
+      position="bottom-{{ isRtl ? 'left' : 'right' }}"
+      i18n-dropDownButtonLabel="
+        Dropdown menu aria-label@@messages.messagesConversationsList.messagesTable.dropdownMenuAriaLabel"
+    >
+      <ng-template bbDropdownMenuItem>
+        <a
+          role="menuitem"
+          data-role="mark-as-read-unread"
+          class="dropdown-item"
+          *ngIf="!isDraftView"
+          (bbKeyboardClick)="toggleRead()"
+        >
+          <ng-container
+            i18n="
+              Mark as Read or Unread|Item text in dropdown
+              menu@@messages.messagesConversationsList.messagesTable.markAsReadDropdownItem"
+          >
+            {conversation?.read + '', select, true {Mark as unread} false {Mark as read}}
+          </ng-container>
+        </a>
+        <a
+          role="menuitem"
+          data-role="delete"
+          class="dropdown-item"
+          *ngIf="conversation?.deletable || isDraftView"
+          (bbKeyboardClick)="emitRemove()"
+        >
+          <ng-container
+            i18n="
+              Delete|Item text in dropdown menu@@messages.messagesConversationsList.messagesTable.deleteDropdownItem"
+            >Delete
+          </ng-container>
+        </a>
+      </ng-template>
+    </bb-dropdown-menu-ui>
+  </span>
+</td>
+
+<ng-template #noSubject>
+  <span class="bb-text-support" i18n="No subject@@messages.messagesConversationsList.messagesTable.subjectEmptyState"
+    >No subject</span
+  ></ng-template
+>
+<ng-template #noTopic>
+  <span class="bb-text-support" i18n="No subject@@messages.messagesConversationsList.messagesTable.topicEmptyState"
+    >No topic</span
+  ></ng-template
+>

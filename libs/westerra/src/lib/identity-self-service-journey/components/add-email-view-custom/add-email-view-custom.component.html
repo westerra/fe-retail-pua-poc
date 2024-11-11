@@ -1,0 +1,58 @@
+<div data-role="user-manage-profile-email-add-container">
+  <bb-identity-back-button
+    page="Back to Personal information"
+    i18n-page="
+      Page description for personal information back
+      button@@bb-user-profile-features.add-email-view.back-button-text.back-link"
+    (backClick)="cancelAddEditAttribute()"
+  >
+  </bb-identity-back-button>
+  <div class="bb-block bb-block--lg">
+    <bb-header-ui
+      headingType="h1"
+      data-role="user-profile-add-email-heading"
+      heading="Add an email address"
+      i18n-heading="Header for add email@@bb-user-profile-features.add-email-view.header-text.add-email"
+    >
+    </bb-header-ui>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <bb-identity-email-record-form-custom
+        [emailTypeOptions]="configService.emailAddressTypes"
+        [emailAddressIsPrimaryEnabled]="configService.emailAddressIsPrimaryEditable"
+        [emailAddressSelectTypeEnabled]="configService.emailAddressIsTypeEditable"
+        [saveLoading]="(isSaveLoadingSubject$ | async) || false"
+        (saveClick)="addEmailAddress($event)"
+        (cancelClick)="cancelAddEditAttribute()"
+        (formHasChanges)="setFormHasChanges($event)"
+      >
+      </bb-identity-email-record-form-custom>
+    </div>
+  </div>
+</div>
+<bb-identity-discard-modal-component
+  [modalOpen]="modalOpen"
+  (cancelModalClick)="cancelModal()"
+  (discardChangesClick)="discardChanges()"
+></bb-identity-discard-modal-component
+><ng-template #notificationSuccessHeader>
+  <span
+    class="bb-text-bold"
+    data-role="user-manage-profile-email-add-success-notification"
+    i18n="
+      Add email save success notification
+      header@@bb-user-profile-features.add-email-view.notification-text.success-email"
+  >
+    Email added successfully
+  </span></ng-template
+><ng-template #notificationFailure>
+  <span
+    data-role="user-profile-add-email-error-notification"
+    i18n="
+      An unexpected error occurred
+      notification@@bb-user-profile-features.add-email-view.notification-text.unexpected-error-email"
+  >
+    An unexpected error occurred
+  </span></ng-template
+>

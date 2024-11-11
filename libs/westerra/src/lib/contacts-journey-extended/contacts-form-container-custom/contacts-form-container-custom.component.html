@@ -1,0 +1,84 @@
+<ng-container *ngIf="detailsState$ | async as detailsState; else loadingTemplate">
+  <div class="bb-block bb-block--xl mt-3">
+    <bb-contact-header
+      [name]="detailsState.formValue.name"
+      (edit)="onEdit(detailsState.id, detailsState.accountIdentifierType)"
+      (delete)="promptDelete()"
+    >
+    </bb-contact-header>
+    <hr />
+  </div>
+  <div class="bb-block bb-block--xl">
+    <bb-contact-form-custom
+      [value]="detailsState.formValue"
+      [type]="detailsState.accountIdentifierType"
+      (save)="onSave(detailsState.id, $event, detailsState.accountIdentifierType)"
+      (back)="back(detailsState.id)"
+      (cancel)="cancelEdit(detailsState.id)"
+    >
+    </bb-contact-form-custom>
+  </div>
+  <bb-contact-delete-dialog
+    [isOpen]="isDeleteConfirmOpened"
+    [name]="detailsState.formValue.name"
+    (confirm)="deleteContactsItem(detailsState.id)"
+    (cancel)="onCancelDelete()"
+  >
+  </bb-contact-delete-dialog></ng-container
+><bb-confirm-action-dialog
+  [isOpen]="isDiscardConfirmOpened"
+  [confirmButtonColor]="'danger'"
+  (confirm)="onConfirmDiscard()"
+  (cancel)="onCancelDiscard()"
+>
+  <span title i18n="@contact-manager-form-container.header.discardChanges">Discard Changes</span>
+  <span body i18n="@@contact-manager-form-container.discardChangesConfirmation">
+    Are you sure you want to discard your changes? This action cannot be undone.
+  </span>
+  <span cancelButtonLabel i18n="@@contact-manager-form-container.button.cancel">Cancel</span>
+  <span confirmButtonLabel i18n="@@contact-manager-form-container.button.discard"
+    >Discard</span
+  ></bb-confirm-action-dialog
+><ng-template #loadingTemplate>
+  <div class="bb-state-container">
+    <bb-loading-indicator-ui
+      i18n-text="@@contact-manager-form-container.loading.label"
+      text="Loading..."
+    ></bb-loading-indicator-ui></div></ng-template
+><!-- TODO Remove templates on next breaking change --><ng-template #notificationCreateSuccess>
+  <span
+    i18n="@@contact-manager-form-container.notification-create.success"
+    data-role="successfully-saved-contact"
+    role="alert"
+    aria-atomic="true"
+  >
+    Successfully saved Contact
+  </span></ng-template
+><ng-template #notificationCreateError>
+  <span
+    i18n="@@contact-manager-form-container.notification-create.error"
+    data-role="failed-to-save-contact"
+    role="alert"
+    aria-atomic="true"
+  >
+    Error saving Contact
+  </span></ng-template
+><ng-template #notificationEditSuccess>
+  <span
+    i18n="@@contact-manager-form-container.notification-edit.success"
+    data-role="successfully-saved-contact"
+    role="alert"
+    aria-atomic="true"
+  >
+    Successfully saved Contact
+  </span></ng-template
+><ng-template #notificationEditError>
+  <span
+    i18n="@@contact-manager-form-container.notification-edit.error"
+    data-role="failed-to-save-contact"
+    role="alert"
+    aria-atomic="true"
+  >
+    Error saving Contact
+  </span></ng-template
+>

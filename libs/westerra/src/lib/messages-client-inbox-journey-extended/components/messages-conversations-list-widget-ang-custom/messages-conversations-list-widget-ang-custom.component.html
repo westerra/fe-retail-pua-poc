@@ -1,0 +1,128 @@
+<div class="bb-messages-conversations-list__container card card-lg">
+  <ng-container *ngIf="(conversations | async)?.data; else loadingState">
+    <ng-container *ngIf="!errorResponse; else errorState">
+      <ng-container *ngIf="(conversations | async)?.data.length; else emptyState">
+        <ng-container
+          *ngIf="{ mailboxTypeValue: mailboxType | async, conversationsValue: conversations | async } as data"
+        >
+          <bb-conversations-list-table-ui-custom
+            [conversations]="(conversations | async)?.data"
+            [reset]="resetSelection"
+            [mailboxType]="data.mailboxTypeValue"
+            [customerServiceTitle$]="customerServiceTitle"
+            (remove)="removeConversations($event)"
+            (read)="markAsReadUnread($event)"
+            (select)="data.mailboxTypeValue === mailboxTypeEnum.drafts ? openDraft($event) : openConversation($event)"
+            (update)="updateConversations()"
+          ></bb-conversations-list-table-ui-custom>
+          <div class="p-3 text-center">
+            <bb-load-button-ui
+              [from]="from.value.from"
+              [isLoading]="isLoading"
+              [size]="itemsPerPage | async"
+              [totalCount]="data.conversationsValue.totalCount"
+              (paramChange)="setLoadingParams($event)"
+              data-role="load-more-button"
+              i18n="Load more button name@@messages.messagesConversationsList.loadMoreButton"
+              >Load more
+            </bb-load-button-ui>
+          </div>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</div>
+<ng-template #emptyState>
+  <div class="bb-state-container">
+    <ng-container [ngSwitch]="mailboxType | async">
+      <ng-container *ngSwitchCase="mailboxTypeEnum.drafts">
+        <bb-empty-state-ui
+          i18n-title="Empty state title@@messages.messagesConversationsList.draftsEmptyStateTitle"
+          title="No Drafts"
+          i18n-subtitle="Empty state subtitle@@messages.messagesConversationsList.draftsEmptyStateSubTitle"
+          subtitle="You don't have any drafts to be displayed."
+          iconModifier="email"
+          iconColor="muted"
+        >
+        </bb-empty-state-ui>
+      </ng-container>
+      <ng-container *ngSwitchCase="mailboxTypeEnum.outbox">
+        <bb-empty-state-ui
+          i18n-title="Empty state title@@messages.messagesConversationsList.emptyStateTitle"
+          title="No Sent Messages"
+          i18n-subtitle="Empty state subtitle@@messages.messagesConversationsList.emptyStateSubtitle"
+          subtitle="You don't have any sent messages to be displayed."
+          iconModifier="email"
+          iconColor="muted"
+        >
+        </bb-empty-state-ui>
+      </ng-container>
+      <ng-container *ngSwitchDefault>
+        <bb-empty-state-ui
+          i18n-title="Empty state title@@messages.messagesConversationsList.simpleEmptyStateTitle"
+          title="No Conversations"
+          i18n-subtitle="Empty state subtitle@@messages.messagesConversationsList.simpleEmptyStateSubTitle"
+          subtitle="You don't have any conversations to be displayed."
+          iconModifier="email"
+          iconColor="muted"
+        >
+        </bb-empty-state-ui>
+      </ng-container>
+    </ng-container>
+  </div>
+</ng-template>
+<ng-template #errorState>
+  <!-- {{errorResponse | json}} -->
+  <bb-messages-request-error [error]="errorResponse"></bb-messages-request-error>
+</ng-template>
+<ng-template #loadingState>
+  <bb-loading-indicator-ui class="py-4" loaderSize="md"></bb-loading-indicator-ui>
+</ng-template>
+<ng-template #messageDeleteSuccess>
+  <span
+    i18n="
+      Your conversation has been deleted successfully.|Text of successful conversation
+      deletion@@messages.messagesConversationList.messageSuccessDelete"
+    >Your conversation has been deleted successfully.</span
+  ></ng-template
+>
+<ng-template #messageDeleteSuccessMultiple>
+  <span
+    i18n="
+      Your conversations have been deleted successfully.|Text of successful conversations
+      deletion@@messages.messagesConversationList.messageDeleteSuccessMultipleDelete"
+    >Your conversations have been deleted successfully.</span
+  ></ng-template
+>
+<ng-template #messageDeleteFail>
+  <span
+    i18n="
+      This message cannot be deleted.|Text of failed message
+      deletion@@messages.messagesConversationList.messageDeleteFailDelete"
+    >This message cannot be deleted.</span
+  ></ng-template
+>
+<ng-template #messageDeleteFailMultiple>
+  <span
+    i18n="
+      These messages cannot be deleted.|Text of failed messages
+      deletion@@messages.messagesConversationList.messageDeleteFailMultipleDelete"
+    >These messages cannot be deleted.</span
+  ></ng-template
+>
+<ng-template #draftDeleteSuccess>
+  <span
+    i18n="
+      Your draft has been deleted successfully.|Text of successful draft
+      deletion@@messages.messagesConversationList.draftSuccessDelete"
+    >Your draft has been deleted successfully.</span
+  ></ng-template
+>
+<ng-template #draftDeleteSuccessMultiple>
+  <span
+    i18n="
+      Your draft have been deleted successfully.|Text of successful draft
+      deletion@@messages.messagesConversationList.draftDeleteSuccessMultipleDelete"
+    >Your drafts have been deleted successfully.</span
+  ></ng-template
+>

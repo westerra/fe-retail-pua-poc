@@ -1,0 +1,318 @@
+<bb-enrollment-header [userData]="userData" [isAutoEnrollment]="isAutoEnrollment"></bb-enrollment-header>
+<bb-enrollment-progress-indicator [steps]="progressSteps"></bb-enrollment-progress-indicator>
+
+<div class="card card-lg bb-block bb-block--lg">
+  <div class="card-body">
+    <div class="card-title bb-block bb-block--lg" id="identification-title">
+      <h2>{{ isAutoEnrollment && !isAutoIdentification ? 'Verify ' : '' }} Personal Information</h2>
+    </div>
+
+    <bb-alert-ui
+      data-role="could-not-identify-error-message"
+      *ngIf="isNotIdentified && badData && !isIdentifying"
+      modifier="error"
+      title="Unfortunately we could not verify your information"
+      i18n-title="
+        We could not identify you|Title of an error message that appears in case user's identification has
+        failed@@self.enrollment.identification.error.invalid.title"
+      i18n="
+        The data does not match your profile data|Explanation on why the identification process has
+        failed@@self.enrollment.identification.error.invalid.text"
+    >
+      The data you entered does not match your profile data. Please try again.
+    </bb-alert-ui>
+    <bb-alert-ui
+      data-role="not-invited-error-message"
+      *ngIf="isNotIdentified && notInvited && !isIdentifying"
+      modifier="error"
+      title="Your account has not yet been upgraded to our new Digital Banking."
+    >
+      Please continue to log in <a [style]="errorLinkStyling" href="https://westerraonline.westerracu.com">here</a>. For
+      more information on the upgrade process, visit our
+      <a [style]="errorLinkStyling" href="https://www.westerracu.com/digitalbanking">Digital Banking FAQs</a>.
+    </bb-alert-ui>
+    <bb-alert-ui
+      data-role="duplicate-user-error-message"
+      *ngIf="isNotIdentified && duplicateUser && !isIdentifying"
+      modifier="error"
+      title="Unfortunately we could not enroll you at this time."
+    >
+      A member with this information has already enrolled.
+    </bb-alert-ui>
+    <bb-alert-ui
+      data-role="general-error-message"
+      *ngIf="isNotIdentified && errorMsg === null && !isIdentifying"
+      modifier="error"
+      title="Unfortunately we could not enroll you at this time. Please contact us at 303-321-4209 for assistance with enrollment."
+    >
+    </bb-alert-ui>
+    <bb-alert-ui
+      data-role="general-error-message"
+      *ngIf="
+        isNotIdentified &&
+        !isLockedOut &&
+        !badData &&
+        !notInvited &&
+        !duplicateUser &&
+        !isIdentifying &&
+        errorMsg !== null
+      "
+      modifier="error"
+      title="Unfortunately we could not enroll you at this time. Please contact us at 303-321-4209 for assistance with enrollment."
+    >
+    </bb-alert-ui>
+    <bb-alert-ui
+      data-role="locked-out-error-message"
+      *ngIf="isLockedOut"
+      modifier="error"
+      title="Unfortunately you are locked out"
+      i18n-title="
+        You are locked out|Title of an error message that appears in case users gets locked out during
+        identification@@self.enrollment.identification.error.lock.title"
+      i18n="
+        You have exceeded allowed number of attempts|Explanation on why is the user being locked out from identification
+        process@@self.enrollment.identification.error.lock.text"
+    >
+      You have exceeded the allowed number of attempts. Please contact us at 303-321-4209 for further assistance.
+    </bb-alert-ui>
+    <bb-alert-ui
+      data-role="identify-system-error-message"
+      *ngIf="isSystemErrorOccurred"
+      modifier="error"
+      title="Unexpected error"
+      i18n-title="
+        Unexpected error|Title of an error message that appears in case when system is unable to process identification
+        data@@self.enrollment.identification.error.system.title"
+      i18n="
+        Please try again later|Content of an error message that appears in case when system is unable to process
+        identification data@@self.enrollment.identification.error.system.text"
+    >
+      Something has gone wrong with our server. Please try again later.
+    </bb-alert-ui>
+
+    <bb-alert-ui data-role="locked-out-info-message" *ngIf="isLockedOut" modifier="info">
+      <!-- [title]="hostRef.lockedOutTitle" -->
+      {{ hostRef.lockedOutMessage }}
+    </bb-alert-ui>
+
+    <div class="bb-stack bb-stack--wrap no-gutters">
+      <div class="bb-stack__item bb-stack__item--align-top col-12 col-lg-6">
+        <bb-icon-ui
+          name="verified-user"
+          color="success"
+          size="xxl"
+          class="bb-stack__item bb-stack__item--align-top"
+          ng-reflect-name="verified-user"
+          ng-reflect-color="success"
+          ng-reflect-size="xxl"
+          ><i
+            role="img"
+            class="bb-icon bb-icon-verified-user bb-icon--xxl bb-icon--success"
+            ng-reflect-ng-class="bb-icon-verified-user,bb-icon-"
+            aria-hidden="true"
+          ></i
+        ></bb-icon-ui>
+
+        <div class="bb-stack__break bb-stack__break--spacing-sm bb-stack__break--md-up"></div>
+
+        <p class="instructional-text bb-stack__item bb-stack__item--fill bb-text-support">
+          This information will only be used to validate your account and won't be shared with any external data
+          services.
+        </p>
+      </div>
+
+      <div class="bb-stack__break bb-stack__break--sm-down"></div>
+
+      <div class="bb-stack__item bb-stack__item--fill">
+        <ng-container *ngIf="!isAutoEnrollment; else autoEnrollmentForm">
+          <form [formGroup]="personalInfoForm" autocomplete="off">
+            <div class="form-group">
+              <label for="member-format">Member Number</label>
+              <small class="member-format-detail"> (this is 10 digits or less)</small>
+              <bb-input-text-ui
+                id="member-format"
+                formControlName="entityId"
+                [maxLength]="10"
+                i18n-label="
+                  Member number|Label for Member number input field in identification
+                  form@@self.enrollment.identification.form.entityId"
+                data-role="unique-id-input"
+                [readonly]="isLockedOut || isIdentifying"
+              >
+              </bb-input-text-ui>
+
+              <bb-input-validation-message-ui [showErrors]="!isFieldValid('entityId')">
+                <span
+                  *ngIf="hasRequiredError('entityId')"
+                  data-role="last-name-validation-msg"
+                  i18n="
+                    Required field|Error message stating that identification form field is
+                    required@@self.enrollment.identification.form.error.required"
+                >
+                  Required field
+                </span>
+                <span *ngIf="hasPatternError('entityId')"> Only numbers are allowed. </span>
+                <span *ngIf="hasLengthError('entityId')"> Please enter at least 3 digits. </span>
+              </bb-input-validation-message-ui>
+            </div>
+
+            <div class="form-group">
+              <bb-input-password-ui
+                label="Social Security Number"
+                formControlName="ssn"
+                [maxLength]="9"
+                [showVisibilityControl]="true"
+                visibilityControlLabel="Toggle password visibility"
+                i18n-visibilityControlLabel="
+                  Toggle password visibility|Aria label for password visibility toggle
+                  button@@self.enrollment.identification.form.ssn.toggle.ariaLabel"
+                i18n-label="
+                  Social security number|Label for Social security number input field in identification
+                  form@@self.enrollment.identification.form.ssn"
+                data-role="identifying-id-input"
+                [readonly]="isLockedOut || isIdentifying"
+              >
+              </bb-input-password-ui>
+              <bb-input-validation-message-ui [showErrors]="!isFieldValid('ssn')">
+                <span
+                  *ngIf="hasRequiredError('ssn')"
+                  data-role="last-name-validation-msg"
+                  i18n="
+                    Required field|Error message stating that identification form field is
+                    required@@self.enrollment.identification.form.error.required"
+                >
+                  Required field
+                </span>
+                <span *ngIf="hasPatternError('ssn')"> Only numbers are allowed. </span>
+                <span *ngIf="hasLengthError('ssn')"> Please enter at least 9 digits. </span>
+              </bb-input-validation-message-ui>
+            </div>
+
+            <div class="form-group">
+              <label>Date of Birth</label>
+              <div class="d-flex">
+                <bb-dropdown-single-select-ui
+                  placeholder="Month"
+                  formControlName="month"
+                  displayAttributePath="label"
+                  [options]="dobOptions.month"
+                  class="mr-1"
+                >
+                </bb-dropdown-single-select-ui>
+                <bb-dropdown-single-select-ui
+                  placeholder="Day"
+                  formControlName="day"
+                  [disabled]="!personalInfoForm.value.month"
+                  [options]="dayArray"
+                  class="mx-1"
+                >
+                </bb-dropdown-single-select-ui>
+                <bb-dropdown-single-select-ui
+                  placeholder="Year"
+                  formControlName="year"
+                  [options]="yearArray"
+                  class="ml-1"
+                >
+                </bb-dropdown-single-select-ui>
+              </div>
+            </div>
+          </form>
+        </ng-container>
+        <ng-template #autoEnrollmentForm>
+          <ng-container *ngIf="isAutoIdentification; else autoVerification">
+            <form [formGroup]="autoPersonalInfoForm" autocomplete="off">
+              <div class="form-group">
+                <bb-input-password-ui
+                  label="Social Security Number"
+                  formControlName="ssn"
+                  [maxLength]="9"
+                  [showVisibilityControl]="true"
+                  visibilityControlLabel="Toggle password visibility"
+                  i18n-visibilityControlLabel="
+                    Toggle password visibility|Aria label for password visibility toggle
+                    button@@self.enrollment.identification.form.ssn.toggle.ariaLabel"
+                  i18n-label="
+                    Social security number|Label for Social security number input field in identification
+                    form@@self.enrollment.identification.form.ssn"
+                  data-role="identifying-id-input"
+                  [readonly]="isLockedOut || isIdentifying"
+                >
+                </bb-input-password-ui>
+                <bb-input-validation-message-ui [showErrors]="!isFieldValid('ssn')">
+                  <span
+                    *ngIf="hasRequiredError('ssn')"
+                    data-role="last-name-validation-msg"
+                    i18n="
+                      Required field|Error message stating that identification form field is
+                      required@@self.enrollment.identification.form.error.required"
+                  >
+                    Required field
+                  </span>
+                  <span *ngIf="hasPatternError('ssn')"> Only numbers are allowed. </span>
+                  <span *ngIf="hasLengthError('ssn')"> Please enter at least 9 digits. </span>
+                </bb-input-validation-message-ui>
+              </div>
+            </form>
+          </ng-container>
+          <ng-template #autoVerification>
+            <form [formGroup]="autoVerificationForm" autocomplete="off">
+              <div class="form-group">
+                <bb-input-text-ui
+                  label="Account"
+                  formControlName="account"
+                  [required]="true"
+                  [disabled]="true"
+                  placeholder="Account"
+                >
+                </bb-input-text-ui>
+                <bb-input-validation-message-ui [showErrors]="!isFieldValid('account')">
+                  <span
+                    *ngIf="hasRequiredError('account')"
+                    data-role="last-name-validation-msg"
+                    i18n="
+                      Required field|Error message stating that identification form field is
+                      required@@self.enrollment.identification.form.error.required"
+                  >
+                    Required field
+                  </span>
+                </bb-input-validation-message-ui>
+                <bb-input-datepicker-ui label="Date of Birth" formControlName="dob" [disabled]="true" placeholder="DOB">
+                </bb-input-datepicker-ui>
+              </div>
+            </form>
+          </ng-template>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="bb-button-bar">
+  <bb-load-button-ui
+    type="submit"
+    class="bb-button-bar__button"
+    data-role="continue-button"
+    color="primary"
+    i18n="Continue|Self enrollment identification submission button label@@self.enrollment.identification.continue"
+    [disabled]="
+      (!isAutoEnrollment && !personalInfoForm.valid) ||
+      (isAutoEnrollment &&
+        ((isAutoIdentification && !autoPersonalInfoForm.valid) ||
+          (!isAutoIdentification && !autoVerificationForm.valid)))
+    "
+    [isLoading]="!!isIdentifying"
+    (click)="!isIdentifying && submit()"
+  >
+    Continue
+  </bb-load-button-ui>
+  <button
+    bbButton
+    class="bb-button-bar__button"
+    color="link"
+    i18n="Cancel|Cancel self enrollment identification button label@@self.enrollment.identification.cancel"
+    [disabled]="isLockedOut"
+    (click)="onCancel()"
+  >
+    Cancel
+  </button>
+</div>

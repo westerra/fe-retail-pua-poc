@@ -1,0 +1,16 @@
+<div
+  class="row bb-place-timetable"
+  [ngClass]="{ 'bb-text-semi-bold': this.isToday(day), 'bb-text-support': !this.isToday(day) }"
+>
+  <span class="col-sm-5" i18n="Week day name|label for week day name based on work times@@places.workTimes.dayName">
+    { day, select, 1 {Monday} 2 {Tuesday} 3 {Wednesday} 4 {Thursday} 5 {Friday} 6 {Saturday} 7 {Sunday} }
+  </span>
+  <span class="col-sm-7">
+    <ng-container *ngIf="this.hours.length; else closed">
+      <ng-container *ngFor="let workHour of this.hours; let i = index"
+        >{{ this.toLocaleTime(workHour.open) }} - {{ this.toLocaleTime(workHour.close) }}<br
+      /></ng-container>
+    </ng-container>
+  </span>
+</div>
+<ng-template #closed> <span i18n="Closed|label for closed day@@places.workTimes.closed">Closed</span></ng-template>

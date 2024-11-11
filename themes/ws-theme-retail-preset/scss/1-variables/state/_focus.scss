@@ -1,0 +1,28 @@
+/// Configures the horizontal shadow position of focused components
+/// /// Used to compose $focus-box-shadow
+/// Defaults to: 0
+// $focus-box-shadow-offset-x:
+
+/// Configures the vertical shadow position of focused components
+/// /// Used to compose $focus-box-shadow
+/// Defaults to: 0
+// $focus-box-shadow-offset-y:
+
+/// Configures the shadow blur radius for focused components
+/// /// Used to compose $focus-box-shadow
+/// Defaults to: 0
+// $focus-box-shadow-blur-radius:
+
+/// Configures the shadow spread radius for focused components
+/// /// Used to compose $focus-box-shadow
+/// Defaults to: 3px
+// $focus-box-shadow-spread-radius:
+
+/// Configures the shadow color for focused components
+/// /// Used to compose $focus-box-shadow
+/// Defaults to: $color-info-lightest
+// $focus-box-shadow-color:
+
+/// Configures the border-color for focused components
+/// Defaults to: $color-info-lighter
+// $focus-border-color:

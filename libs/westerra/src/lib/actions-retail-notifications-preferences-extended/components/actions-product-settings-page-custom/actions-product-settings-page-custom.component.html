@@ -1,0 +1,77 @@
+<ng-container
+  [ngTemplateOutlet]="temp"
+  [ngTemplateOutletContext]="{
+    account: account$ | async,
+    loadingError: loadingError$ | async,
+    loading: isLoading$ | async,
+    specificationsWithAction: specificationsWithActionRecipe$ | async
+  }"
+></ng-container>
+
+<ng-template
+  #temp
+  let-actions="actions"
+  let-specifications="specifications"
+  let-account="account"
+  let-loadingError="loadingError"
+  let-loading="loading"
+  let-specificationsWithAction="specificationsWithAction"
+>
+  <ng-container *ngIf="!loading; else loadingState">
+    <ng-container *ngIf="!loadingError; else errorState">
+      <bb-actions-product-item-card [account]="account"></bb-actions-product-item-card>
+      <div class="bb-block bb-block--xl">
+        <bb-actions-account-balance-recipe-form-custom
+          *ngIf="specificationsWithAction[specificationIds.AccountBalance] as specificationWithAction"
+          [account]="account"
+          [specification]="specificationWithAction.specification"
+          [actionRecipe]="specificationWithAction.actionRecipe"
+          (submit)="onSubmit($event)"
+        ></bb-actions-account-balance-recipe-form-custom>
+      </div>
+      <div class="bb-block bb-block--xl">
+        <bb-actions-transactions-recipe-form-custom
+          *ngIf="specificationsWithAction[specificationIds.Transactions] as specificationWithAction"
+          [specification]="specificationWithAction.specification"
+          [actionRecipe]="specificationWithAction.actionRecipe"
+          (submit)="onSubmit($event)"
+        ></bb-actions-transactions-recipe-form-custom>
+      </div>
+    </ng-container>
+  </ng-container>
+  <ng-template #loadingState>
+    <div class="card">
+      <bb-loading-indicator-ui
+        class="bb-state-container"
+        loaderSize="lg"
+        text="Loading..."
+        i18n-text="Loading... text@@actions-product-settings-page.title"
+      ></bb-loading-indicator-ui>
+    </div>
+  </ng-template>
+  <ng-template #errorState>
+    <div class="card">
+      <bb-empty-state-ui
+        class="bb-state-container"
+        data-role="error-state"
+        iconSize="xxl"
+        iconModifier="error-outline"
+        title="Unknown Error"
+        i18n-title="
+          Actions product notifications settings are not loading title@@actions-product-settings-page.error-state.title"
+        subtitle="Try to reload the page or contact the system administrator."
+        i18n-subtitle="
+          Actions product notifications settings are not loading
+          subtitle@@actions-product-settings-page.error-state.subtitle"
+      >
+      </bb-empty-state-ui>
+    </div> </ng-template></ng-template
+><ng-template #errorNotificationHeader>
+  <span i18n="Couldn't save changes@@actions-product-settings-page.error-notification.header"
+    >Couldn't make changes</span
+  ></ng-template
+><ng-template #errorNotificationMessage>
+  <div i18n="Please try again later@@actions-product-settings-page.error-notification.message">
+    Please try again later
+  </div></ng-template
+>

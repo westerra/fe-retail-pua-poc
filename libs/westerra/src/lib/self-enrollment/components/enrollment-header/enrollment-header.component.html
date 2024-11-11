@@ -1,0 +1,18 @@
+<div class="pb-3 mb-5 pt-5 mt-4">
+  <!-- <button (click)="onNavigateToLogin()" class="btn btn-link pb-5 pl-0 ml-0 pt-0 align-self-start">
+        <i aria-hidden="true" class="bb-icon bb-icon-keyboard-backspace"></i>
+        <span i18n="Back to manage cards content@@cards-management-journey.cards-details.button.back">
+            Back to Login
+        </span>
+    </button> -->
+
+  <h1 data-role="headings">
+    {{
+      !isAutoEnrollment
+        ? 'Set Up Online Access'
+        : 'Welcome ' +
+          (userData?.firstName ? userData?.firstName : userData?.lastName ? userData?.lastName : '') +
+          ' , '
+    }}
+  </h1>
+</div>

@@ -1,0 +1,78 @@
+<div *ngIf="viewState$ | async as state" data-role="user-manage-profile-address-edit-container">
+  <bb-identity-back-button
+    page="Back to Personal information"
+    i18n-page="
+      Page description for personal information back
+      button@@bb-user-profile-features.edit-address-view.back-button-text.back-link"
+    (backClick)="cancelAddEditAttribute()"
+  >
+  </bb-identity-back-button>
+  <div class="bb-block bb-block--lg">
+    <bb-header-ui
+      headingType="h1"
+      data-role="user-profile-edit-address-heading"
+      heading="Change address"
+      i18n-heading="Header for edit address@@bb-user-profile-features.edit-address-view.header-text.edit-address"
+    >
+    </bb-header-ui>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <bb-identity-view-state-container-component [error]="state.error" [loading]="state.loading">
+        <bb-identity-address-autocomplete-record-form
+          *ngIf="configService.isAddressSearchAutocompleteActive && state.postalAddress"
+          [postalAddressRecord]="state.postalAddress"
+          [addressTypeOptions]="configService.postalAddressTypes"
+          [postalAddressIsPrimaryEnabled]="configService.postalAddressIsPrimaryEditable"
+          [postalAddressSelectTypeEnabled]="configService.postalAddressIsTypeEditable"
+          [searchAddressDebounceTime]="configService.searchAddressDebounceTime"
+          [saveLoading]="(isSaveLoadingSubject$ | async) || false"
+          (saveClick)="editAutocompleteAddress.bind(this, state.postalAddress.key)($event)"
+          (cancelClick)="cancelAddEditAttribute()"
+          (formHasChanges)="setFormHasChanges($event)"
+        >
+        </bb-identity-address-autocomplete-record-form>
+        <bb-identity-address-record-form-custom
+          *ngIf="!configService.isAddressSearchAutocompleteActive && state.postalAddress"
+          [isEditMode]="true"
+          [postalAddressRecord]="state.postalAddress"
+          [addressTypeOptions]="configService.postalAddressTypes"
+          [postalAddressIsPrimaryEnabled]="configService.postalAddressIsPrimaryEditable"
+          [postalAddressSelectTypeEnabled]="configService.postalAddressIsTypeEditable"
+          [saveLoading]="(isSaveLoadingSubject$ | async) || false"
+          (saveClick)="editPostalAddress.bind(this, state.postalAddress.key)($event)"
+          (cancelClick)="cancelAddEditAttribute()"
+          (formHasChanges)="setFormHasChanges($event)"
+        >
+        </bb-identity-address-record-form-custom>
+      </bb-identity-view-state-container-component>
+    </div>
+  </div>
+  <bb-identity-discard-modal-component
+    [modalOpen]="modalOpen"
+    (cancelModalClick)="cancelModal()"
+    (discardChangesClick)="discardChanges()"
+  >
+  </bb-identity-discard-modal-component>
+  <ng-template #notificationSuccessHeader>
+    <span
+      class="bb-text-bold"
+      data-role="user-manage-profile-address-edit-success-notification"
+      i18n="
+        Change address save success notification
+        header@@bb-user-profile-features.edit-address-view.notification-text.success-address"
+    >
+      Address changed successfully
+    </span>
+  </ng-template>
+  <ng-template #notificationFailure>
+    <span
+      data-role="user-manage-profile-address-edit-fail-notification"
+      i18n="
+        An unexpected error occurred
+        notification@@bb-user-profile-features.edit-address-view.notification-text.unexpected-error-address"
+    >
+      An unexpected error occurred
+    </span>
+  </ng-template>
+</div>

@@ -1,0 +1,21 @@
+ignores:
+  - 'nx'
+  - 'playwright'
+  - 'allure-playwright'
+  - '@angular/*'
+  - '@angular-devkit/*'
+  - '@angular-eslint/*'
+  - '@backbase/address-autocomplete-v1-client-ang'
+  - '@backbase/backbase-theme-retail-preset'
+  - '@backbase/loans-http-ang'
+  - '@backbase/manage-payments-journey-ang'
+  - '@backbase/product-summary-common-ang'
+  - '@backbase/product-summary-ui'
+  - '@dot-build/*'
+  - '@nrwl/*'
+  - '@types/*'
+  - '@typescript-eslint/*'
+  - '@twilio/conversations'
+skip-missing: true
+ignore-bin-packages: false
+json: true

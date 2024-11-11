@@ -1,0 +1,36 @@
+bb-transactions-list-widget,
+bb-transactions-list-widget-extended {
+
+  .bb-transaction-category--enriched {
+
+    background-color: $color-neutral-black;
+    border-radius: 2px;
+  }
+
+  .bb-search-box--has-search .bb-search-box__search-button button {
+    border-top-left-radius: 0rem;
+    border-bottom-left-radius: 0rem;
+    padding-right: 1rem;
+    padding-left: 1rem;
+
+  }
+
+  .bb-search-box-visible.bb-search-box-search input {
+    padding-left: 0.25rem;
+    border-top-right-radius: 0rem;
+    border-bottom-right-radius: 0rem;
+  }
+
+  .bb-transaction-list-controls__search-box {
+    flex-grow: 1;
+    padding-bottom: 0rem;
+  }
+
+  .btn-secondary:not(:disabled):not(.disabled):hover {
+    background-color: $color-neutral-white;
+    border-color: $color-neutral-black;
+    color: $color-neutral-black !important;
+  }
+
+
+}

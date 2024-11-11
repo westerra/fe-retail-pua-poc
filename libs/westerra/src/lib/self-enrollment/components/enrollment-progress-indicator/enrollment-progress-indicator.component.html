@@ -1,0 +1,24 @@
+<div class="progress_indicator__wrapper bb-stepper">
+    <ng-container *ngFor="let step of steps; index as i; last as isLast">
+        <ng-container *ngIf="!!step.description">
+            <div class="bb-step " [ngClass]="{'bb-step--active': step.status === 'active'}">
+                <!-- <span *ngIf="step.status !== 'complete'" ngClass="{{ step.status }}--number">{{ i + 1 }}</span> -->
+                <div *ngIf="step.status !== 'complete'" class="bb-step__icon" ngClass="{{ step.status }}--number">{{ i + 1 }}</div>
+                <em
+                    *ngIf="step.status === 'complete'"
+                    role="img"
+                    class="complete--number bb-icon bb-icon-check"
+                    aria-hidden="true"
+                ></em>
+
+                <!-- <span ngClass="{{ step.status }}--text">{{ step.description }}</span> -->
+                <div class="bb-step__label" title="Identification">{{ step.description }} 
+                    <span class="bb-step__state-label" title="undefined"></span>
+                </div>
+
+            </div>
+            <!-- <div *ngIf="!isLast" class="spacer"></div> -->
+            <div aria-hidden="true" class="bb-stepper__separator" *ngIf="!isLast"></div>
+        </ng-container>
+    </ng-container>
+</div>

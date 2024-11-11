@@ -1,0 +1,56 @@
+/// Configures the color for the payment-card
+/// Defaults to: $color-neutral-white
+// $payment-card-color:
+
+/// Configures the shadow for the payment-card
+/// Defaults to: $box-shadow-sm
+// $payment-card-box-shadow:
+
+/// Configures the border-radius for the payment-card
+/// Defaults to: $border-radius
+// $payment-card-border-radius:
+
+/// Configures the font weight for the payment card number
+/// Defaults to: $optional
+// $payment-card-number-font-weight:
+
+/// Configures the font size for the payment card number
+/// Defaults to: $font-size-highlight
+// $payment-card-number-font-size:
+
+/// Configures the font size of the payment card name
+/// Defaults to: $optional
+// $payment-card-name-font-size:
+
+/// Configures the font-weight of the payment card name
+/// Defaults to: $font-weight-semi-bold
+// $payment-card-name-font-weight:
+
+/// Configures the font size of the payment-card experition label
+/// Defaults to: $font-size-subheader
+// $payment-card-label-font-size:
+
+/// Configures the font weight of the payment-card expiration label
+/// Defaults to: $optional
+// $payment-card-label-font-weight:
+
+/// Configures the font weight of the payment-card expiration date
+/// Defaults to: $font-weight-semi-bold
+// $payment-card-expiration-date-font-weight:
+
+/// Configures the font size of the payment-card expiration date
+/// Defaults to: $font-size-subtitle
+// $payment-card-expiration-date-font-size:
+
+/// Configures the minimum width of the payment-card
+/// Defaults to: 17.375rem
+// $payment-card-min-width:
+
+/// Configures the maximum width of the payment-card
+/// Defaults to: 20rem
+// $payment-card-max-width:
+
+/// Configures a map of custom colors ([name]: [background value]), use existing keys to override the colors
+/// /// To add new colors, keys can be added, but those need to be added in the html with corresponding class--modifiers as well
+/// Defaults to: ()
+// $payment-card-custom-background-map:

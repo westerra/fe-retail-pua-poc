@@ -1,0 +1,32 @@
+bb-payord-internal-account-selector {
+  .bb-label.bb-block.bb-block--lg.ng-star-inserted {
+    font-weight: bolder;
+    font-size: larger;
+  }
+}
+
+
+bb-dropdown-single-select-ui[data-role="frequency"]>select>option[value="1: DAILY"] {
+  display: none;
+}
+
+
+bb-payord-button-group {
+  .btn-primary {
+    background-color: white;
+    border-color: #E52921;
+    color: #E52921;
+  }
+}
+
+bb-payment-review {
+  .btn-primary {
+    background-color: white;
+    border-color: #E52921;
+    color: #E52921;
+  }
+
+  .bb-button-bar--reverse .bb-button-bar__button--across {
+    margin-left: 0;
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "baseUrl": "http://localhost:4200/",
+  "baasKey": "X-PRDL-BAAS",
+  "baasToken": "reference-stg-d45ecd5c-9624-9db5-3254-49681278a126",
+  "users": {
+    "userWithSingleContext": {
+      "username": "ref-az-stg-emily-autotest",
+      "password": "Pass1234",
+      "fullName": "emily-autotest Jones"
+    },
+    "userWithMultipleContexts": {
+      "username": "",
+      "password": "",
+      "fullName": "",
+      "userContext": "",
+      "defaultContext": "",
+      "debitCardHolder": ""
+    }
+  }
+}

@@ -1,0 +1,31 @@
+<ng-container>
+  <div
+    class="d-flex pb-5 pt-3 justify-content-center mx-auto"
+    [ngClass]="{
+      'col-10': currentStep?.stepIndex !== 3,
+      'col-6': currentStep?.stepIndex === 3
+    }"
+  >
+    <ng-container [ngSwitch]="currentStep?.stepIndex">
+      <ng-container *ngSwitchCase="'1'">
+        <bb-identification-page
+          [isAutoEnrollment]="isAutoEnrollment"
+          (nextStep)="onNextStep()"
+          [uuid]="uuid"
+          [userData]="userData"
+        >
+        </bb-identification-page>
+      </ng-container>
+      <ng-container *ngSwitchCase="'2'">
+        <bb-create-username-page
+          [isAutoEnrollment]="isAutoEnrollment"
+          (nextStep)="onNextStep()"
+          [userData]="userData"
+        ></bb-create-username-page>
+      </ng-container>
+      <ng-container *ngSwitchCase="'3'">
+        <bb-check-enrollment-status-page [isMobileUser]="isMobileUser"></bb-check-enrollment-status-page>
+      </ng-container>
+    </ng-container>
+  </div>
+</ng-container>

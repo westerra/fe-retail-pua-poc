@@ -1,0 +1,122 @@
+<div class="card card-lg bb-block bb-block--lg w-470px">
+  <div class="card-body bb-text-align-center no-gutters">
+    <div class="bb-block bb-block--md">
+      <bb-icon-ui name="success" color="success" size="xxl"></bb-icon-ui>
+    </div>
+    <!-- Non-mobile user specific enrollment success message -->
+    <ng-container *ngIf="!isMobileUser; else mobileScreenMessage">
+      <bb-header-ui
+        heading="Congratulations!"
+        headingType="h1"
+        data-role="confirmation-header"
+        i18n-heading="Congratulations!|Header for self enrollment confirmation@@self.enrollment.confirmation.header"
+      >
+      </bb-header-ui>
+      <bb-header-ui
+        heading="Your account has been created successfully"
+        headingType="h2"
+        data-role="confirmation-title"
+        i18n-heading="
+          Your account has been created successfully|Title of the successful enrollment
+          confirmation@@self.enrollment.confirmation.title"
+      >
+      </bb-header-ui>
+      <p
+        data-role="confirmation-text"
+        class="bb-text-support"
+        i18n="
+          Confirmation description|Text of the successful enrollment confirmation@@self.enrollment.confirmation.text"
+      >
+        Account is ready, you can start using your account by logging in below.
+      </p>
+    </ng-container>
+
+    <!-- Mobile user specific enrollment success message -->
+    <ng-template #mobileScreenMessage>
+      <bb-header-ui
+        heading="Your account has been created!"
+        headingType="h2"
+        headingClasses="success-enrollment-mobile-message-header-1"
+        data-role="confirmation-header"
+        i18n-heading="Your account has been created!"
+      >
+      </bb-header-ui>
+
+      <p
+        data-role="confirmation-text"
+        class="success-enrollment-mobile-message-paragraph-1"
+        i18n="
+          Confirmation description|Text of the successful enrollment confirmation@@self.enrollment.confirmation.text"
+      >
+        To complete setup, log in using the button below. This is required before you can access the mobile app.
+      </p>
+    </ng-template>
+
+    <!-- Login button -->
+    <button
+      bbButton
+      color="primary"
+      data-role="confirmation-log-in-btn"
+      i18n="Log in|log in button label@@self.enrollment.confirmation.login"
+      (click)="onNavigateToLogin()"
+    >
+      Log in to your account
+    </button>
+  </div>
+</div>
+
+<div class="card card-lg" *ngIf="!isMobileUser">
+  <div class="card-body bb-text-align-center no-gutters">
+    <bb-header-ui
+      heading="Manage your finances in our app"
+      headingType="h2"
+      data-role="finances-section-header"
+      i18n-heading="
+        Manage your finances in our app|Header for manage finances section@@self.enrollment.confirmation.app.header"
+    >
+    </bb-header-ui>
+    <p
+      data-role="finances-section-description"
+      class="bb-text-support"
+      i18n="
+        Download the app and login with your credentials|Description of the section with mobile app download
+        links@@self.enrollment.confirmation.app.description"
+    >
+      Download the app and login with your credentials
+    </p>
+    <div class="bb-button-bar bb-button-bar--center">
+      <a
+        class="bb-button-bar__button"
+        target="_blank"
+        *ngIf="googlePlayURL"
+        [href]="googlePlayURL"
+        data-role="google-play-href"
+      >
+        <img
+          id="play-store-logo"
+          src="assets/bb-check-enrollment-status-page/google-play-img.svg"
+          alt="Google Play logo"
+          i18n-alt="
+            Google Play logo alternative|Text that should be displayed in case Google Play logo image cannot be
+            loaded@@self.enrollment.confirmation.google.play.alt"
+        />
+      </a>
+      <a
+        class="bb-button-bar__button"
+        target="_blank"
+        *ngIf="appStoreURL"
+        [href]="appStoreURL"
+        data-role="app-store-href"
+      >
+        <img
+          id="app-store-logo"
+          src="assets/bb-check-enrollment-status-page/app-store-img.svg"
+          alt="App Store logo"
+          i18n-alt="
+            App Store logo alternative|Text that should be displayed in case App Store logo image cannot be
+            loaded@@self.enrollment.confirmation.app.store.alt"
+        />
+      </a>
+    </div>
+  </div>
+</div>

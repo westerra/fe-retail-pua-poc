@@ -1,0 +1,72 @@
+<ng-container *ngIf="(isLoading | async) === false && (items | async) as items; else loadingTemplate">
+  <div *ngIf="items.total" class="bb-product-summary-balance" style="display: none">
+    <div class="bb-product-summary-balance__tooltip">
+      <span
+        class="bb-product-summary-balance__title"
+        data-role="label-total-validation"
+        i18n="Total balance label|product summary header label@@product.summary.header.label.total.balance"
+      >
+        Total balance
+      </span>
+      <bb-icon-ui
+        class="bb-text-support"
+        data-role="toggle-tooltip-icon"
+        tabindex="0"
+        size="sm"
+        name="info"
+        aria-label="Toggle tooltip for Total balance"
+        i18n-aria-label="
+          Toggle tooltip for Total balance|@@product.summary.header.account.consumedAmount.aria.label.openclose"
+        bbTooltip="Total balance"
+        i18n-bbTooltip="Total balance|Total balance label@@product.summary.header.account.tooltip.consumedAmount"
+        triggers="focus hover"
+      ></bb-icon-ui>
+    </div>
+    <bb-amount-ui
+      data-role="total-validation-amount"
+      class="bb-product-summary-balance__amount"
+      [currency]="items.total.currency"
+      [amount]="items.total.aggregatedBalance"
+    >
+    </bb-amount-ui>
+  </div>
+  <ng-container *ngFor="let productKind of items.productKinds">
+    <ng-container *ngIf="productKind">
+      <!-- <bb-product-kind-collapsible-ui
+        *ngIf="productKind?.products?.length"
+        [attr.data-role]="productKind.id"
+        [(isExpanded)]="isExpanded[productKind.name || '']"
+        [showIcons]="(showIcons | async) === true"
+        [productKind]="$any(productKind)"
+        (selectAccount)="selectAccount($event)"
+      ></bb-product-kind-collapsible-ui> -->
+
+      <bb-product-kind-collapsible-ui-extended
+        *ngIf="productKind?.products?.length"
+        [attr.data-role]="productKind.id"
+        [(isExpanded)]="isExpanded[productKind.name || '']"
+        [showIcons]="(showIcons | async) === true"
+        [productKind]="$any(productKind)"
+        [showLogo]="true"
+        (selectAccount)="selectAccount($event)"
+        (selectProduct)="selectAccount($event)"
+      ></bb-product-kind-collapsible-ui-extended>
+    </ng-container> </ng-container
+></ng-container>
+<ng-template #loadingTemplate>
+  <ng-container *ngIf="error | async as error; else loading">
+    <bb-empty-state-ui
+      title=""
+      [subtitle]="error"
+      iconModifier="error"
+      iconSize="xxl"
+      iconColor="gray"
+      iconClasses="text-muted"
+    ></bb-empty-state-ui>
+  </ng-container>
+  <ng-template #loading>
+    <bb-loading-indicator-ui
+      i18n-text="@@product.details.loadingAccounts"
+      [text]="'Loading Accounts...'"
+    ></bb-loading-indicator-ui> </ng-template
+></ng-template>

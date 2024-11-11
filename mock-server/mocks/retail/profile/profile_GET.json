@@ -1,0 +1,122 @@
+{
+  "name": "profile-GET-request",
+  "request": {
+    "url": "/api/user-manager/client-api/v2/users/me/profile",
+    "method": "GET"
+  },
+  "responses": {
+    "badRequest": {
+      "status": 400,
+      "data": {
+        "message": "Bad Request",
+        "key": "GENERAL_ERROR",
+        "errors": [
+          {
+            "message": "Value Exceeded. Must be between {min} and {max}.",
+            "key": "common.api.shoesize",
+            "context": {
+              "max": "50",
+              "min": "1"
+            }
+          }
+        ]
+      }
+    },
+    "forbidden": {
+      "status": 403,
+      "data": {
+        "message": "Access to requested resource denied.",
+        "key": "GENERAL_ERROR",
+        "errors": [
+          {
+            "message": "Resource access denied due to an insufficient user quota of {quota}.",
+            "key": "common.api.quota",
+            "context": {
+              "quota": "someQuota"
+            }
+          }
+        ]
+      }
+    },
+    "systemError": {
+      "status": 500,
+      "data": {
+        "message": "Description of error"
+      }
+    },
+    "success": {
+      "default": true,
+      "status": 200,
+      "data": {
+        "fullName": "JAMIE ICKES",
+        "phone-addresses": [
+          {
+            "key": "Home",
+            "type": "Home",
+            "primary": true,
+            "number": "7202604445"
+          }
+        ],
+        "electronic-addresses": [
+          {
+            "key": "Email",
+            "type": "Email",
+            "primary": true,
+            "address": "automation.8357@gmail.com"
+          }
+        ],
+        "postal-addresses": [
+          {
+            "key": "mailing",
+            "type": "Mailing",
+            "primary": false,
+            "buildingNumber": "3700 E ALAMEDA AVE",
+            "streetName": "SOME APARTMENT2",
+            "townName": "DENVER",
+            "postalCode": "80290",
+            "countrySubDivision": "LA",
+            "country": "US"
+          },
+          {
+            "key": "home",
+            "type": "Home",
+            "primary": true,
+            "buildingNumber": "3700 E ALAMEDA AVE",
+            "streetName": "SOME APARTMENT2",
+            "townName": "DENVER",
+            "postalCode": "80209",
+            "countrySubDivision": "LA",
+            "country": "US"
+          },
+          {
+            "key": "pobox",
+            "type": "POBOX",
+            "primary": false,
+            "buildingNumber": "3700 E ALAMEDA AVE",
+            "streetName": "SOME APARTMENT2",
+            "townName": "DENVER",
+            "postalCode": "80290",
+            "countrySubDivision": "LA",
+            "country": "US"
+          },
+          {
+            "key": "residential",
+            "type": "RESIDENTIAL",
+            "primary": true,
+            "buildingNumber": "3700 E ALAMEDA AVE",
+            "streetName": "SOME APARTMENT2",
+            "townName": "DENVER",
+            "postalCode": "80209",
+            "countrySubDivision": "LA",
+            "country": "US"
+          }
+        ],
+        "additions": {
+          "customerCode": "12452623",
+          "SSN": "5152345",
+          "userId": "c123-45fde-34gtd-23e5r-56yut"
+        }
+      }
+    }
+  }
+}

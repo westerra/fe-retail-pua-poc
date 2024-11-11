@@ -1,0 +1,35 @@
+/// Configures the maximum width of the state container
+/// Defaults to: $sizer * 25
+// $empty-state-container-max-width:
+
+/// Configures the minimum width of the state container
+/// Defaults to: $optional
+// $empty-state-container-min-width:
+
+/// Configures the color of the empty-state icon
+/// Defaults to: $color-neutral-darker
+// $empty-state-icon-color:
+
+/// Configures the color of the empty-state title
+/// Defaults to: $color-neutral-black
+// $empty-state-title-color:
+
+/// Configures the font weight of the empty-state title
+/// Defaults to: $font-weight-semi-bold
+// $empty-state-title-font-weight:
+
+/// Configures the font size of the empty-state title
+/// Defaults to: $optional
+// $empty-state-title-font-size:
+
+/// Configures the color of the empty-state message
+/// Defaults to: $color-neutral-dark
+// $empty-state-message-color:
+
+/// Configures the font size of the empty-state message
+/// Defaults to: $font-size-subtitle
+// $empty-state-message-font-size:
+
+/// Configures the font weight of the empty-state message
+/// Defaults to: $optional
+// $empty-state-message-font-weight:

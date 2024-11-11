@@ -1,0 +1,60 @@
+<!-- Places List -->
+<bb-collapsible-accordion-ui [closeOthers]="true" class="bb-list bb-list--density-md">
+  <bb-collapsible-ui
+    [isOpen]="place.id === selectedPlaceId"
+    class="bb-list__item d-block"
+    role="tree"
+    *ngFor="let place of places; let i = index"
+  >
+    <ng-template bbCollapsibleHeader let-isOpen="isOpen">
+      <div
+        role="treeitem"
+        bbKeyboardAccessibility
+        [attr.aria-expanded]="isOpen"
+        (click)="this.onListItemClick(isOpen, place)"
+        class="bb-block"
+        [class.bb-block--md]="isOpen"
+      >
+        <div class="bb-stack bb-place-info">
+          <div class="bb-inline-stack bb-inline-stack--density-sm">
+            <bb-icon-ui
+              [name]="this.getPlaceTypeIcon(place.placeType)"
+              size="md"
+              class="bb-inline-stack__item"
+            ></bb-icon-ui>
+            <span class="bb-text-semi-bold">{{ place.name }}</span>
+          </div>
+          <bb-icon-ui
+            class="bb-stack__item bb-stack__item--push-right"
+            [name]="isOpen ? 'toggle-up' : 'toggle-down'"
+            size="md"
+          >
+          </bb-icon-ui>
+        </div>
+        <div class="bb-place-info__subtitle bb-subtitle">
+          <div *ngIf="place.address">
+            <span>{{ place.address.addressLine1 }}</span>
+            <span *ngIf="place.address.addressLine2"
+              >, <span>{{ place.address.addressLine2 }}</span>
+            </span>
+            <div *ngIf="place.address.postalCode">{{ place.address.postalCode }}</div>
+          </div>
+          <div class="bb-text-support bb-inline-stack" *ngIf="place.distance !== undefined">
+            <bb-icon-ui name="near-me" size="sm" class="bb-inline-stack__item"></bb-icon-ui>
+            <span>{{ this.formatDistance(place.distance) }}</span>
+          </div>
+          <div class="bb-text-support" *ngIf="this.getClosingHour(place.hours) as hour">
+            <span i18n="Open Today until|label for open today until@@places.openToday.until">Open Today until </span>
+            <span>{{ hour }}</span>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template bbCollapsibleBody>
+      <bb-places-details-custom [place]="place"></bb-places-details-custom>
+    </ng-template>
+  </bb-collapsible-ui> </bb-collapsible-accordion-ui
+><span #transM class="ng-cloak" i18n="m|Label for meters@@places.distance.meter">m</span
+><span #transKm class="ng-cloak" i18n="km|Label for kilometers@@places.distance.kilometer">km</span
+><span #transFt class="ng-cloak" i18n="ft|Label for feet@@places.distance.foot">ft</span
+><span #transMi class="ng-cloak" i18n="mi|Label for miles@@places.distance.mile">mi</span>

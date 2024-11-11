@@ -1,0 +1,20 @@
+{
+  "baseUrl": "https://app.dev.ref.live.backbaseservices.com/web/",
+  "baasKey": "X-PRDL-BAAS",
+  "baasToken": "prdl-dev-d8fd6fee-4306-493a-808a-a9a69990ce00",
+  "users": {
+    "userWithSingleContext": {
+      "username": "ref-dev-emily-autotest",
+      "password": "Pass1234",
+      "fullName": "emily-autotest Jones"
+    },
+    "userWithMultipleContexts": {
+      "username": "",
+      "password": "",
+      "fullName": "",
+      "userContext": "",
+      "defaultContext": "",
+      "debitCardHolder": ""
+    }
+  }
+}

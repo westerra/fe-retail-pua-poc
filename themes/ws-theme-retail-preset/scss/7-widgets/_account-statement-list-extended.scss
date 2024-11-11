@@ -1,0 +1,67 @@
+bb-account-statement-list-extended{
+  bb-icon-ui{
+    color: black;
+  }
+
+  span.th-content.bb-text-align-left {
+    font-size: 0.9rem;
+  }
+
+  span.th-content {
+    font-size: 0.9rem;
+  }
+
+  button.bb-button-bar__button.btn-sm.btn.btn-primary {
+    font-size: 1.1rem;
+    color: #E52921;
+    background-color: white;
+  }
+
+
+  button.bb-button-bar__button.btn-secondary.btn-sm.btn {
+    font-size: 1.1rem;
+  }
+
+  button.bb-button-bar__button.btn-link.btn-sm.btn.ng-star-inserted {
+    font-size: 1.1rem;
+  }
+
+  .btn-link:not(:disabled):not(.disabled):active, .btn-link:not(:disabled):not(.disabled).active, .show > .btn-link.dropdown-toggle, i.bb-icon.bb-icon-get-app.bb-icon--md {
+    color: #111112;
+  }
+
+
+  .btn-link:not(:disabled):not(.disabled):active, .btn-link:not(:disabled):not(.disabled).active, .show > .btn-link.dropdown-toggle:hover.i.bb-icon.bb-icon-get-app.bb-icon--md {
+    color: white!important;
+    background-color: #111112;
+    border-color: #e9eaeb;
+    background-color: #111112;
+    margin-left: 0;
+    border-radius: 1rem;
+    width: 30px;
+    height: 30px;
+  }
+
+  .btn-link:not(:disabled):not(.disabled):active, .btn-link:not(:disabled):not(.disabled).active, .show > .btn-link.dropdown-toggle{
+    background-color: white;
+    border-color: #111112;
+    margin-left: 0;
+    border-radius: 1rem;
+    width: 30px;
+    height: 30px;
+  }
+
+  .btn-link:not(:disabled):not(.disabled):hover{
+    color: white!important;
+  }
+
+
+
+
+}
+
+bb-heading-widget{
+  h1.bb-heading-widget__heading {
+    font-size: 2.2rem!important;
+  }
+}

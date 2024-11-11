@@ -1,0 +1,124 @@
+<form *ngIf="form && (profile$ | async)" [formGroup]="form" (submit)="formSubmit$.next(true)">
+  <div class="bb-block bb-block--lg">
+    <bb-input-phone-ui
+      class="bb-form-field bb-form-field--md"
+      data-role="user-manage-profile-phone-manage-phone"
+      i18n-label="
+        Label for the phone-number
+        field@@bb-user-profile-features.phone-number-record-form.input-label-text.phone-number"
+      [label]="updatedFormTitle"
+      formControlName="number"
+      [required]="true"
+      [minLength]="phoneNumberMaxDigitLimit"
+      [maxLength]="phoneNumberMaxDigitLimit"
+      (click)="updateMaxlengthForPhoneNumberField()"
+      (ngModelChange)="updateMaxlengthForPhoneNumberField()"
+      [ngClass]="{ 'bb-force-ltr bb-text-align-end': isRtl }"
+      [inputClassName]="isRtl ? 'bb-text-align-end' : undefined"
+    >
+    </bb-input-phone-ui>
+    <!-- <bb-input-validation-message-ui [showErrors]="(showPhoneNumberRequiredError$ | async) || false">
+      <span
+        i18n="
+          Phone number required
+          error@@bb-user-profile-features.phone-number-record-form.validation-text.provide-phone-number"
+      >
+        Provide a phone number
+      </span>
+    </bb-input-validation-message-ui> -->
+    <bb-input-validation-message-ui [showErrors]="(showPhoneNumberInvalidError$ | async) || false">
+      <span
+        i18n="
+          Phone number invalid
+          error@@bb-user-profile-features.phone-number-record-form.validation-text.invalid-phone-number"
+      >
+        Phone number format is invalid
+      </span>
+    </bb-input-validation-message-ui>
+    <!-- TO SET UP MINIMUM VALIDATION -->
+    <bb-input-validation-message-ui [showErrors]="form?.controls?.number?.errors?.minlength">
+      <span
+        i18n="
+          Phone number should have 10 digits after the country code
+          error@@bb-user-profile-features.phone-number-record-form.validation-text.phone-number-ten-digit-validation-fail"
+      >
+        Phone number should have 10 digits after the country code
+      </span>
+    </bb-input-validation-message-ui>
+  </div>
+  <div class="bb-block bb-block--lg" *ngIf="phoneNumberSelectTypeEnabledValue && !isEditMode">
+    <bb-input-radio-group-ui
+      data-role="user-manage-profile-phone-manage-type"
+      formControlName="type"
+      label="Phone number type"
+      i18n-label="
+        Label for phone number type radio
+        options@@bb-user-profile-features.phone-number-record-form.input-label-text.phone-type"
+      [preselect]="false"
+      [required]="true"
+    >
+      <bb-input-radio-ui
+        *ngFor="let option of phoneNumberTypeOptions"
+        [value]="option"
+        [label]="option"
+        [disabled]="checkIfDisbaled(option)"
+      >
+      </bb-input-radio-ui>
+    </bb-input-radio-group-ui>
+    <bb-input-validation-message-ui [showErrors]="(showPhoneNumberTypeError$ | async) || false">
+      <span
+        i18n="
+          Phone number type required
+          error@@bb-user-profile-features.phone-number-record-form.validation-text.phone-type-required"
+      >
+        Choose a phone number type
+      </span>
+    </bb-input-validation-message-ui>
+  </div>
+  <div class="bb-block bb-block--lg" *ngIf="phoneNumberIsPrimaryEnabled && !isEditMode">
+    <bb-input-checkbox-ui
+      data-role="user-manage-profile-phone-manage-primary"
+      label="This is my primary phone number"
+      i18n-label="
+        Make primary checkbox label@@bb-user-profile-features.phone-number-record-form.input-label-text.phone-primary"
+      formControlName="primary"
+    >
+    </bb-input-checkbox-ui>
+  </div>
+  <div class="bb-button-bar bb-button-bar--reverse">
+    <bb-load-button-ui
+      *ngIf="!phoneNumberRecordValue"
+      type="submit"
+      data-role="user-manage-profile-phone-manage-save"
+      class="bb-button-bar__button"
+      [isLoading]="saveLoading"
+      [disabled]="!phoneNumberHasCorrectLength"
+      i18n="Add phone number button action@@bbb-user-profile-features.phone-number-record-form.button-text.add-phone"
+    >
+      Add phone number
+    </bb-load-button-ui>
+
+    <bb-load-button-ui
+      *ngIf="phoneNumberRecordValue"
+      type="submit"
+      data-role="user-manage-profile-phone-manage-save"
+      class="bb-button-bar__button"
+      [isLoading]="saveLoading"
+      [disabled]="!phoneNumberHasCorrectLength"
+      i18n="Save phone number button action@@bb-user-profile-features.phone-record-form.button-text.save-changes"
+    >
+      Save changes
+    </bb-load-button-ui>
+    <button
+      bbButton
+      data-role="user-manage-profile-manage-cancel-button"
+      color="secondary"
+      class="bb-button-bar__button"
+      type="button"
+      (click)="cancelClick.emit()"
+      i18n="Cancel changes button action@@bb-user-profile-features.phone-number-record-form.button-text.cancel"
+    >
+      Cancel
+    </button>
+  </div>
+</form>

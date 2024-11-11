@@ -1,0 +1,60 @@
+<div data-role="user-manage-profile-phone-add-container">
+  <bb-identity-back-button
+    page="Back to Personal information"
+    i18n-page="
+      Page description for personal information back
+      button@@bb-user-profile-features.add-phone-view.back-button-text.back-link"
+    (backClick)="cancelAddEditAttribute()"
+  >
+  </bb-identity-back-button>
+  <div class="bb-block bb-block--lg">
+    <bb-header-ui
+      headingType="h1"
+      data-role="user-profile-add-phone-heading"
+      heading="Add a phone number"
+      i18n-heading="Header for add phone number@@bb-user-profile-features.add-phone-view.header-text.add-phone"
+    >
+    </bb-header-ui>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <bb-identity-phone-record-form-custom
+        [phoneNumberTypeOptions]="configService.phoneNumberTypes"
+        [phoneNumberIsPrimaryEnabled]="configService.phoneNumberIsPrimaryEditable"
+        [phoneNumberSelectTypeEnabled]="configService.phoneNumberIsTypeEditable"
+        [enablePhoneNumberFormatter]="configService.enablePhoneNumberFormatter"
+        [phoneNumberCountryCode]="configService.phoneNumberCountryCode"
+        [phoneNumberDebounceTime]="configService.phoneNumberDebounceTime"
+        [saveLoading]="(isSaveLoadingSubject$ | async) || false"
+        (saveClick)="addPhoneNumber($event)"
+        (cancelClick)="cancelAddEditAttribute()"
+        (formHasChanges)="setFormHasChanges($event)"
+      ></bb-identity-phone-record-form-custom>
+    </div>
+  </div>
+</div>
+<bb-identity-discard-modal-component
+  [modalOpen]="modalOpen"
+  (cancelModalClick)="cancelModal()"
+  (discardChangesClick)="discardChanges()"
+></bb-identity-discard-modal-component
+><ng-template #notificationSuccessHeader>
+  <span
+    class="bb-text-bold"
+    data-role="user-manage-profile-phone-add-success-notification"
+    i18n="
+      Add phone number save success notification
+      header@@bb-user-profile-features.add-phone-view.notification-text.success-phone"
+  >
+    Phone number added successfully
+  </span></ng-template
+><ng-template #notificationFailure>
+  <span
+    data-role="user-profile-add-phone-error-notification"
+    i18n="
+      An unexpected error occurred
+      notification@@bb-user-profile-features.add-phone-view.notification-text.unexpected-error-phone"
+  >
+    An unexpected error occurred
+  </span></ng-template
+>

@@ -1,0 +1,23 @@
+{
+  "projectType": "library",
+  "root": "libs/westerra",
+  "sourceRoot": "libs/westerra/src",
+  "prefix": "bb",
+  "targets": {
+    "test": {
+      "executor": "@angular-devkit/build-angular:karma",
+      "options": {
+        "main": "libs/westerra/src/test.ts",
+        "tsConfig": "libs/westerra/tsconfig.spec.json",
+        "karmaConfig": "libs/westerra/karma.conf.js"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/westerra/src/**/*.ts", "libs/westerra/src/**/*.html"]
+      }
+    }
+  },
+  "tags": []
+}

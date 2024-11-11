@@ -1,0 +1,145 @@
+<div id="viewCustomWrapper" [ngClass]="{ 'bb-heading-widget bb-heading-widget--de-elevated': config.deElevatedHeader }">
+  <bb-header-ui
+    headingType="h1"
+    [headingClasses]="config.deElevatedHeader ? 'bb-heading-widget__heading' : 'bb-heading-widget__heading px-0 pb-5'"
+    heading="Find Us"
+    i18n-heading="Find Us|Heading for the Places journey@@places.journey.heading.text: Find Us"
+  ></bb-header-ui>
+  <ng-content></ng-content>
+</div>
+<div [ngClass]="{ 'container--drag-up container-fluid': config.deElevatedHeader }">
+  <ng-container *ngTemplateOutlet="placesContainer; context: { places: locations | async }"></ng-container>
+</div>
+<ng-template #placesContainer let-places="places">
+  <div class="card">
+    <div class="card-body">
+      <div class="row" [class.bb-stack--center]="this.error">
+        <ng-container *ngIf="!this.error; else errorState">
+          <div class="col-md-6">
+            <bb-map-search-ui-custom
+              [config]="this.mapConfig"
+              (mapSearch)="this.handleMapSearch($event)"
+            ></bb-map-search-ui-custom>
+
+            <div class="bb-inline-stack bb-text-support bb-block bb-block--md" *ngIf="this.currentLocation">
+              <bb-icon-ui name="my-location" class="bb-inline-stack__item"></bb-icon-ui>
+              <span
+                class="bb-inline-stack__item"
+                i18n="Current Location|current location message for places@@places.state.currentLocation"
+                >Current Location - {{ this.currentLocation }}</span
+              >
+            </div>
+            <form #placeTypeFilterForm="ngForm" class="bb-block bb-block--md bb-stack bb-stack--density-xl">
+              <bb-input-checkbox-ui
+                *ngFor="let type of this.placeTypes; let i = index"
+                ngModel
+                [name]="type"
+                class="bb-stack__item"
+                (change)="this.handleTypeSearch(this.filterTypes(placeTypeFilterForm.value))"
+              >
+                <span i18n="filters|filters for types@@places.filter.types"
+                  >{type, select, atm {ATM's} branch {Branches}}</span
+                >
+              </bb-input-checkbox-ui>
+            </form>
+            <div class="bb-text-align-center bb-block bb-block--md d-md-none" #groupBtns>
+              <div class="btn-group btn-group-toggle bb-block bb-block--full-width">
+                <button
+                  class="btn btn-secondary"
+                  [ngClass]="{ active: this.selectedView === 'list' }"
+                  name="list"
+                  (click)="this.selectedView = 'list'"
+                  i18n="List view button|List view @@places.toggle.view.list"
+                >
+                  List
+                </button>
+                <button
+                  class="btn btn-secondary"
+                  [ngClass]="{ active: this.selectedView === 'map' }"
+                  (click)="this.selectedView = 'map'"
+                  i18n="Map view Button|Map view @@places.toggle.view.map"
+                >
+                  Map
+                </button>
+              </div>
+            </div>
+            <div [hidden]="this.selectedView === 'map'" class="d-md-block">
+              <div class="bb-places-list" [ngClass]="places && places.length ? '' : 'bb-places-list--empty'">
+                <ng-container *ngIf="!this.isLoading; else loadingState">
+                  <ng-container *ngIf="places?.length; else emptyState">
+                    <bb-places-list-custom
+                      [radius]="this.config.radius"
+                      [locations]="places"
+                      [selectedPlaceId]="(this.selectedPlaceId | async) || undefined"
+                      [currentPosition]="this.currentPosition"
+                      [isMetric]="this.isMetric"
+                      [placeTypes]="this.config.placeTypes"
+                      (selected)="this.updatePlaceSelection($event)"
+                    ></bb-places-list-custom>
+                  </ng-container>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 d-md-block" [hidden]="this.selectedView === 'list'">
+            <bb-map-wrapper-custom
+              [apiKey]="this.config.apiKey"
+              [config]="this.mapConfig"
+              [mapZoom]="this.config.mapZoom"
+              [latitude]="this.latitude"
+              [longitude]="this.longitude"
+              [icons]="this.markerIcon"
+              [locations]="places"
+              [enableInfoWindow]="!!this.smallScreen"
+              [selectedPlaceId]="(this.selectedPlaceId | async) || undefined"
+              (update)="this.locationUpdate($event)"
+              (selected)="this.updatePlaceSelection($event)"
+              (mapReady)="this.onMapReady()"
+            ></bb-map-wrapper-custom>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<!-- Empty List -->
+<ng-template #emptyState>
+  <bb-empty-state-ui
+    class="bb-text-align-center"
+    i18n-title="
+      No Locations Found|Title of a message that is shown when there are no places@@places.state.noResultsFound.title"
+    i18n-subtitle="
+      We couldn’t find any branches or ATMs in this region. Try moving the map or searching for a city or
+      branch|Subtitle of a message that is shown when there are no places@@places.state.noResultsFound.subtitle"
+    title="No Locations Found"
+    subtitle="We couldn't find any branches or ATMs in this region. Try moving the map or searching for a city or branch."
+    iconSize="xxl"
+    iconModifier="place"
+  ></bb-empty-state-ui
+></ng-template>
+<!-- Loading State -->
+<ng-template #loadingState>
+  <bb-loading-indicator-ui
+    i18n-text="Loading places data|Text to display while loading places@@places.state.loadingPlaces"
+  ></bb-loading-indicator-ui
+></ng-template>
+<!-- Error State -->
+<ng-template #errorState>
+  <bb-common-error-state-ui [error]="errorCustomTemplate">
+    <ng-template #errorCustomTemplate>
+      <bb-empty-state-ui
+        class="bb-text-align-center"
+        i18n-title="
+          Page couldn't load|Title of a message that is shown when page couldn't
+          load@@places.state.pageCouldnotLoad.title"
+        i18n-subtitle="
+          Try to reload the page or contact the system administrator.|Subtitle of a message that is shown when page
+          could not load@@places.state.pageCouldnotLoad.subtitle"
+        title="Page couldn't load"
+        subtitle="Try to reload the page or contact the system administrator."
+        iconSize="xxl"
+        iconModifier="error"
+      ></bb-empty-state-ui>
+    </ng-template>
+  </bb-common-error-state-ui>
+</ng-template>

@@ -1,0 +1,8 @@
+<bb-create-username-view
+  (continue)="onContinue($event)"
+  (navigateToLogin)="onNavigateToLogin()"
+  [isAutoEnrollment]="isAutoEnrollment"
+  [data]="data"
+  [userData]="userData"
+  [errorStatus]="(userService.errorStatus$ | async)!"
+></bb-create-username-view>

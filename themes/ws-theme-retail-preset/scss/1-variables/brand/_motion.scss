@@ -1,0 +1,35 @@
+/// Configures the delay in seconds for slow motions (experimental)
+/// Defaults to: 0.5s
+// $motion-delay-slow:
+
+/// Configures the default delay in seconds motions (experimental)
+/// Defaults to: 0.2s
+// $motion-delay-default:
+
+/// Configures the delay in seconds for fast motions (experimental)
+/// Defaults to: 0.1s
+// $motion-delay-fast:
+
+/// Configures the duration in seconds for slow motions (experimental)
+/// Defaults to: 0.5s
+// $motion-duration-slow:
+
+/// Configures the default duration in seconds for motions (experimental)
+/// Defaults to: 0.2s
+// $motion-duration-default:
+
+/// Configures the duration in seconds for fast motions (experimental)
+/// Defaults to: 0.1s
+// $motion-duration-fast:
+
+/// Configures the ease-in timing used for motions (experimental)
+/// Defaults to: cubic-bezier(0.89, 0.03, 0.68, 0.22)
+// $motion-timing-ease-in:
+
+/// Configures the ease-out timing used for motions (experimental)
+/// Defaults to: cubic-bezier(0.16, 0.84, 0.44, 1)
+// $motion-timing-ease-out:
+
+/// Configures the ease-in-out timing used for motions (experimental)
+/// Defaults to: cubic-bezier(0.42, 0, 0.58, 1)
+// $motion-timing-ease-in-out:

@@ -1,0 +1,24 @@
+
+bb-accounts-list {
+   
+    bb-heading-widget {
+       
+        bb-header-ui{
+            h1{
+                visibility: hidden;
+                margin-bottom: -2.6rem;
+             } &::after{
+                 content: 'Accounts';
+                 margin-bottom: 0.5rem;
+                 font-family: "CircularXXSub";
+                 font-weight: 700;
+                 line-height: 1.2;
+                 color: #101820;
+                 font-size: 2.2rem !important;
+                 
+             }
+        }
+        
+      }
+}
+

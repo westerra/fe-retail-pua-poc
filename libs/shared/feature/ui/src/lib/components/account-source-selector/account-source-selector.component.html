@@ -1,0 +1,66 @@
+<label *ngIf="label" class="bb-dropdown-single-select__label" for="{{ id }}" [attr.data-role]="'label'">{{
+  label
+}}</label>
+
+<div class="bb-product-selector">
+  <div
+    #selectorDropdown="ngbDropdown"
+    ngbDropdown
+    class="bb-product-selector__dropdown dropdown pre-scrollable-typeahead"
+    placement="bottom"
+  >
+    <button
+      id="selectorToggle"
+      ngbDropdownToggle
+      bbbutton
+      color="unstyled"
+      type="button"
+      class="dropdown-toggle bb-product-selector__item btn-unstyled btn btn-md"
+      ng-reflect-color="unstyled"
+      ng-reflect-type="button"
+      data-role="product-selector-expand-button"
+      aria-expanded="false"
+      aria-describedby="account-selector-debitorAccount-error-message"
+    >
+      <div class="bb-product-selector__item-content" data-role="product-selector-selected-content">
+        <ng-container *ngIf="!selectedAccount; else basicAccountUiTemplate">
+          <ng-container *ngTemplateOutlet="defaultTemplate"></ng-container>
+        </ng-container>
+      </div>
+      <bb-icon-ui [name]="selectorDropdown.isOpen() ? 'toggle-up' : 'toggle-down'" class="bb-product-selector__icon">
+      </bb-icon-ui>
+    </button>
+
+    <div
+      ngbDropdownMenu="selectorToggle"
+      role="menu"
+      class="bb-product-selector__dropdown-menu-panel dropdown-menu"
+      data-role="product-selector-dropdown-menu"
+      x-placement="bottom"
+    >
+      <div class="bb-product-selector__dropdown-menu" id="account-selector-ui">
+        <button
+          class="bb-product-selector__dropdown-item btn-unstyled btn btn-md"
+          *ngFor="let account of accountsList"
+          (click)="selectorDropdown.close(); changeSelectedOption(account)"
+          bbButton
+          color="unstyled"
+        >
+          <bb-basic-account-item-ui [account]="account"></bb-basic-account-item-ui>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #defaultTemplate>
+  <div class="bb-stack">
+    <span data-role="item-empty-state" class="bb-text-support bb-product-selector__placeholder">
+      {{ placeholder }}
+    </span>
+  </div>
+</ng-template>
+
+<ng-template #basicAccountUiTemplate>
+  <bb-basic-account-item-ui [account]="selectedAccount"></bb-basic-account-item-ui>
+</ng-template>

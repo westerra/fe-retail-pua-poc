@@ -1,0 +1,20 @@
+{
+  "baseUrl": "https://app.ret-stable.ref.live.backbaseservices.com/web/",
+  "baasKey": "X-PRDL-BAAS",
+  "baasToken": "prdl-ret-stable-5736696d-00bb-49b5-9036-d81c2b7d2c4d",
+  "users": {
+    "userWithSingleContext": {
+      "username": "ref-ret-stable-emily-autotest",
+      "password": "Pass1234",
+      "fullName": "emily-autotest Jones"
+    },
+    "userWithMultipleContexts": {
+      "username": "",
+      "password": "",
+      "fullName": "",
+      "userContext": "",
+      "defaultContext": "",
+      "debitCardHolder": ""
+    }
+  }
+}

@@ -1,0 +1,96 @@
+/// Configures the background color for inputs
+/// Defaults to: $color-neutral-white
+// $input-background-color:
+
+/// Configures the color for inputs
+/// Defaults to: $color-neutral-black
+// $input-color:
+
+/// Configures the placeholder color for inputs
+/// Defaults to: $color-text-support
+// $input-placeholder-color:
+
+/// Configures the border width for inputs
+/// /// Used to compose $input-border
+/// Defaults to: $border-width
+// $input-border-width:
+
+/// Configures the border style for inputs
+/// /// Used to compose $input-border
+/// Defaults to: $border-style
+// $input-border-style:
+
+/// Configures the border color for inputs
+/// /// Used to compose $input-border
+/// Defaults to: $border-color
+// $input-border-color:
+
+/// Configures the border radius for inputs
+/// Defaults to: $border-radius-sm
+// $input-border-radius:
+
+/// Configures the horizontal padding for inputs
+/// Defaults to: $sizer-md
+// $input-padding-horizontal:
+
+/// Configures the vertical padding for inputs
+/// Defaults to: $sizer-sm
+// $input-padding-vertical:
+
+/// Configures the padding for inputs
+/// /// Composed of separate padding properties: input-padding-vertical and input-padding-horizontal
+/// Defaults to: $input-padding-vertical $input-padding-horizontal
+// $input-padding:
+
+/// Configures the font size for inputs
+/// Defaults to: $font-size-default
+// $input-font-size:
+
+/// Configures the font weight for inputs
+/// Defaults to: $font-weight-regular
+// $input-font-weight:
+
+/// Configures the shadow for inputs. Defaults to none
+/// /// Use one of the $shadow variables to configure consistantly
+/// Defaults to: none
+// $input-box-shadow:
+
+/// Configures the input:focus border color. Defaults to $focus-border-color
+/// Defaults to: $focus-border-color
+// $input-focus-border-color:
+
+/// Configures the input:focus border width. Defaults to $input-border-width
+/// Defaults to: $input-border-width
+// $input-focus-border-width:
+
+/// Configures the input:focus border width. Defaults to $input-border-width
+/// Defaults to: $input-border-style
+// $input-focus-border-style:
+
+/// Configures the input:focus shadow. Defaults to $focus-box-shadow
+/// Defaults to: $focus-box-shadow
+// $input-focus-box-shadow:
+
+/// Configures the input:invalid border color. Defaults to $color-danger
+/// Defaults to: $color-danger
+// $input-invalid-border-color:
+
+/// Configures the input:invalid border width. Defaults to $input-border-width
+/// Defaults to: $input-border-width
+// $input-invalid-border-width:
+
+/// Configures the input:invalid border style. Defaults to $input-border-style
+/// Defaults to: $input-border-style
+// $input-invalid-border-style:
+
+/// Configures the input:disabled background color
+/// Defaults to: $color-neutral-lightest
+// $input-disabled-background-color:
+
+/// Configures the input:disabled placeholder color
+/// Defaults to: $color-neutral-greyest
+// $input-disabled-placeholder-color:
+
+/// Configures the input:disabled color
+/// Defaults to: $color-neutral-dark
+// $input-disabled-color:

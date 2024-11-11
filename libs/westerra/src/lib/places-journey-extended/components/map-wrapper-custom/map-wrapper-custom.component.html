@@ -1,0 +1,9 @@
+<bb-map-ui-custom [options]="this.options" [config]="this.config" (mapReady)="this.setMapOptions($event)">
+</bb-map-ui-custom>
+
+<div hidden #bbMapInfoWindowContent>
+  <div [attr.data-place-id]="place.id" *ngFor="let place of this.places">
+    <p class="bb-text-semi-bold">{{ place.name }}</p>
+    <div>{{ place.address?.addressLine1 }}, {{ place.address?.postalCode }} {{ place.address?.addressLine2 }}</div>
+  </div>
+</div>

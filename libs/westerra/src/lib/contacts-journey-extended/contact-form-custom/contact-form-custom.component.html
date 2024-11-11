@@ -1,0 +1,256 @@
+<bb-loading-indicator-ui *ngIf="disabled"></bb-loading-indicator-ui>
+<form [hidden]="disabled" [formGroup]="formGroup" (submit)="onSubmit()">
+  <div class="row">
+    <div class="bb-block bb-block--xl col-12" data-role="contact-account-info-account-name1">
+      <bb-input-text-ui
+        autofocus="true"
+        id="bb-create-contact-name"
+        data-role="new-contact-name"
+        label="Name"
+        i18n-label="@@contact-manager-form.label.name"
+        formControlName="name"
+        [maxLength]="140"
+        [required]="true"
+        bbNoWhiteSpace
+        [ngClass]="{ 'form-submitted': submitted, 'form-not-submitted': !submitted }"
+      >
+      </bb-input-text-ui>
+      <bb-input-validation-message-ui
+        class="position-absolute"
+        role="alert"
+        [showErrors]="formGroup.controls.name.errors?.required && formGroup.controls.name.touched && submitted"
+      >
+        <span i18n="@@contact-manager-form.label.nameRequired" data-role="missing-account-name">
+          Name is required
+        </span>
+      </bb-input-validation-message-ui>
+    </div>
+    <div class="bb-block bb-block--xl col-12" [hidden]="editMode">
+      <ng-container [ngSwitch]="type">
+        <ng-container *ngSwitchCase="createAccountTypeRef.IBAN">
+          <ng-container *ngTemplateOutlet="iban"></ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="createAccountTypeRef.EMAIL">
+          <ng-container *ngTemplateOutlet="email"></ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="createAccountTypeRef.PHONE">
+          <ng-container *ngTemplateOutlet="phone"></ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="createAccountTypeRef.ACCOUNT">
+          <ng-container *ngTemplateOutlet="bban"></ng-container>
+        </ng-container>
+        <ng-container *ngSwitchDefault>
+          <ng-container *ngTemplateOutlet="iban"></ng-container>
+        </ng-container>
+      </ng-container>
+      <ng-container
+        *ngTemplateOutlet="
+          requiredErrorTemplate;
+          context: { control: formGroup.controls.accountIdentifier, accountIdentifierType: type }
+        "
+      >
+      </ng-container>
+    </div>
+  </div>
+  <div class="bb-button-bar bb-button-bar--spacing-sm">
+    <button
+      bbButton
+      class="bb-button-bar__button"
+      type="submit"
+      color="primary"
+      name="save"
+      data-role="save-button"
+      i18n="@@contact-manager-form.button.save"
+    >
+      <!-- [disabled]="(submitted && formGroup.invalid) || disabled" -->
+      Save
+    </button>
+    <button
+      bbButton
+      color="secondary"
+      type="button"
+      class="bb-button-bar__button"
+      name="back"
+      data-role="contacts-form-back-button"
+      i18n="@@contact-manager-form.button.back"
+      (click)="onBack()"
+    >
+      Back
+    </button>
+    <button
+      bbButton
+      color="link-text"
+      type="button"
+      class="bb-button-bar__button bb-button-bar__button--across"
+      name="cancel"
+      data-role="contacts-form-cancel-button"
+      i18n="@@contact-manager-form.button.cancel"
+      (click)="onCancel()"
+    >
+      Cancel
+    </button>
+  </div>
+  <ng-template #iban>
+    <bb-input-text-ui
+      id="bb-create-contact-iban"
+      label="IBAN"
+      i18n-label="@@contact-manager-form.label.bban"
+      data-role="new-contact-iban"
+      formControlName="accountIdentifier"
+      [maxLength]="ibanMask.length"
+      [required]="true"
+      [mask]="ibanMask"
+      [maskValidator]="false"
+      bbIbanValidator
+    >
+    </bb-input-text-ui>
+  </ng-template>
+  <ng-template #bban>
+    <bb-input-text-ui
+      id="bb-create-contact-bban"
+      label="Member number (base account number)"
+      i18n-label="@@contact-manager-form.label.account.number"
+      data-role="new-contact-bban"
+      formControlName="accountIdentifier"
+      [maxLength]="10"
+      [required]="true"
+      pattern="^[0-9]*$"
+      [ngClass]="{ 'form-submitted': submitted, 'form-not-submitted': !submitted }"
+    >
+    </bb-input-text-ui>
+  </ng-template>
+  <ng-template #email>
+    <label
+      #contactsEmailLabel
+      id="bb-create-contact-email-label"
+      data-role="contact-account-create-email-label"
+      i18n="@@contact-personal-data.contactEmail.label"
+      class="mb-2"
+    >
+      Email
+      <small class="d-block bb-text-support bb-text-default">{{ emailSample }}</small>
+    </label>
+    <bb-input-email-ui
+      [aria-labelledby]="contactsEmailLabel.id"
+      formControlName="accountIdentifier"
+      [maxLength]="255"
+      [required]="true"
+      data-role="new-contact-email"
+      bbEmailDomainValidator
+    >
+    </bb-input-email-ui>
+  </ng-template>
+  <ng-template #phone>
+    <label
+      #contactsPhoneLabel
+      id="bb-create-contact-phone-label"
+      data-role="contact-account-create-phone"
+      i18n="@@contact-manager-form.label.phoneNumber"
+      class="mb-2"
+    >
+      Phone number
+      <small id="example-number" class="d-block bb-text-support bb-text-default">E.g. +12027953213</small>
+    </label>
+    <bb-input-text-ui
+      formControlName="accountIdentifier"
+      [maxLength]="30"
+      [required]="true"
+      [aria-labelledby]="contactsPhoneLabel.id"
+      aria-describedby="example-number"
+      data-role="new-contact-phone"
+    >
+    </bb-input-text-ui>
+  </ng-template>
+</form>
+<ng-template #requiredErrorTemplate let-control="control" let-accountIdentifierType="accountIdentifierType">
+  <bb-input-validation-message-ui
+    class="position-absolute"
+    role="alert"
+    [showErrors]="control.errors?.pattern && !control.errors?.minlength && control.touched && submitted"
+  >
+    <ng-container [ngSwitch]="accountIdentifierType">
+      <span
+        *ngSwitchCase="createAccountTypeRef.ACCOUNT"
+        i18n="@@contact-manager-form.label.account.pattern"
+        data-role="missing-account-number-error-label"
+      >
+        Member number has only numbers as digits
+      </span>
+    </ng-container>
+  </bb-input-validation-message-ui>
+
+  <!-- <bb-input-validation-message-ui
+    class="position-absolute"
+    role="alert"
+    [showErrors]="control.errors?.minlength && control.touched"
+  >
+    <ng-container [ngSwitch]="accountIdentifierType">
+      <span
+        *ngSwitchCase="createAccountTypeRef.ACCOUNT"
+        i18n="@@contact-manager-form.label.account.minimum.ten.digits"
+        data-role="missing-account-number-error-label"
+      >
+        Member number has {{ control.errors?.minlength?.requiredLength }} digits
+      </span>
+    </ng-container>
+  </bb-input-validation-message-ui> -->
+
+  <bb-input-validation-message-ui
+    class="position-absolute"
+    role="alert"
+    [showErrors]="control.errors?.required && control.touched && submitted"
+  >
+    <ng-container [ngSwitch]="accountIdentifierType">
+      <span
+        *ngSwitchCase="createAccountTypeRef.ACCOUNT"
+        i18n="@@contact-manager-form.label.account.required"
+        data-role="missing-account-number-error-label"
+      >
+        Member number is required
+      </span>
+      <span
+        *ngSwitchCase="createAccountTypeRef.IBAN"
+        i18n="@@contact-manager-form.label.iban.required"
+        data-role="missing-account-number-error-label"
+      >
+        IBAN is required
+      </span>
+      <span
+        *ngSwitchCase="createAccountTypeRef.PHONE"
+        i18n="@@contact-manager-form.label.phone.number.required"
+        data-role="missing-phone-number-error-label"
+      >
+        Phone number is required
+      </span>
+      <span
+        *ngSwitchCase="createAccountTypeRef.EMAIL"
+        i18n="@@contact-manager-form.label.email.required"
+        data-role="missing-email-error-label"
+      >
+        Email is required
+      </span>
+    </ng-container>
+  </bb-input-validation-message-ui>
+  <bb-input-validation-message-ui
+    class="position-absolute"
+    role="alert"
+    [showErrors]="control.touched && control.errors?.email"
+  >
+    <ng-container>
+      <span i18n="@@contact-manager-form.label.email.invalid" data-role="invalid-email-error-label">
+        Invalid email
+      </span>
+    </ng-container>
+  </bb-input-validation-message-ui>
+  <bb-input-validation-message-ui
+    class="position-absolute"
+    role="alert"
+    [showErrors]="control.touched && control.errors?.invalidIban"
+  >
+    <ng-container>
+      <span i18n="@@contact-manager-form.label.ibanInvalid" data-role="invalid-account-number-error-label">
+        Invalid IBAN
+      </span>
+    </ng-container>
+  </bb-input-validation-message-ui></ng-template
+>

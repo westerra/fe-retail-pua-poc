@@ -1,0 +1,23 @@
+{
+  "projectType": "library",
+  "root": "libs/shared/feature/ui",
+  "sourceRoot": "libs/shared/feature/ui/src",
+  "prefix": "bb",
+  "targets": {
+    "test": {
+      "executor": "@angular-devkit/build-angular:karma",
+      "options": {
+        "main": "libs/shared/feature/ui/src/test.ts",
+        "tsConfig": "libs/shared/feature/ui/tsconfig.spec.json",
+        "karmaConfig": "libs/shared/feature/ui/karma.conf.js"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/shared/feature/ui/src/**/*.ts", "libs/shared/feature/ui/src/**/*.html"]
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,0 +1,42 @@
+bb-cards-travel-notice-create{
+  .card.card-lg.bb-create-travel-notice.ng-star-inserted {
+    width: 120%;
+    left: -10%;
+  }
+
+  @media (max-width: 375px) {
+    .card.card-lg.bb-create-travel-notice.ng-star-inserted {
+      width: 100%;
+      left: 0%;
+    }
+  }
+
+  @media (max-width: 812px) {
+    .card.card-lg.bb-create-travel-notice.ng-star-inserted {
+      width: 100%;
+      left: 0%;
+    }
+  }
+
+  button.bb-button-bar__button.btn.btn-primary.btn-md {
+    color: #E52921;
+    background-color: white;
+  }
+
+
+}
+
+bb-cards-travel-notice-list{
+  button.btn-link.btn-sm.btn {
+    color: black;
+  }
+
+  .bb-travel-notice-list-item__departure-date {
+    font-weight: bold;
+  }
+
+  .bb-travel-notice-list-item__return-date {
+    font-weight: bold;
+  }
+}
+

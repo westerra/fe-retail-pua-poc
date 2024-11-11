@@ -1,0 +1,457 @@
+<div *ngIf="viewState$ | async as state" data-role="view-user-profile">
+  <bb-identity-view-state-container-component [error]="state.error" [loading]="state.loading">
+    <div class="bb-block bb-block--lg" *ngIf="configService.showWidgetHeader">
+      <bb-header-ui headingType="h1" data-role="user-manage-profile-user-name" [heading]="state?.userProfile?.fullName">
+      </bb-header-ui>
+      <p
+        class="bb-block bb-block--sm bb-subtitle bb-text-support"
+        i18n="
+          Label for personal
+          information@@bb-user-profile-features.view-user-profile-view.header-text.personal-information"
+      >
+        Personal information
+      </p>
+    </div>
+
+    <bb-identity-admin-user-details-view *ngIf="configService.isAdmin"></bb-identity-admin-user-details-view>
+    <div class="card bb-block bb-block--lg">
+      <div class="card-body">
+        <div class="bb-block bb-block--lg">
+          <bb-header-ui
+            headingType="h2"
+            data-role="view-user-profile-header-email"
+            heading="Email address"
+            i18n-heading="
+              Header for user profile email address@@bb-user-profile-features.view-user-profile-view.header-text.email"
+          >
+          </bb-header-ui>
+        </div>
+        <ng-container *ngIf="state?.userProfile?.['electronic-addresses']?.length; else emailEmptyState">
+          <ul class="bb-list">
+            <li
+              *ngFor="let emailAddressItem of state?.userProfile?.['electronic-addresses']"
+              class="bb-list__item"
+              data-role="view-user-profile-email-item"
+            >
+              <bb-identity-profile-item-layout>
+                <ng-container left>
+                  <p
+                    data-role="view-user-profile-email-item-type"
+                    class="bb-block bb-block--sm bb-subtitle bb-text-support"
+                  >
+                    <span
+                      *ngIf="configService.emailAddressIsTypeEditable"
+                      data-role="view-user-profile-email-type-label"
+                      >{{ emailAddressItem.type }}</span
+                    >
+                    <span
+                      class="bb-d-none"
+                      *ngIf="configService.emailAddressIsPrimaryEditable && emailAddressItem.primary"
+                      data-role="view-user-profile-email-primary-label"
+                      i18n="
+                        Label for email
+                        type@@bb-user-profile-features.view-user-profile-view.label-text.email-is-primary"
+                      >(primary)</span
+                    >
+                  </p>
+                  <div data-role="view-user-profile-email-item-value">
+                    {{ emailAddressItem.address }}
+                  </div>
+                </ng-container>
+                <ng-container right *ngIf="emailOptions.length">
+                  <bb-identity-profile-operations
+                    [options]="emailOptions"
+                    [itemRef]="emailAddressItem"
+                    [totalItems]="state?.userProfile?.['electronic-addresses']?.length || 0"
+                    ariaLabel="Modify email menu"
+                    i18n-ariaLabel="
+                      Menu for modifications to
+                      email@@bb-user-profile-features.view-user-profile-view.dropdown-menu-aria-label.email"
+                  >
+                  </bb-identity-profile-operations>
+                </ng-container>
+              </bb-identity-profile-item-layout>
+            </li>
+            <li *ngIf="state.showEmailAddButton" role="presentation" class="bb-list__item bb-stack bb-stack--wrap"></li>
+          </ul>
+        </ng-container>
+        <div *ngIf="state.showEmailAddButton" class="bb-button-bar bb-button-bar--reverse">
+          <button
+            bbButton
+            data-role="user-manage-profile-email-add-button"
+            class="bb-button-bar__button"
+            color="secondary"
+            (click)="navigateEmailPath()"
+          >
+            <bb-icon-ui name="create-payment"></bb-icon-ui>
+            <span
+              i18n="Add email address button@@bb-user-profile-features.view-user-profile-view.button-text.add-email"
+            >
+              Add email address</span
+            >
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="card bb-block bb-block--lg">
+      <div class="card-body">
+        <div class="bb-block bb-block--lg">
+          <bb-header-ui
+            headingType="h2"
+            data-role="view-user-profile-header-phone"
+            heading="Phone number"
+            i18n-heading="
+              Header for user profile phone
+              number@@bb-user-profile-features.view-user-profile-view.header-text.phone-number"
+          >
+          </bb-header-ui>
+        </div>
+        <ng-container *ngIf="state?.userProfile?.['phone-addresses']?.length; else phoneEmptyState">
+          <ul class="bb-list">
+            <li
+              *ngFor="let phoneNumberItem of state?.userProfile?.['phone-addresses']"
+              class="bb-list__item"
+              data-role="view-user-profile-phone-item"
+            >
+              <bb-identity-profile-item-layout>
+                <ng-container left>
+                  <p
+                    data-role="view-user-profile-phone-item-type"
+                    class="bb-block bb-block--sm bb-subtitle bb-text-support"
+                  >
+                    <span *ngIf="configService.phoneNumberIsTypeEditable">{{ phoneNumberItem.type }}</span>
+                    <span
+                      *ngIf="configService.phoneNumberIsPrimaryEditable && phoneNumberItem.primary"
+                      data-role="view-user-profile-phone-primary-label"
+                      i18n="
+                        Label for phone number
+                        type@@bb-user-profile-features.view-user-profile-view.label-text.phone-is-primary"
+                    >
+                      (primary)
+                    </span>
+                  </p>
+                  <div data-role="view-user-profile-phone-item-value">
+                    &lrm;{{ phoneNumberItem.number | phoneNumber: configService.phoneNumberCountryCode }}
+                  </div>
+                </ng-container>
+                <ng-container right *ngIf="phoneOptions.length">
+                  <bb-identity-profile-operations
+                    [options]="phoneOptions"
+                    [itemRef]="phoneNumberItem"
+                    [totalItems]="state?.userProfile?.['phone-addresses']?.length || 0"
+                    ariaLabel="Modify phone number menu"
+                    i18n-ariaLabel="
+                      Menu for modifications to phone
+                      number@@bb-user-profile-features.view-user-profile-view.dropdown-menu-aria-label.phone"
+                  >
+                  </bb-identity-profile-operations>
+                </ng-container>
+              </bb-identity-profile-item-layout>
+            </li>
+            <li *ngIf="state.showPhoneAddButton" role="presentation" class="bb-list__item bb-stack bb-stack--wrap"></li>
+          </ul>
+        </ng-container>
+        <div *ngIf="state.showPhoneAddButton" class="bb-button-bar bb-button-bar--reverse">
+          <button
+            bbButton
+            data-role="user-manage-profile-phone-add-button"
+            class="bb-button-bar__button"
+            color="secondary"
+            (click)="navigateAddPhonePath()"
+          >
+            <bb-icon-ui name="create-payment"></bb-icon-ui>
+            <span i18n="Add phone number button@@bb-user-profile-features.view-user-profile-view.button-text.add-phone"
+              >Add phone number</span
+            >
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="card bb-block bb-block--lg">
+      <div class="card-body">
+        <div class="bb-block bb-block--lg">
+          <bb-header-ui
+            headingType="h2"
+            data-role="view-user-profile-header-address"
+            heading="Address"
+            i18n-heading="
+              Header for user profile postal
+              address@@bb-user-profile-features.view-user-profile-view.header-text.postal-address"
+          >
+          </bb-header-ui>
+        </div>
+        <ng-container *ngIf="state?.userProfile?.['postal-addresses']?.length; else addressEmptyState">
+          <ul class="bb-list">
+            <li
+              *ngFor="let postalAddressItem of state?.userProfile?.['postal-addresses']; let k=index;"
+              class="bb-list__item"
+              data-role="view-user-profile-address-item"
+            >
+              <bb-identity-profile-item-layout [alignTop]="true">
+                <ng-container left>
+                  <p
+                    data-role="view-user-profile-address-item-type"
+                    class="bb-block bb-block--sm bb-subtitle bb-text-support"
+                  >
+                    <span
+                      *ngIf="configService.postalAddressIsTypeEditable"
+                      data-role="view-user-profile-postal-type-label"
+                      >{{ updatedAddressType(postalAddressItem.type) }}</span
+                    >
+                    <span
+                      *ngIf="configService.postalAddressIsPrimaryEditable && postalAddressItem.primary"
+                      data-role="view-user-profile-address-primary-label"
+                      i18n="
+                        Label for postal address
+                        type@@bb-user-profile-features.view-user-profile-view.label-text.address-is-primary"
+                    >
+                      (primary)
+                    </span>
+                  </p>
+                  <div data-role="view-user-profile-address-item-value">
+                    <div *ngIf="postalAddressItem.department">
+                      {{ postalAddressItem.department }}
+                    </div>
+                    <div *ngIf="postalAddressItem.subDepartment">
+                      {{ postalAddressItem.subDepartment }}
+                    </div>
+                    <div *ngIf="postalAddressItem.addressLine">
+                      {{ postalAddressItem.addressLine }}
+                    </div>
+                    <div *ngIf="postalAddressItem.buildingNumber">
+                      {{ postalAddressItem.buildingNumber }}
+                    </div>
+                    <div *ngIf="postalAddressItem.streetName">
+                      {{ postalAddressItem.streetName }}
+                    </div>
+                    <div *ngIf="postalAddressItem.townName">
+                      {{ postalAddressItem.townName }}
+                    </div>
+                    <div *ngIf="postalAddressItem.countrySubDivision">
+                      {{ postalAddressItem.countrySubDivision }}
+                    </div>
+                    <div *ngIf="postalAddressItem.postalCode">
+                      {{ postalAddressItem.postalCode }}
+                    </div>
+                    <div *ngIf="postalAddressItem.country">
+                      {{ postalAddressItem.country }}
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-container right *ngIf="updatedAddressOptions(postalAddressItem, k).length">
+                  <!-- 
+                    [options]="addressOptions" -->
+                  <bb-identity-profile-operations
+                    [options]="updatedAddressOptions(postalAddressItem, k)"
+                    [itemRef]="postalAddressItem"
+                    [totalItems]="state?.userProfile?.['postal-addresses']?.length || 0"
+                    ariaLabel="Modify postal address menu"
+                    i18n-ariaLabel="
+                      Menu for modifications to postal
+                      address@@bb-user-profile-features.view-user-profile-view.dropdown-menu-aria-label.address"
+                  >
+                  </bb-identity-profile-operations>
+                </ng-container>
+              </bb-identity-profile-item-layout>
+            </li>
+            <li
+              *ngIf="state.showAddressAddButton"
+              role="presentation"
+              class="bb-list__item bb-stack bb-stack--wrap"
+            ></li>
+          </ul>
+        </ng-container>
+        <div *ngIf="state.showAddressAddButton" class="bb-button-bar bb-button-bar--reverse">
+          <button
+            bbButton
+            data-role="user-manage-profile-address-add-button"
+            class="bb-button-bar__button"
+            color="secondary"
+            (click)="navigateAddAddressPath()"
+          >
+            <bb-icon-ui name="create-payment"></bb-icon-ui>
+            <span i18n="Add address button@@bb-user-profile-features.view-user-profile-view.button-text.add-address"
+              >Add address</span
+            >
+          </button>
+        </div>
+      </div>
+    </div>
+  </bb-identity-view-state-container-component>
+</div>
+<ng-template #removeEmailTemplate let-emailAddressContext="emailAddressContext">
+  <bb-identity-confirm-action-modal-component
+    heading="Remove email address?"
+    i18n-heading="
+      Remove email address modal
+      heading@@bb-user-profile-features.view-user-profile-view.confirm-action-modal-heading-text.email"
+    description="This will remove {{ emailAddressContext.address }} from your email addresses"
+    i18n-description="
+      Remove email address modal
+      description@@bb-user-profile-features.view-user-profile-view.confirm-action-modal-description-text.email"
+    cancelText="Cancel"
+    i18n-cancelText="
+      Remove email address modal cancel
+      button@@bb-user-profile-features.view-user-profile-view.confirm-action-modal-button-text.cancel-email"
+    confirmText="Remove"
+    i18n-confirmText="
+      Remove email address modal confirm
+      button@@bb-user-profile-features.view-user-profile-view.confirm-action-modal-button-text.confirm-email"
+    confirmStyle="danger"
+    [confirmLoading]="!!(isRemoveEmailLoadingSubject$ | async)"
+    [confirmDisabled]="!!(isRemoveEmailLoadingSubject$ | async)"
+    [modalOpen]="!!removeEmailAddressContext"
+    (cancelModalClick)="cancelDeleteModal()"
+    (confirmActionClick)="removeEmailAddressConfirm(emailAddressContext)"
+  >
+  </bb-identity-confirm-action-modal-component></ng-template
+><ng-container *ngIf="removeEmailAddressContext">
+  <ng-container
+    *ngTemplateOutlet="removeEmailTemplate; context: { emailAddressContext: removeEmailAddressContext }"
+  ></ng-container></ng-container
+><ng-template #removePhoneTemplate let-phoneNumberContext="phoneNumberContext">
+  <bb-identity-confirm-action-modal-component
+    heading="Remove phone number?"
+    i18n-heading="
+      Remove phone number modal
+      heading@@bb-user-profile-features.view-user-profile-view.confirm-action-modal-heading-text.phone"
+    description="This will remove {{ phoneNumberContext.number }} from your phone numbers"
+    i18n-description="
+      Remove phone number modal
+      description@@bb-user-profile-features.view-user-profile-view.confirm-action-modal-description-text.phone"
+    cancelText="Cancel"
+    i18n-cancelText="
+      Remove phone number modal cancel
+      button@@bb-user-profile-features.view-user-profile-view.confirm-action-modal-button-text.cancel-phone"
+    confirmText="Remove"
+    i18n-confirmText="
+      Remove phone number modal confirm
+      button@@bb-user-profile-features.view-user-profile-view.confirm-action-modal-button-text.confirm-phone"
+    confirmStyle="danger"
+    [confirmLoading]="!!(isRemovePhoneLoadingSubject$ | async)"
+    [confirmDisabled]="!!(isRemovePhoneLoadingSubject$ | async)"
+    [modalOpen]="!!removePhoneNumberContext"
+    (cancelModalClick)="cancelDeleteModal()"
+    (confirmActionClick)="removePhoneNumberConfirm(phoneNumberContext)"
+  >
+  </bb-identity-confirm-action-modal-component></ng-template
+><ng-container *ngIf="removePhoneNumberContext">
+  <ng-container
+    *ngTemplateOutlet="removePhoneTemplate; context: { phoneNumberContext: removePhoneNumberContext }"
+  ></ng-container></ng-container
+><ng-template #removePostalAddressTemplate let-postalAddressContext="postalAddressContext">
+  <bb-identity-confirm-action-modal-component
+    heading="Remove address?"
+    i18n-heading="
+      Remove postal address modal
+      heading@@bb-user-profile-features.view-user-profile-view.confirm-action-modal-heading-text.address"
+    description="This will remove the address from your addresses"
+    i18n-description="
+      Remove postal address modal
+      description@@bb-user-profile-features.view-user-profile-view.confirm-action-modal-description-text.address"
+    cancelText="Cancel"
+    i18n-cancelText="
+      Remove postal address modal cancel
+      button@@bb-user-profile-features.view-user-profile-view.confirm-action-modal-button-text.cancel-address"
+    confirmText="Remove"
+    i18n-confirmText="
+      Remove postal address modal confirm
+      button@@bb-user-profile-features.view-user-profile-view.confirm-action-modal-button-text.confirm-address"
+    confirmStyle="danger"
+    [confirmLoading]="!!(isRemoveAddressLoadingSubject$ | async)"
+    [confirmDisabled]="!!(isRemoveAddressLoadingSubject$ | async)"
+    [modalOpen]="!!removePostalAddressContext"
+    (cancelModalClick)="cancelDeleteModal()"
+    (confirmActionClick)="removePostalAddressConfirm(postalAddressContext)"
+  >
+  </bb-identity-confirm-action-modal-component></ng-template
+><ng-container *ngIf="removePostalAddressContext">
+  <ng-container
+    *ngTemplateOutlet="removePostalAddressTemplate; context: { postalAddressContext: removePostalAddressContext }"
+  ></ng-container></ng-container
+><ng-template #emailEmptyState>
+  <div class="bb-block bb-block--md">
+    <bb-empty-state-ui
+      data-role="user-manage-profile-email-empty-state"
+      [showIcon]="false"
+      i18n-title="Empty email address list text@@bb-user-profile-features.view-user-profile-view.empty-state-text.email"
+      title="No email addresses"
+    >
+    </bb-empty-state-ui></div></ng-template
+><ng-template #phoneEmptyState>
+  <div class="bb-block bb-block--md">
+    <bb-empty-state-ui
+      data-role="user-manage-profile-phone-empty-state"
+      [showIcon]="false"
+      i18n-title="Empty phone address list text@@bb-user-profile-features.view-user-profile-view.empty-state-text.phone"
+      title="No phone numbers"
+    >
+    </bb-empty-state-ui></div></ng-template
+><ng-template #addressEmptyState>
+  <div class="bb-block bb-block--md">
+    <bb-empty-state-ui
+      data-role="user-manage-profile-address-empty-state"
+      [showIcon]="false"
+      i18n-title="
+        Empty postal address list text@@bb-user-profile-features.view-user-profile-view.empty-state-text.address"
+      title="No addresses"
+    >
+    </bb-empty-state-ui></div></ng-template
+><ng-template #removeEmailNotificationSuccessHeader>
+  <span
+    class="bb-text-bold"
+    data-role="user-manage-profile-email-remove-success-notification"
+    i18n="
+      Add email save success notification
+      header@@bb-user-profile-features.view-user-profile-view.notification-text.success-email"
+  >
+    Email removed successfully
+  </span></ng-template
+><ng-template #removeEmailNotificationFailure>
+  <span
+    data-role="user-profile-remove-email-error-notification"
+    i18n="
+      An unexpected error occurred
+      notification@@bb-user-profile-features.view-user-profile-view.notification-text.unexpected-error-email"
+  >
+    An unexpected error occurred
+  </span></ng-template
+><ng-template #removePhoneNotificationSuccessHeader>
+  <span
+    class="bb-text-bold"
+    data-role="user-manage-profile-delete-phone-success-notification"
+    i18n="
+      Add phone save success notification
+      header@@bb-user-profile-features.view-user-profile-view.notification-text.success-phone"
+  >
+    Phone number removed successfully
+  </span></ng-template
+><ng-template #removePhoneNotificationFailure>
+  <span
+    data-role="user-profile-remove-phone-error-notification"
+    i18n="
+      An unexpected error occurred
+      notification@@bb-user-profile-features.view-user-profile-view.notification-text.unexpected-error-phone"
+  >
+    An unexpected error occurred
+  </span></ng-template
+><ng-template #removePostalAddressNotificationSuccessHeader>
+  <span
+    class="bb-text-bold"
+    data-role="user-manage-profile-delete-postal-success-notification"
+    i18n="
+      Add address save success notification
+      header@@bb-user-profile-features.view-user-profile-view.notification-text.success-address"
+  >
+    Address removed successfully
+  </span></ng-template
+><ng-template #removePostalAddressNotificationFailure>
+  <span
+    data-role="user-profile-remove-postal-error-notification"
+    i18n="
+      An unexpected error occurred
+      notification@@bb-user-profile-features.view-user-profile-view.notification-text.unexpected-error-address"
+  >
+    An unexpected error occurred
+  </span></ng-template
+>

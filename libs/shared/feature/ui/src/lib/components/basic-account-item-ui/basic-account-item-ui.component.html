@@ -1,0 +1,39 @@
+<div class="bb-product-item bb-product-item-basic-account-ui product-item">
+  <div class="bb-stack bb-stack--wrap product-item-content">
+    <div class="bb-stack__item bb-product-item__title">
+      <div class="bb-stack">
+        <div class="bb-account-info ng-star-inserted">
+          <div data-role="card-title" class="bb-account-info__title">
+            <bb-ellipsis-ui>
+              <div class="bb-ellipsis bb-ellipsis--single-line">
+                {{ account?.displayName ? account?.displayName : account?.name }}
+                <div></div></div
+            ></bb-ellipsis-ui>
+            <span class="bb-account-info__status bb-account-status"></span>
+          </div>
+
+          <div data-role="card-sub-title" class="bb-stack bb-account-info__product-number ng-star-inserted">
+            <span class="sr-only"> Account number: </span>
+            <bb-ellipsis-ui class="bb-account-info__product-number-content"
+              ><div class="bb-ellipsis bb-ellipsis--single-line" tooltip="Account number">
+                {{ account?.BBAN }}
+                <div></div></div
+            ></bb-ellipsis-ui>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bb-stack__break bb-stack__break--xs"></div>
+    <div class="bb-stack__item bb-stack__item--push-right bb-stack__item--spacing-none bb-product-item__details">
+      <div class="bb-text-align-right ng-star-inserted">
+        <div class="ng-star-inserted">
+          <span data-role="balance-type-label" class="bb-text-support bb-subheader bb-subheader--regular">
+            Current Balance
+          </span>
+        </div>
+        <bb-amount-ui class="bb-highlight bb-product-item__amount" [currency]="'USD'" [amount]="account?.bookedBalance">
+        </bb-amount-ui>
+      </div>
+    </div>
+  </div>
+</div>

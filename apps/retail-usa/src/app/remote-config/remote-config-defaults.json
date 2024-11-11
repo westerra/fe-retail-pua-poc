@@ -1,0 +1,7 @@
+{
+  "show_manage_contacts": true,
+  "owed_amount_focus": true,
+  "show_payment_status_retail_loans": true,
+  "show_maintenance_banner": false,
+  "maintenance_banner_text": "Dear Customer, some services in the online banking app are  not available due to maintenance activity."
+}

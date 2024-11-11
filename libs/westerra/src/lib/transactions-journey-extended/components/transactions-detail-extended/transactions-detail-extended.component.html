@@ -1,0 +1,306 @@
+<ng-container bbTransactionsListItemDetailsCustomizable [bbHostRef]="hostRef"></ng-container>
+<ng-template bbTransactionsListItemDetailsCustomizable let-hostRef>
+
+  <div class="bb-transaction-list-item-details">
+    <div class="bb-block bb-block--lg">
+      <!-- Export failed alert -->
+      <div class="bb-block bb-block--lg bb-text-align-left" *ngIf="hostRef.showExportError">
+        <bb-alert-ui modifier="error" data-role="export-error-banner" title="Oops! Something went wrong" i18n-title="
+            Export failed notification|Notification title displayed when transaction export request fails
+            @@transactions.notification.export-failed.title" message="Please try again." i18n-message="
+            Export failed notification message|Notification message displayed when transaction export request fails
+            @@transactions.notification.export-failed.message"></bb-alert-ui>
+      </div>
+      <div class="bb-text-align-center bb-stack bb-stack--center">
+        <!-- Add note button -->
+        <div class="bb-stack__item bb-transaction-list-item-details-controls-container">
+          <button bbButton [circle]="true" data-role="control-note-btn" class="bb-block bb-block--md"
+            [attr.aria-expanded]="!!hostRef.isEditingNotes" (click)="hostRef.openEditNotes()">
+            <bb-icon-ui name="subject"></bb-icon-ui>
+          </button>
+          <div class="bb-transaction-list-item-details-controls-label">
+            <label data-role="add-note-label" *ngIf="!hostRef.transaction.notes; else editNoteLabel"
+              i18n="Add note to the current transaction@@transactions.list.details.addNote.label">Add note</label>
+            <ng-template #editNoteLabel>
+              <label data-role="edit-note-label"
+                i18n="Edit note of the current transaction@@transactions.list.details.editNote.label">Edit note</label>
+            </ng-template>
+          </div>
+        </div>
+        <!-- Export button -->
+        <!-- <div
+          class="bb-stack__item bb-transaction-list-item-details-controls-container">
+          <button
+            bbButton
+            [circle]="true"
+            data-role="export-button"
+            class="bb-block bb-block--md"
+            (click)="hostRef.onExport()">
+            <bb-icon-ui name="get-app"></bb-icon-ui>
+          </button>
+          <div class="bb-transaction-list-item-details-controls-label">
+            <label
+              data-role="export-label"
+              i18n="Export the current transaction@@transactions.list.details.export.label"
+              >Export</label
+            >
+          </div>
+        </div> -->
+        <!-- Report button -->
+        <!-- <div
+          *ngIf="            hostRef.transactionDetailsLoadingStatus?.enableDisputeAndInquiry === hostRef.loadingStateEnum.done &&            !(hostRef.isExternalAccount | async)          "
+          class="bb-stack__item bb-transaction-list-item-details-controls-container">
+          <button
+            bbButton
+            [circle]="true"
+            class="bb-block bb-block--md"
+            data-role="report-button"
+            (click)="hostRef.showReportForm(true)">
+            <bb-icon-ui name="sms-failed"></bb-icon-ui>
+          </button>
+          <div class="bb-transaction-list-item-details-controls-label">
+            <label
+              data-role="report-label"
+              i18n="Report the current transaction@@transactions.list.details.report.label">
+              Report
+            </label>
+          </div>
+        </div> -->
+      </div>
+      <!-- Dispute and inquiry alerts -->
+      <div class="bb-block bb-block--lg bb-text-align-left">
+        <!-- Dispute banners -->
+        <bb-dispute-banner [transaction]="hostRef.transaction"></bb-dispute-banner>
+        <!-- Inquiry banner -->
+        <ng-container *ngIf="hostRef.reportState === hostRef.loadingStateEnum.done">
+          <bb-alert-ui *ngIf="hostRef.savedReportType === 'inquire'" modifier="info" data-role="send-inquiry-success"
+            title="The bank is reviewing your transaction" i18n-title="
+              Send inquiry report success notification|Message for a notification displayed when sending transaction
+              inquiry report request has succeed@@transactions.notification.success.send.inquiry.title"
+            message="Please go to Messages to view any responses to your request."
+            i18n-message="
+              Send inquiry report success notification message@@transactions.notification.success.send.inquiry.message"></bb-alert-ui>
+        </ng-container>
+      </div>
+      <!-- Dispute and inquiry component -->
+      <div *ngIf="hostRef.showInquiryAndDispute">
+        <bb-transactions-inquiry-dispute [(message)]="hostRef.message" [enableDispute]="
+            hostRef.transactionDetailsLoadingStatus.disputeOption === hostRef.loadingStateEnum.done &&
+            (hostRef.transaction.disputeStatus === 'UNDISPUTED' ||
+              hostRef.transaction.disputeStatus === 'REJECTED' ||
+              !hostRef.transaction.disputeStatus)
+          " [state]="hostRef.reportState" [inquireAndDisputeTopics]="hostRef.inquireAndDisputeTopics"
+          (submitReport)="hostRef.saveReport($event)" (cancelReport)="hostRef.cancelReport()"
+          (fileChange)="hostRef.fileChange($event)"
+          (fileRemoved)="hostRef.fileRemoved($event)"></bb-transactions-inquiry-dispute>
+      </div>
+    </div>
+    <div class="bb-block--lg">
+      <!-- Type -->
+      <div class="bb-block--md" *ngIf="hostRef.transaction?.type" data-role="list-details-type-section">
+        <!-- *ngIf="hostRef.transaction?.type && (!!hostRef.transaction?.category || !!hostRef.transaction.isPending)" -->
+        <div class="bb-text-bold" i18n="Type of the selected transaction@@transactions.details.label.transactionType"
+          data-role="section-title">
+          Type
+        </div>
+        <div class="break-word" data-role="section-content">
+          {{ localizeTransactionType(hostRef.transaction?.type) }}
+        </div>
+      </div>
+      <!-- Date Created -->
+      <div class="bb-block--md" *ngIf="hostRef.transaction.valueDate && !hostRef.transaction.isPending">
+        <div class="bb-text-bold"
+          i18n="Transaction date posted of the selected transaction@@transactions.details.label.valueDate"
+          data-role="section-title">
+          Date Created
+        </div>
+        <div class="break-word" data-role="section-content">
+          {{ hostRef.transaction?.valueDate | bbDate }}
+        </div>
+      </div>
+      <!-- Description -->
+      <div class="bb-block--md" *ngIf="hostRef.transaction?.description" data-role="list-details-description-section">
+        <div class="bb-text-bold" i18n="Description of the selected transaction@@transactions.details.label.description"
+          data-role="section-title">
+          Description
+        </div>
+        <div class="break-word" data-role="section-content">
+          {{ hostRef.transaction?.description }}
+        </div>
+      </div>
+      <!-- Original Description -->
+      <div class="bb-block--md" *ngIf="hostRef.transaction?.originalDescription"
+        data-role="list-details-original-description-section">
+        <div class="bb-text-bold"
+          i18n="Original description of the selected transaction@@transactions.details.label.originalDescription"
+          data-role="section-title">
+          Statement description
+        </div>
+        <div class="break-word" data-role="section-content">
+          {{ hostRef.transaction?.originalDescription }}
+        </div>
+      </div>
+      <!-- Running balance -->
+      <!-- Will not be displayed for pending transactions -->
+      <div class="bb-block--md" *ngIf="hostRef.transaction?.runningBalance && !hostRef.transaction.isPending"
+        data-role="list-details-running-balance-section">
+        <div class="bb-text-bold"
+          i18n="Running balance of the selected transaction@@transactions.details.label.runningBalance"
+          data-role="section-title">
+          Running balance
+        </div>
+        <div class="break-word">
+          <bb-amount-ui data-role="section-content"
+            [currency]="hostRef.transaction?.transactionAmountCurrency?.currencyCode"
+            [amount]="hostRef.transaction?.runningBalance"></bb-amount-ui>
+        </div>
+      </div>
+      <!-- Instructed amount -->
+      <!-- <div
+        class="bb-block--md"
+        *ngIf="hostRef.transaction?.instructedAmountCurrency?.amount"
+        data-role="list-details-instructed-amount-section">
+        <div
+          class="bb-text-bold"
+          i18n="Instructed Amount of the selected transaction@@transactions.details.label.instructedAmount"
+          data-role="section-title">
+          Instructed amount
+        </div>
+        <div class="break-word">
+          <bb-amount-ui
+            data-role="section-content"
+            [amount]="hostRef.transaction?.instructedAmountCurrency?.amount"
+            [currency]="hostRef.transaction?.instructedAmountCurrency?.currencyCode"></bb-amount-ui>
+        </div>
+      </div> -->
+      <!-- Counter party account number -->
+      <!-- <div
+        class="bb-block--md"
+        *ngIf="hostRef.transaction?.counterPartyAccountNumber"
+        data-role="list-details-counter-party-account-number-section">
+        <div
+          class="bb-text-bold"
+          i18n="            Counter Party Account number of the selected            transaction@@transactions.details.label.counterPartyAccountNumber"
+          data-role="section-title">
+          Counter party account number
+        </div>
+        <div class="break-word" data-role="section-content">
+          {{ hostRef.transaction?.counterPartyAccountNumber }}
+        </div>
+      </div> -->
+      <!-- Currency Exchange -->
+      <!-- <div
+        class="bb-block--md"
+        *ngIf="hostRef.transaction.currencyExchangeAvailability"
+        data-role="list-details-currency-exchange-section">
+        <div
+          class="bb-text-bold"
+          i18n="Transaction type of the selected transaction@@transactions.details.label.currencyExchange"
+          data-role="section-title">
+          Currency exchange
+        </div>
+        <div class="break-word" data-role="section-content">
+          <bb-amount-ui
+            amount="1"
+            [currency]="hostRef.transaction?.instructedAmountCurrency.currencyCode"></bb-amount-ui>
+          <span> = </span>
+          <bb-amount-ui
+            [amount]="hostRef.transaction?.currencyExchangeRate"
+            [currency]="hostRef.transaction?.transactionAmountCurrency.currencyCode"
+            [decimalPlaces]="6"
+            [trailingZeroes]="false"></bb-amount-ui>
+        </div>
+      </div> -->
+    </div>
+    <!-- Check image -->
+    <ng-container *ngIf="hostRef?.transactionDetailsLoadingStatus?.checkImages !== hostRef.loadingStateEnum.notStarted">
+      <ng-container
+        *ngIf="hostRef?.transactionDetailsLoadingStatus?.checkImages !== hostRef.loadingStateEnum.notLoaded">
+        <div class="bb-block--lg"
+          *ngIf="hostRef.transaction && hostRef.transaction.checkImageAvailability === 'AVAILABLE'">
+          <span class="bb-text-bold"
+            i18n="check images of the selected transaction@@transactions.details.label.check-img">
+            Check images
+          </span>
+          <span>
+            <bb-icon-ui class="bb-transactions-list-pending-header__tooltip" role="tooltip" name="info" size="sm"
+              [bbTooltip]="tipContent" triggers="hover click" placement="right" bbAccessibilityKeyboard></bb-icon-ui>
+          </span>
+          <bb-transaction-check-image [transaction]="hostRef.transaction" [checkImagesList]="hostRef.checkImagesList"
+            [transactionDetailsLoadingStatus]="hostRef.transactionDetailsLoadingStatus"></bb-transaction-check-image>
+        </div>
+      </ng-container>
+    </ng-container>
+    <!-- Geo location -->
+    <div *ngIf="hostRef.transaction?.location">
+      <div class="bb-text-bold bb-block bb-block--sm"
+        i18n="Geo location of the selected transaction@@transactions.details.label.geo-location">
+        Location
+      </div>
+      <bb-transaction-geo-location-map [transaction]="hostRef.transaction"
+        [loadingStatus]="hostRef.transactionDetailsLoadingStatus?.geolocation"></bb-transaction-geo-location-map>
+    </div>
+    <!-- Notes -->
+    <ng-container *ngIf="!!hostRef.isEditingNotes || !!hostRef.transaction.notes">
+      <div class="bb-block bb-block--lg"></div>
+      <div class="bb-transaction-list-item-detail-additional-info">
+        <bb-transaction-notes data-role="transaction-notes" [transaction]="hostRef.transaction"
+          [isEditingNotes]="hostRef.isEditingNotes" [isSavingNotes]="hostRef.isSavingNotes"
+          (isEditingNotesChange)="hostRef.isEditingNotes = $event; hostRef.isEditingNotesChange.emit($event)"
+          (changeNotes)="hostRef.onChangeNotes($event)" (deleteNote)="hostRef.handleDelete()"></bb-transaction-notes>
+      </div>
+    </ng-container>
+  </div>
+</ng-template>
+<!-- Delete note -->
+<bb-modal-ui [isOpen]="deleteNoteModalActive" (cancel)="closeModal()">
+  <ng-container bbTransactionsListConfirmationModalCustomizable [bbHostRef]="hostRef"></ng-container></bb-modal-ui>
+<ng-template bbTransactionsListConfirmationModalCustomizable let-hostRef>
+  <div class="modal-header">
+    <h2 id="modal-basic-title" class="modal-title" data-role="delete-note-modal-header"
+      i18n="Delete note?|Delete note modal title@@transactions.list.note.delete.modal.title">
+      Delete note?
+    </h2>
+  </div>
+  <div class="modal-body">
+    <span data-role="delete-note-modal-subHeader"
+      i18n="Are you sure you want to delete this note?|Delete note info@@transactions.list.note.delete.modal.info">
+      Are you sure you want to delete the attached note? Entered data will be lost.
+    </span>
+  </div>
+  <div class="modal-footer">
+    <div class="bb-button-bar">
+      <button bbButton color="danger" class="bb-button-bar__button" data-role="delete-note-modal-delete-button"
+        (click)="hostRef.submitDeleteNote()"
+        i18n="Delete note|Delete note button label@@transactions.list.note.delete.modal.delete.button">
+        Delete note
+      </button>
+      <button bbButton color="link" class="bb-button-bar__button" data-role="delete-note-modal-cancel-button"
+        (click)="hostRef.closeModal()"
+        i18n="Cancel|Cancel button label@@transactions.list.note.confirmation.modal.cancel.button">
+        Cancel
+      </button>
+    </div>
+  </div>
+</ng-template>
+<ng-template #tipContent>
+  <div class="bb-text-align-left">
+    <span i18n="Description inside a tooltip@@transactions.list.details.check-img.tooltip.description">
+      Some images may not be available online if:
+    </span>
+    <ul>
+      <li i18n="Description scheduled maintenance@transactions.list.details.check-img.tooltip.description.point1">
+        There is a scheduled maintenance in the Check Image Service.
+      </li>
+      <li i18n="Check deposited earlier@transactions.list.details.check-img.tooltip.description.point2">
+        <!-- The check has been deposited earlier than 12 months ago. -->
+        Check images for checks older than 2 years are unavailable through the digital banking app.
+      </li>
+      <li i18n="Check deposited after 48 hours@transactions.list.details.check-img.tooltip.description.point3">
+        The checks have been received or deposited within the past 48 hours.
+      </li>
+    </ul>
+    <span> Please contact a Westerra representative for assistance. </span>
+  </div>
+</ng-template>
+<ng-template #loadingState> <bb-loading-indicator-ui loaderSize="lg"></bb-loading-indicator-ui></ng-template>

@@ -1,0 +1,193 @@
+<div
+  class="bb-account-details-item bb-stack__item bb-stack__item--fill"
+  [attr.data-role]="'account-info-property-' + property?.key"
+>
+  <div
+    *ngIf="property?.label"
+    class="bb-block bb-block--sm bb-stack bb-stack--density-sm"
+    [attr.data-role]="'account-info-property-' + property?.key + '-label'"
+  >
+    <span class="bb-stack__item bb-text-bold">
+      {{ property?.label }}
+    </span>
+    <bb-icon-ui
+      *ngIf="property?.tooltip"
+      class="bb-stack__item bb-text-support"
+      data-role="toggle-tooltip-icon"
+      tabindex="0"
+      name="info"
+      size="sm"
+      aria-label="Toggle tooltip for {{ property?.label }}"
+      i18n-aria-label="Toggle tooltip icon aria label@@product-summary.account-details-property.tooltip-icon.aria-label"
+      [bbTooltip]="property?.tooltip"
+      triggers="focus hover"
+    ></bb-icon-ui>
+  </div>
+
+  <div [attr.data-role]="'account-info-property-' + property?.key + '-value'">
+    <ng-container [ngSwitch]="property?.type">
+      <ng-container *ngSwitchCase="propertyType.ACCOUNT_NUMBER">
+        <ng-container *ngTemplateOutlet="accountNumberValue"></ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="propertyType.ACCOUNT_STATE">
+        <ng-container *ngTemplateOutlet="accountStateValue"></ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="propertyType.AMOUNT">
+        <ng-container *ngTemplateOutlet="amountOrPercentValue"></ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="propertyType.DATE">
+        <ng-container *ngTemplateOutlet="dateValue"></ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="propertyType.DEBIT_CARDS">
+        <ng-container *ngTemplateOutlet="debitCardsValue"></ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="propertyType.FREQUENCY">
+        <ng-container *ngTemplateOutlet="termValue"></ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="propertyType.NUMBER">
+        <ng-container *ngTemplateOutlet="numberOrPercentValue"></ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="propertyType.PERCENT">
+        <ng-container *ngTemplateOutlet="percentValue"></ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="propertyType.RENEWAL_STATUS">
+        <ng-container *ngTemplateOutlet="renewalStatus"></ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="propertyType.TEXT">
+        <ng-container *ngTemplateOutlet="textValue"></ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="propertyType.UPDATE_TIME">
+        <ng-container *ngTemplateOutlet="updateTimeValue"></ng-container>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>
+
+<ng-template #accountNumberValue>
+  <ng-container *ngIf="property | bbCastAccountProperty: propertyType.ACCOUNT_NUMBER as valueProperty">
+    <span aria-live="assertive">
+      <!-- <bb-account-number
+        [type]="valueProperty.numberType"
+        [number]="account | bbGetValue: valueProperty.key"
+        [unmaskable]="isMaskable && !valueProperty.hideMaskIndicator"
+        [masked]="isMasked"
+        (unmask)="masked.emit(false)"
+        (mask)="masked.emit(true)"
+      ></bb-account-number> -->
+      <bb-account-number-custom
+        [type]="valueProperty.numberType"
+        [number]="account | bbGetValue: valueProperty.key"
+        [unmaskable]="isMaskable && !valueProperty.hideMaskIndicator"
+        [masked]="isMasked"
+        (unmask)="masked.emit(false)"
+        (mask)="masked.emit(true)"
+      ></bb-account-number-custom>
+    </span>
+  </ng-container>
+</ng-template>
+
+<ng-template #accountStateValue>
+  <ng-container *ngIf="property | bbCastAccountProperty: propertyType.ACCOUNT_STATE as valueProperty">
+    <bb-account-state-indicator
+      *ngIf="account | bbGetValue: valueProperty.key as state"
+      [state]="state"
+      [showIcon]="valueProperty.showIcon || false"
+    ></bb-account-state-indicator>
+  </ng-container>
+</ng-template>
+
+<ng-template #amountOrPercentValue>
+  <ng-container *ngIf="property | bbCastAccountProperty: propertyType.AMOUNT as valueProperty">
+    <ng-container *ngIf="account | bbGetValue: valueProperty.key | bbIsPercentValue; else amountValue">
+      <ng-container *ngTemplateOutlet="percentValue"></ng-container>
+    </ng-container>
+  </ng-container>
+</ng-template>
+
+<ng-template #amountValue>
+  <ng-container *ngIf="property | bbCastAccountProperty: propertyType.AMOUNT as valueProperty">
+    <bb-amount-ui
+      *ngIf="account | bbGetValue: valueProperty.key | bbIsDefined"
+      [amount]="account | bbGetValue: valueProperty.key | bbToNumber"
+      [currency]="valueProperty.currency || account?.currency || ''"
+      [mapCurrency]="(valueProperty.currencyFormat || currencyFormat) === 'symbol'"
+    ></bb-amount-ui>
+  </ng-container>
+</ng-template>
+
+<ng-template #dateValue>
+  <ng-container *ngIf="property | bbCastAccountProperty: propertyType.DATE as valueProperty">
+    {{ account | bbGetValue: valueProperty.key | bbDate: valueProperty.dateFormat || dateFormat }}
+  </ng-container>
+</ng-template>
+
+<ng-template #debitCardsValue>
+  <ng-container *ngIf="property | bbCastAccountProperty: propertyType.DEBIT_CARDS as valueProperty">
+    <div class="bb-stack bb-stack--density-xl bb-stack--wrap">
+      <bb-payment-card-ui
+        class="bb-stack__item bb-block bb-block--md"
+        *ngFor="let debitCardData of account | bbGetValue: valueProperty.key | bbToArray"
+        [paymentCard]="debitCardData | bbToPaymentCardData"
+        [paymentCardNumberFormat]="'cardNumber' | bbGetAccountNumberFormat"
+      ></bb-payment-card-ui>
+    </div>
+  </ng-container>
+</ng-template>
+
+<ng-template #termValue>
+  <ng-container *ngIf="property | bbCastAccountProperty: propertyType.FREQUENCY as valueProperty">
+    <bb-account-info-frequency
+      [value]="account | bbGetValue: valueProperty.key"
+      [unit]="account | bbGetValue: valueProperty.unitKey"
+    ></bb-account-info-frequency>
+  </ng-container>
+</ng-template>
+
+<ng-template #numberOrPercentValue>
+  <ng-container *ngIf="property | bbCastAccountProperty: propertyType.NUMBER as valueProperty">
+    <ng-container *ngIf="account | bbGetValue: valueProperty.key | bbIsPercentValue; else numberValue">
+      <ng-container *ngTemplateOutlet="percentValue"></ng-container>
+    </ng-container>
+  </ng-container>
+</ng-template>
+
+<ng-template #numberValue>
+  <ng-container *ngIf="property | bbCastAccountProperty: propertyType.NUMBER as valueProperty">
+    <bb-amount-ui
+      *ngIf="account | bbGetValue: valueProperty.key | bbIsDefined"
+      [amount]="account | bbGetValue: valueProperty.key | bbToNumber"
+      [decimalPlaces]="valueProperty.decimalPlaces"
+    ></bb-amount-ui>
+  </ng-container>
+</ng-template>
+
+<ng-template #percentValue>
+  <ng-container *ngIf="property | bbCastAccountProperty: propertyType.PERCENT as valueProperty">
+    <bb-amount-ui
+      *ngIf="account | bbGetValue: valueProperty.key | bbIsDefined"
+      [amount]="account | bbGetValue: valueProperty.key | bbToNumber"
+      [showPercent]="true"
+    ></bb-amount-ui>
+  </ng-container>
+</ng-template>
+
+<ng-template #renewalStatus>
+  <ng-container *ngIf="property | bbCastAccountProperty: propertyType.RENEWAL_STATUS as valueProperty">
+    <bb-account-info-renewal-status
+      [isRenewalAllowed]="(account | bbGetValue: valueProperty.key) || false"
+    ></bb-account-info-renewal-status>
+  </ng-container>
+</ng-template>
+
+<ng-template #textValue>
+  <ng-container *ngIf="property | bbCastAccountProperty: propertyType.TEXT as valueProperty">
+    <!-- Static Routing Number Setup -->
+    {{ account | bbGetValue: valueProperty.key }}
+  </ng-container>
+</ng-template>
+
+<ng-template #updateTimeValue>
+  <ng-container *ngIf="property | bbCastAccountProperty: propertyType.UPDATE_TIME as valueProperty">
+    {{ (account | bbGetValue: valueProperty.key) || '' | bbToUpdatedDate: valueProperty.dateFormat || dateFormat }}
+  </ng-container>
+</ng-template>

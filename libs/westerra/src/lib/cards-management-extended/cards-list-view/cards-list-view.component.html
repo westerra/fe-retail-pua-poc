@@ -1,0 +1,22 @@
+<div class="heading-widget bb-heading-widget" [ngClass]=" configService.deElevatedHeader
+    ? 'bb-heading-widget bb-heading-widget--de-elevated'  : 'bb-cards-management-journey__heading'  ">
+    <bb-header-ui headingType="h1" headingClasses="bb-heading-widget__heading" heading="Manage Cards"
+        i18n-heading="Card Management heading@@cards-management-journey.cards-list.heading.title"></bb-header-ui>
+    <button *ngIf="configService.enableTravelNotice" (click)="onNavigateTravelNotice()"
+        class="bb-heading-widget__button btn btn-link"> <i aria-hidden="true" class="bb-icon
+                bb-icon-flight"></i> <span i18n="Travel Notice button
+                content@@cards-management-journey.cards-list.button.travel-notice"> Travel Notice </span>
+    </button>
+</div>
+
+<div *ngIf="configService.deElevatedHeader; else cardListView" class="container--drag-up container-fluid">
+    <div class="bb-card bb-card--lg">
+        <div class="bb-card__body"> <ng-container [ngTemplateOutlet]="cardListView"></ng-container> </div>
+    </div>
+</div>
+
+<ng-template #cardListView> <bb-cards-list (selectedCard)="selectedCard($event)"
+        [notificationTtl]="configService.notificationTtl" [paymentCardTypes]="configService.paymentCardTypes"
+        [groupByPaymentCardTypes]="configService.groupByPaymentCardTypes">
+    </bb-cards-list>
+</ng-template>

@@ -1,0 +1,11 @@
+.bb-topbar__branding-area {
+    display: flex;
+    align-items: center;
+     img {
+        display: block;
+        height: 2.0rem;
+            &.desktop {
+                height: 3.0rem;
+            }
+        }
+  }

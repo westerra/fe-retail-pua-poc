@@ -1,0 +1,10 @@
+{
+  "title": "Backbase R&D retail prototype apps",
+  "name": "backbase-retail-prototypes",
+  "applications": [
+    {
+      "title": "Retail Banking Web App",
+      "name": "bb-retail-app-ang"
+    }
+  ]
+}

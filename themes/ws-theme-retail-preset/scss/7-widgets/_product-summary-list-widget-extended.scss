@@ -1,0 +1,35 @@
+westerra-product-kind {
+  .bb-account-info__title_right {
+    /* display: flex; */
+    align-items: right;
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  .bb-subtitle {
+    font-size: 0.875rem !important;
+    line-height: 1.5 !important;
+    color: #616161 !important;
+  }
+}
+
+bb-accounts-details-tab-container {
+  bb-account-graphical-header {
+    div.bb-stack.bb-stack--align-bottom {
+      display: none;
+    }
+  }
+}
+
+bb-product-kind-name[data-role="Current Account"] span {
+  display: none;
+}
+
+bb-product-kind-name[data-role="Current Account"]:after {
+  content: 'Spending Accounts';
+}
+
+bb-product-item-custom-title-ui div.bb-account-info div.bb-subtitle {
+  display: none;
+}

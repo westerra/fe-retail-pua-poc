@@ -1,0 +1,102 @@
+<form *ngIf="form && (profile$ | async)" [formGroup]="form" (submit)="formSubmit$.next(true)">
+  <div class="bb-block bb-block--lg">
+    <bb-input-email-ui
+      class="bb-form-field bb-form-field--lg"
+      data-role="user-manage-profile-email-manage-email"
+      i18n-label="Email address label@@bb-user-profile-features.email-record-form.input-label-text.email-address"
+      label="Email address"
+      formControlName="address"
+      [required]="true"
+      [maxLength]="255"
+    >
+    </bb-input-email-ui>
+    <bb-input-validation-message-ui [showErrors]="(showEmailAddressRequiredError$ | async) || false">
+      <span
+        i18n="
+          Email address required error@@bb-user-profile-features.email-record-form.validation-text.provide-email-address"
+      >
+        Provide an email address
+      </span>
+    </bb-input-validation-message-ui>
+    <bb-input-validation-message-ui [showErrors]="(showEmailAddressInvalidError$ | async) || false">
+      <span
+        i18n="
+          Email address invalid error@@bb-user-profile-features.email-record-form.validation-text.invalid-email-address"
+      >
+        Email format is invalid
+      </span>
+    </bb-input-validation-message-ui>
+  </div>
+  <div class="bb-block bb-block--lg" *ngIf="emailAddressSelectTypeEnabledValue && !isEditMode">
+    <bb-input-radio-group-ui
+      data-role="user-manage-profile-email-manage-type"
+      formControlName="type"
+      label="Email address type"
+      i18n-label="
+        Label for email address type radio
+        options@@bb-user-profile-features.email-record-form.input-label-text.email-type"
+      [preselect]="false"
+      [required]="true"
+    >
+      <bb-input-radio-ui
+        *ngFor="let option of emailTypeOptions"
+        [value]="option"
+        [label]="option"
+        [disabled]="checkIfDisbaled(option)"
+      >
+      </bb-input-radio-ui>
+    </bb-input-radio-group-ui>
+    <bb-input-validation-message-ui [showErrors]="(showEmailAddressTypeError$ | async) || false">
+      <span
+        i18n="
+          Email address type required
+          error@@bb-user-profile-features.email-record-form.validation-text.email-type-required"
+      >
+        Choose an email address type
+      </span>
+    </bb-input-validation-message-ui>
+  </div>
+  <div class="bb-block bb-block--lg" *ngIf="emailAddressIsPrimaryEnabled && !isEditMode">
+    <bb-input-checkbox-ui
+      data-role="user-manage-profile-email-manage-primary"
+      label="This is my primary email address"
+      i18n-label="
+        Make primary checkbox label@@bb-user-profile-features.email-record-form.input-label-text.email-primary"
+      formControlName="primary"
+    >
+    </bb-input-checkbox-ui>
+  </div>
+  <div class="bb-button-bar bb-button-bar--reverse">
+    <bb-load-button-ui
+      *ngIf="!emailAddressRecordValue"
+      type="submit"
+      data-role="user-manage-profile-email-manage-save"
+      class="bb-button-bar__button"
+      [isLoading]="saveLoading"
+      i18n="Add email address button action@@bb-user-profile-features.email-record-form.button-text.add-email"
+    >
+      Add email address
+    </bb-load-button-ui>
+    <bb-load-button-ui
+      *ngIf="emailAddressRecordValue"
+      type="submit"
+      data-role="user-manage-profile-email-manage-save"
+      class="bb-button-bar__button"
+      [isLoading]="saveLoading"
+      i18n="Save email address button action@@bb-user-profile-features.email-record-form.button-text.save-changes"
+    >
+      Save changes
+    </bb-load-button-ui>
+    <button
+      bbButton
+      data-role="user-manage-profile-manage-cancel-button"
+      color="secondary"
+      class="bb-button-bar__button"
+      type="button"
+      (click)="cancelClick.emit()"
+      i18n="Cancel changes button action@@bb-user-profile-features.email-record-form.button-text.cancel"
+    >
+      Cancel
+    </button>
+  </div>
+</form>

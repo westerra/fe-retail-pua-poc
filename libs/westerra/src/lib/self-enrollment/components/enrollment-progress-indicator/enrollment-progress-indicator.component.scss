@@ -1,0 +1,47 @@
+.bb-stepper {
+    position: relative;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    padding: 1rem;
+}
+
+.bb-step--active .bb-step__icon {
+    color: #FFFFFF;
+    background-color: #E52921;
+}
+
+.bb-step__icon {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    color: #101820;
+    font-weight: 600;
+    font-size: 0.875rem;
+    line-height: 1;
+    background-color: #dedede;
+    border-radius: 50%;
+}
+
+.bb-step--active .bb-step__label {
+    color: #101820;
+}
+
+.bb-step__label {
+    margin-left: 0.5rem;
+    color: #616161;
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.bb-stepper__separator {
+    flex-grow: 1;
+    max-width: 100%;
+    height: 2px;
+    margin: 0.2rem;
+    padding: 0;
+    background-color: #dedede;
+}

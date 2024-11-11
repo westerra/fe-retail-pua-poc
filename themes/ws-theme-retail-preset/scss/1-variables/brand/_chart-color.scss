@@ -1,0 +1,75 @@
+/// Configures additional palette color 1: Used in the custom icon colors and part of the data-visualisation palette
+/// Defaults to: #0079c9
+// $chart-color-1:
+
+/// Configures additional palette color 2: Used in the custom icon colors and part of the data-visualisation palette
+/// Defaults to: #00a1e0
+// $chart-color-2:
+
+/// Configures additional palette color 3: Used in the custom icon colors and part of the data-visualisation palette
+/// Defaults to: #ffac09
+// $chart-color-3:
+
+/// Configures additional palette color 4: Used in the custom icon colors and part of the data-visualisation palette
+/// Defaults to: #f2780c
+// $chart-color-4:
+
+/// Configures additional palette color 5: Used in the custom icon colors and part of the data-visualisation palette
+/// Defaults to: #e24b2c
+// $chart-color-5:
+
+/// Configures additional palette color 6: Used in the custom icon colors and part of the data-visualisation palette
+/// Defaults to: #c22327
+// $chart-color-6:
+
+/// Configures additional palette color 7: Used in the custom icon colors and part of the data-visualisation palette
+/// Defaults to: #49074e
+// $chart-color-7:
+
+/// Configures additional palette color 8: Used in the custom icon colors and part of the data-visualisation palette
+/// Defaults to: #181e41
+// $chart-color-8:
+
+/// Configures additional palette color 9: Used in the custom icon colors and part of the data-visualisation palette
+/// Defaults to: #260a24
+// $chart-color-9:
+
+/// Configures additional palette color 10: Used in the custom icon colors and part of the data-visualisation palette
+/// Defaults to: #2e7d32
+// $chart-color-10:
+
+/// Configures the primary color used in the data-visualisation palette
+/// Defaults to: #0079c9
+// $chart-primary-color:
+
+/// Configures the primary light color used in the data-visualisation palette
+/// Defaults to: mix($chart-primary-color, $color-neutral-white, 70%)
+// $chart-primary-light-color:
+
+/// Configures the color used for negative amounts in data-visualisation
+/// Defaults to: #d32f2f
+// $chart-negative-color:
+
+/// Configures the negative light color used in the data-visualisation palette
+/// Defaults to: mix($chart-negative-color, $color-neutral-white, 70%)
+// $chart-negative-light-color:
+
+/// Configures the color used for positive amounts in data-visualisation
+/// Defaults to: #2e7d32
+// $chart-positive-color:
+
+/// Configures the secondary color used in data-visualisation
+/// Defaults to: $chart-color-8
+// $chart-secondary-color:
+
+/// Configures the neutral color used in data-visualisation
+/// Defaults to: #f2f2f2
+// $chart-neutral-color:
+
+/// Configures the neutral grey color used in data-visualisation
+/// Defaults to: $color-neutral-grey
+// $chart-neutral-grey-color:
+
+/// Configures the alert color used in data-visualisation. By default a slightly lighter calculation of $chart-negative-color
+/// Defaults to: mix(#ffffff, $chart-negative-color, 85%)
+// $chart-alert-color:

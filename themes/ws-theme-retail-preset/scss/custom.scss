@@ -1,0 +1,659 @@
+.btn-primary:focus {
+  outline: 1pt dashed $button-border-color !important;
+  background-color: $button-primary-background-color !important;
+  border-width: 1pt;
+}
+
+.btn-link-text {
+  border-color: $button-primary-background-color !important;
+  border: 1pt !important;
+}
+
+.btn-primary {
+  background-color: $button-primary-background-color;
+  border-color: $button-primary-background-color;
+}
+
+.btn-secondary {
+  background-color: $color-neutral-white;
+  color: $color-neutral-black;
+  border-color: $button-secondary-background-color;
+}
+
+.btn-secondary:focus {
+  background-color: $color-neutral-white !important;
+  border-color: $button-secondary-hover-background-color !important;
+  outline: dotted;
+}
+
+.btn-secondary:hover {
+  color: $button-secondary-hover-background-color !important;
+  border-color: $button-secondary-hover-background-color !important;
+  background-color: $color-neutral-white !important;
+}
+
+.btn-secondary:active {
+  background-color: $color-neutral-white !important;
+  border-color: $color-neutral-black !important;
+  color: $button-secondary-hover-background-color !important;
+}
+
+.btn-custom {
+  background-color: $color-neutral-white;
+  color: $color-neutral-black;
+}
+
+.btn-link:hover {
+  color: $color-neutral-black;
+}
+
+.bb-search-box-visible.bb-search-box-search input {
+  padding-left: 0.25rem;
+  border-top-right-radius: 0rem;
+  border-bottom-right-radius: 0rem;
+}
+
+.header-caps {
+  text-transform: capitalize;
+}
+
+.bb-product-kind__header_total {
+  /* display: flex; */
+  justify-content: space-between;
+  width: 100%;
+  font-weight: 700 !important;
+}
+
+.bb-heading-widget__button {
+  color: black !important;
+}
+
+.btn-link:focus {
+  color: $color-neutral-black;
+}
+
+.btn-link:active {
+  color: $color-neutral-black;
+}
+
+.dropdown-menu {
+  border-radius: 0px;
+}
+
+.modal-open {
+  .btn-secondary {
+    background-color: #ffffff;
+    color: red;
+    border-color: white;
+  }
+}
+
+bb-deck-container.ng-star-inserted {
+  border: 0;
+  padding-bottom: 20px;
+  border: none !important;
+  outline: none !important;
+  outline-width: 0 !important;
+  box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+
+  &:focus {
+    outline: none !important;
+  }
+
+  :focus {
+    border: 0px !important;
+    border: none !important;
+    outline: none !important;
+    outline-width: 0 !important;
+    box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+  }
+}
+
+bb-area,
+bb-chrome,
+bb-deck-container,
+bb-column-container {
+  display: block;
+  outline-width: 0 !important;
+  border: none !important;
+  outline: none !important;
+  outline-width: 0 !important;
+  box-shadow: none !important;
+}
+
+.bb-heading-widget-self-enroll {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0rem 2rem 2rem;
+  border-radius: 1rem;
+}
+
+.bb-icon__background--secondary {
+  background-color: $color-neutral-black;
+}
+
+.bb-layout__topbar {
+  background-color: #fdfdfd;
+  border-bottom: 1px solid #e0e0e0;
+  box-sizing: border-box;
+  color: #101820;
+  font-family: CircularXXWeb, 'Helvetica Neue', Helvetica, -apple-system, system-ui, 'system-ui', sans-serif;
+  font-size: 18px;
+  line-height: 27px;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+#m2m-link {
+  margin: 32px 16px;
+
+  a {
+    color: #101820;
+  }
+}
+
+div[data-role='upcoming-payment-item'] {
+  padding: 16px;
+
+  &:hover {
+    background-color: #f5f6f7;
+  }
+}
+
+bb-input-text-ui#bb-create-contact-name {
+  &:before {
+    content: 'Last name or business name';
+  }
+
+  label[for='bb-create-contact-name'] {
+    visibility: hidden;
+  }
+}
+
+bb-amount-ui {
+  .bb-amount__value {
+    &:before {
+      content: ' $ ';
+    }
+
+    .symbol {
+      display: none;
+    }
+  }
+}
+
+bb-payord-group {
+  bb-payord-contact-selector {
+    display: flex;
+
+    div.form-group {
+      font-weight: 600;
+
+      div.bb-search-box {
+        margin: 0.5rem 0;
+
+        div.bb-search-box__clear-button {
+          display: none;
+        }
+      }
+
+      &:before {
+        content: 'Select a Recipient';
+      }
+
+      label[for='payord-contact-selector-search-box'] {
+        display: none;
+      }
+    }
+  }
+
+  input#payord-contact-selector-search-box,
+  bb-input-text-ui[data-role='accountNumber']>input {
+    pointer-events: none;
+    user-select: none;
+    background-color: #f5f6f7;
+
+    &::placeholder {
+      color: #f5f6f7;
+    }
+  }
+
+  bb-payord-checkbox {
+    display: none;
+  }
+}
+
+.member-format-detail {
+  color: #616161;
+}
+
+#transactions-list-pending {
+  .text-small {
+    visibility: hidden;
+  }
+}
+
+bb-user-manage-phone-number {
+  bb-badge-ui {
+    display: none;
+  }
+}
+
+bb-user-phone-number-form {
+  bb-user-primary-checkbox-input {
+    bb-input-checkbox-ui {
+      display: none;
+    }
+  }
+}
+
+#dmi-sso-button {
+  margin-top: 1rem;
+  justify-content: start;
+  // display: none !important;
+}
+
+// post Upgrade styles changes
+
+bb-accounts-transactions-journey-wrapper bb-campaign-space-ang {
+  display: none;
+}
+
+bb-messages-client-inbox-journey bb-messages-heading div.bb-heading-widget {
+  padding: 3rem 2rem 2rem !important;
+}
+
+bb-budget-journey bb-budgets-view bb-header-ui h1.bb-heading-widget__heading {
+  padding-top: 3rem;
+}
+
+bb-account-statement-journey div.bb-heading-widget {
+  padding-top: 3rem;
+}
+
+bb-contact-manager-journey bb-header-ui h1:first-of-type {
+  padding-top: 3rem;
+  padding-bottom: 2rem;
+}
+
+bb-manage-upcoming-and-historical-payments-journey bb-header-ui h2.bb-heading-1 {
+  padding-top: 3rem;
+}
+
+bb-payveris-widget div.bb-heading-widget bb-header-ui h1.bb-heading-widget__heading {
+  font-size: 2.2rem;
+  padding-top: 2.5rem;
+}
+
+bb-payveris-widget div.bb-heading-widget {
+  padding: 0rem;
+}
+
+bb-accounts-list bb-accounts-list-header div.bb-heading-widget.heading-widget {
+  padding: 3rem 2rem 2rem 0rem !important;
+
+  bb-header-ui h1.bb-heading-widget__heading {
+    font-size: 2.2rem;
+  }
+}
+
+bb-identity-self-service-journey bb-routable-tab-set div.bb-tab-container__tabs.nav.nav-tabs a::nth-of-type(2) {
+  display: none;
+}
+
+bb-upcoming-payments-item div.bb-stack div.bb-stack__item.bb-text-align-end button {
+  display: none;
+}
+
+bb-identity-profile-item-layout>div.bb-stack.bb-stack--wrap>div:last-of-type {
+  text-align: end;
+}
+
+bb-identity-profile-operations bb-dropdown-menu-ui div.bb-dropdown-btn-group-wrapper div.dropdown-menu div.dropdown-menu-inner-container {
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 5px 9px;
+  border-radius: 0.5rem;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid #e1e1e1;
+  max-height: 90px !important;
+}
+
+bb-transactions-number-of-results-found>div.bb-card__header.bb-subtitle {
+  padding: 1rem 0rem 0rem 2rem;
+}
+
+// To be removed once schedule api has been updated
+bb-upcoming-and-history-payments-tab-container-view bb-tab-group-ui div[role='tablist'] div.nav-item:nth-of-type(2) {
+  // display: none;
+}
+
+.container--fixed-width-2 {
+  max-width: 1040px !important;
+}
+
+// Updating button alignment in create payment form
+bb-create-payment-form-extended bb-payord-form form bb-payord-button-group:last-of-type {
+  div.btn-container.bb-dynamic-input.bb-button-bar {
+    justify-content: space-between !important;
+    flex-direction: initial !important;
+
+    button.bb-button-bar__button.bb-button-bar__button--across.btn-link.btn.btn-md {
+      margin-right: initial !important;
+    }
+  }
+}
+
+// Updating button alignment in review payment form
+bb-review-payment bb-adapted-review-container div.bb-button-bar {
+  flex-direction: initial !important;
+  justify-content: space-between !important;
+
+  button[data-role='submit-button'] {
+    margin-right: 0.5rem !important;
+  }
+
+  button[data-role='cancel-button'] {
+    margin-left: auto !important;
+    margin-right: initial !important;
+  }
+}
+
+// To hide running balance for pending transactions list item
+bb-pending-transactions-list {
+  bb-transactions-list-item {
+    bb-transaction-header {
+      .bb-transaction-header .bb-stack__item {
+        .bb-stack.bb-transaction-list-header-amount {
+          .bb-transaction-list-header-amount__wrapper {
+            div.bb-text-support {
+              bb-amount-ui {
+                display: none;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Resolve spacing related issues in Firefox
+bb-rich-text-editor-ui .bb-rich-text-editor .bb-rich-text-editor__textbox quill-editor .ql-container.ql-snow .ql-editor {
+  white-space: pre-wrap;
+}
+
+.success-enrollment-mobile-message-header-1 {
+  font-weight: 200;
+}
+
+.success-enrollment-mobile-message-paragraph-1 {
+  font-weight: 700;
+}
+
+.w-470px {
+  width: 470px;
+}
+
+@media (max-width: 470px) {
+  .w-470px {
+    width: auto;
+  }
+}
+
+bb-product-notifications-settings-custom {
+
+  h2,
+  .h2 {
+    font-size: 2.2rem;
+  }
+
+  .bb-text-bold {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  h5,
+  .h5 {
+    font-size: 1.3rem;
+  }
+
+  .bb-highlight,
+  .bb-schedule-header__relative-text .bb-schedule-header__text {
+    font-weight: 700;
+    font-size: 1.4rem;
+    line-height: 1.5;
+  }
+
+  .bb-label {
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+  }
+}
+
+#account-notifications-detail-balance-section {
+  &.card-header {
+    padding: 2rem 2rem 0 1.5rem;
+  }
+}
+
+
+
+@media (max-width: 991px) {
+  bb-user-context-menu-widget bb-user-context-menu-container div.user-context-dropdown bb-dropdown-menu-ui div.bb-dropdown-btn-group-wrapper.show.dropdown div.dropdown-menu.show {
+    top: 0px;
+    left: 0px;
+    will-change: transform;
+    position: absolute;
+    transform: translate(-160px, 58px) !important;
+  }
+}
+
+label.bb-input-radio-group__radio.bb-input-radio-group__radio--vertical-align-middle.btn.disabled {
+  opacity: 0.5;
+  cursor: not-allowed !important;
+
+}
+
+// Hide primary checkbox for email record form
+bb-identity-edit-email-view [data-role='user-manage-profile-email-edit-container'] div.card div.card-body bb-identity-view-state-container-component bb-identity-email-record-form form bb-input-checkbox-ui,
+bb-identity-add-email-view [data-role='user-manage-profile-email-edit-container'] div.card div.card-body bb-identity-view-state-container-component bb-identity-email-record-form form bb-input-checkbox-ui {
+  display: none;
+}
+
+// Custom scrollbar for body and dropdowns
+body,
+.bb-product-selector__dropdown-menu-panel.dropdown-menu.show .bb-product-selector__dropdown-menu,
+ng-dropdown-panel.ng-dropdown-panel .ng-dropdown-panel-items.scroll-host,
+bb-order-checks-view-custom #order-checks-wrapper .bb-input-radio-group__list {
+
+  &::-webkit-scrollbar {
+    margin-left: 0.25rem;
+    width: 10px;
+    height: 10px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 50px;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 50px;
+
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: #666;
+  }
+}
+
+.bb-text-bold-2 {
+  font-weight: 700;
+}
+
+.security-settings-custom-details-section {
+  display: block;
+  align-items: center;
+  width: 100%;
+}
+
+.security-settings-custom-details-item {
+  flex-basis: 100%;
+  margin-bottom: 1.25rem;
+}
+
+#account-notifications-detail-transaction-section {
+  &.card-header {
+    padding: 2rem 2rem 0 1.5rem;
+  }
+}
+
+.font-size-13px {
+  font-size: 13px;
+}
+
+// To hide the extra eye icon being displayed on the edge browsers
+input::-ms-reveal {
+  display: none;
+}
+
+// To fix styling issues on bb-actions-notification-channels-custom component
+bb-actions-notification-channels-custom bb-input-checkbox-ui label.bb-input-checkbox {
+  .bb-input-checkbox__input:focus+span.bb-input-checkbox__content::after {
+    position: absolute;
+    // top: calc(50% - 0.99rem);
+    top: -4px;
+    right: -4px;
+    bottom: -4px;
+    left: -4px;
+    z-index: 1000;
+    width: 2rem;
+    height: 2rem;
+    border: 3px solid #E52921;
+    border-radius: 0.25rem;
+  }
+
+  span.bb-input-checkbox__content {
+
+    &::before,
+    &::after {
+      position: absolute;
+      /* top: calc(50% - 0.75rem); */
+      top: 0px;
+      left: 0;
+      width: 1.5rem;
+      height: 1.5rem;
+      content: "";
+    }
+  }
+}
+
+.font-weight-500 {
+  font-weight: 500;
+}
+
+// bb-transaction-detail-category button.btn-secondary {
+//   background-color: #FFFFFF !important;
+//   border-color: #555 !important;
+//   // outline: dotted !important;
+//   color: black !important;
+// }
+
+// bb-transaction-detail-category button.btn-secondary:not(:disabled):not(.disabled):hover {
+
+//   background-color: #E52921 !important;
+//   border-color: #E52921 !important;
+//   color: #FFFFFF !important;
+// }
+
+
+bb-contact-details bb-header-ui h5 {
+  &:before {
+    content: 'Member number';
+    visibility: visible;
+  }
+
+  visibility: hidden;
+}
+
+bb-input-text-ui {
+  &.form-not-submitted {
+
+    input.ng-invalid.ng-touched>input.form-control:not(:focus),
+    .form-control[type=text].ng-touched.ng-invalid {
+      border-color: #dedede;
+    }
+  }
+
+  &.form-submitted {
+
+    input.ng-invalid.ng-touched>input.form-control:not(:focus),
+    .form-control[type=text].ng-touched.ng-invalid {
+      border-color: #d32f2f;
+    }
+  }
+}
+
+bb-order-checks-view-custom {
+  #order-checks-wrapper {
+    bb-header-ui h1:first-of-type {
+      padding-top: 3rem;
+      padding-bottom: 2rem;
+    }
+
+    ::ng-deep bb-input-radio-group-ui#orderCheckAcceptableAccountsSelector ::ng-deep legend.bb-input-radio-group__label {
+      margin-bottom: 1rem !important;
+      font-weight: 700 !important;
+      font-size: 1.45rem !important;
+    }
+
+    .order-checks-account-selector-item {
+      padding: 1.5rem;
+      background-color: #FFFFFF;
+      box-shadow: 0px 4px 9px 0px rgba(0, 0, 0, 0.12);
+      border-radius: 1rem;
+    }
+
+    .bb-input-radio-group__list {
+      max-height: 44vh;
+      overflow-y: auto;
+
+      label.bb-input-radio-group__radio.bb-input-radio-group__radio--vertical-align-middle {
+        margin-left: 0.25rem;
+        padding-right: 0.15rem;
+
+        &:last-child {
+          margin-bottom: 0.5rem;
+        }
+      }
+
+      ;
+    }
+  }
+
+}
+
+@media (max-width: 991px) {
+  #order-checks-wrapper {
+    margin: 0 2rem;
+  }
+}
+
+// Fixing the clickable issue with Back to Accounts title
+.bb-logo--emblem {
+  height: 0rem;
+  margin-top: 5rem;
+  margin-left: 0rem;
+  margin-bottom: 0rem;
+}

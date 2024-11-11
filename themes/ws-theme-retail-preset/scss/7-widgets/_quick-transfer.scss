@@ -1,0 +1,15 @@
+bb-quick-transfer-from-account-ui {
+    div[data-role="from-account"]>div:nth-child(2) {
+        display: none;
+    }
+}
+
+bb-quick-transfer-to-account-ui {
+    div[data-role="quick-transfer-accounts-tab"]>div:nth-child(2) {
+        display: none;
+    }
+
+    bb-tab-group-ui div[role="tablist"]>div:nth-child(2) {
+        visibility: hidden;
+    }
+}

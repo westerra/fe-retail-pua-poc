@@ -1,0 +1,41 @@
+<ng-container bbTransactionsListItemGroupCustomizable [bbHostRef]="hostRef"></ng-container
+><ng-template bbTransactionsListItemGroupCustomizable let-hostRef>
+  <div>
+    <div role="list">
+      <div
+        *ngFor="let transaction of hostRef.transactions; trackBy: hostRef.trackByFn; index as i"
+        role="listitem"
+        aria-live="polite"
+        aria-relevant="all"
+      >
+        <div
+          *ngIf="i === 0"
+          role="heading"
+          aria-level="2"
+          class="bb-transaction-group__date bb-block--xl bb-subheader bb-text-support"
+          i18n="Date of the selected transaction@@transactions.list.transactionDate"
+          tabindex="0"
+        >
+          <!-- {hostRef.daysElapsed, plural, =0 {Today} =1 {Yesterday} other
+          {{{ hostRef.transactionDate | date:'longDate' }}} } -->
+          {{ hostRef.transactionDate | date:'longDate' }}
+
+        </div>
+        <div
+          [ngClass]="{
+            'bb-block--xl': hostRef.transactions.length - 1 !== i,
+            'bb-block--sm': hostRef.transactions.length - 1 === i
+          }"
+        >
+          <bb-transactions-list-item
+            [showChangeCategory]="hostRef.showChangeCategory"
+            [transaction]="transaction"
+            [checkImagesList]="hostRef.checkImagesList"
+            [transactionDetailsLoadingStatus]="hostRef.transactionDetailsLoadingStatus"
+            [inquireAndDisputeTopics]="hostRef.inquireAndDisputeTopics"
+            (detailsOpen)="hostRef.onDetailOpen($event)"
+          ></bb-transactions-list-item>
+        </div>
+      </div>
+    </div></div
+></ng-template>

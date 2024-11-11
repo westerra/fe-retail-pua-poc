@@ -1,0 +1,149 @@
+<div class="pt-5 bb-block bb-block--xl no-print">
+  <bb-accounts-navigate-button-extended
+    [name]="backToAccounts"
+    (navigateBack)="onNavigateBack()"
+  ></bb-accounts-navigate-button-extended>
+  <bb-header-ui
+    headingType="h1"
+    headingClasses="bb-heading-widget__heading"
+    [heading]="'Account Details'"
+  ></bb-header-ui>
+</div>
+
+<ng-container *ngIf="accountArrangementItem$ | async as accountArrangementItem">
+  <div
+    class="bb-card bb-card--lg bb-block bb-block--lg"
+    *ngIf="accountArrangementItem | bbIsProductKind: config.productKindsWithGraphicalRepresentation; else accountHeader"
+  >
+    <div class="bb-card__body">
+      <bb-account-graphical-header
+        data-role="accounts-details-tab__account-graphical-header"
+        [account]="accountArrangementItem"
+        [canEditAlias]="false"
+        [useShortCurrency]="true"
+        [creditLimitViewMode]="config.creditLimitViewMode"
+        [canRepay]="canInitiateRepay(accountArrangementItem)"
+        [canCashInAdvance]="canInitiateCashInAdvance(accountArrangementItem)"
+        [creditCardBackgroundType]="'darkred-card'"
+        [aliasLevel]="accountAliasDisplayingLevel"
+        [isLogoVisible]="false"
+        [showExternalInfo]="accountArrangementItem.financialInstitutionId !== undefined"
+        [externalTitle]="accountArrangementItem.financialInstitution?.name"
+        [externalLogo]="accountArrangementItem.financialInstitution?.logo"
+        (repayInitiated)="onRepayInitiated($event)"
+        (cashAdvanceInitiated)="onCashAdvanceInitiated($event)"
+        (unlinkAccountClick)="openUnlinkAccountModal()"
+      ></bb-account-graphical-header>
+    </div>
+  </div>
+  <ng-template #accountHeader>
+    <div class="bb-block bb-block--lg">
+      <bb-account-header
+        data-role="accounts-details-tab__account-header"
+        [account]="accountArrangementItem"
+        [showBalanceType]="false"
+        [useShortCurrency]="true"
+        [aliasLevel]="accountAliasDisplayingLevel"
+        [canEditAlias]="false"
+        [showLogo]="config.showAccountIcons"
+        [showExternalInfo]="accountArrangementItem.financialInstitutionId !== undefined"
+        [externalTitle]="accountArrangementItem.financialInstitution?.name"
+        [externalLogo]="accountArrangementItem.financialInstitution?.logo"
+      ></bb-account-header>
+
+      <div class="no-print">
+        <bb-product-summary-account-selector-widget
+        (selectedAccount)="onItemSelect($event)"
+        ></bb-product-summary-account-selector-widget>
+      </div>
+
+      <!-- DMI SSO BUTTON - TO BE USED ONCE THE CHANGES ARE READY -->
+      <div id="dmi-sso-button" *ngIf="fetchProductKindName()" class="bb-stack bb-block">
+        <bb-load-button-ui
+          aria-label="filter your transactions"
+          *ngIf="getExternalTypeId()"
+          data-role="filter"
+          [isLoading]="isLoading"
+          color="primary"
+          aria-expanded="false"
+          (click)="ssoDMI(selectorWidgetContext)"
+        >
+          Make a Payment</bb-load-button-ui
+        >
+      </div>
+
+      <!-- Unlink Account -->
+      <ng-container *ngIf="accountArrangementItem?.financialInstitutionId">
+        <div class="bb-stack__item bb-stack bb-block bb-block--md"></div>
+        <div class="bb-stack__item bb-stack no-print">
+          <button
+            bbButton
+            color="secondary"
+            buttonSize="sm"
+            i18n="
+              Unlink Account|Unlink
+              account@@account-header.accounts-transactions-journey.account-header.button.unlinkAccount"
+            data-role="unlink-account-button"
+            (click)="openUnlinkAccountModal()"
+          >
+            <bb-icon-ui name="link-off" class="bb-stack__item bb-stack__item--spacing-xs"></bb-icon-ui>
+            <span>Unlink Account</span>
+          </button>
+        </div>
+      </ng-container>
+    </div>
+  </ng-template>
+
+  <div
+  class="no-print"
+    *ngIf="
+      accountArrangementItem.externalAccountStatus &&
+      knownExternalAccountStatuses.includes(accountArrangementItem.externalAccountStatus) &&
+      !(showOngoingAccountRefreshAlert || showOngoingAccountUpdateAlert)
+    "
+  >
+    <bb-external-account-alert-banner
+      [externalAccountStatus]="accountArrangementItem?.externalAccountStatus"
+    ></bb-external-account-alert-banner>
+  </div>
+
+  <bb-ongoing-account-refresh-alert *ngIf="showOngoingAccountRefreshAlert"></bb-ongoing-account-refresh-alert>
+
+  <bb-ongoing-account-update-alert *ngIf="showOngoingAccountUpdateAlert"></bb-ongoing-account-update-alert>
+</ng-container>
+
+<bb-unlink-account-modal
+  *ngIf="isUnlinkAccountModalOpen"
+  [isOpen]="isUnlinkAccountModalOpen"
+  [isLoading]="(isExternalInfoLoading$ | async) ?? undefined"
+  (cancel)="closeUnlinkAccountModal()"
+  (confirm)="unlinkAccount()"
+></bb-unlink-account-modal>
+
+<bb-fast-link-edit
+  *ngIf="(fastlinkRouteParam | async) === fastlinkParamEnum.EDIT"
+  [arrangementId]="(accountArrangementItem$ | async)?.id"
+  [fastLinkScriptSrc]="config.fastLinkScriptSrc"
+  (flowSuccess)="showOngoingAccountUpdateAlert = true"
+></bb-fast-link-edit>
+
+<bb-fast-link-refresh
+  *ngIf="(fastlinkRouteParam | async) === fastlinkParamEnum.REFRESH"
+  [arrangementId]="(accountArrangementItem$ | async)?.id"
+  [fastLinkScriptSrc]="config.fastLinkScriptSrc"
+  (flowSuccess)="showOngoingAccountRefreshAlert = true"
+></bb-fast-link-refresh>
+
+<div class="d-block">
+  <div class="d-block no-print">
+    <bb-tab-group-ui [initialSelection]="0" role="tablist" data-role="tab-list" (click)="onClickTab($event)">
+      <bb-tab-ui *ngFor="let tab of tabs" role="tab">
+        <span data-role="tab-item" class="stretched-link" (click)="selectTab(tab.route)">{{ tab?.title }}</span>
+      </bb-tab-ui>
+    </bb-tab-group-ui>
+  </div>
+
+  <div class="bb-tab-container__content tab-content" role="tabpanel">
+    <router-outlet></router-outlet>
+  </div>
+</div>

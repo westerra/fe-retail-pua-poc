@@ -1,0 +1,45 @@
+bb-places-list {
+  ul.bb-list.bb-list--density-none {
+    display: none;
+  }
+
+  .bb-stack.bb-stack--density-sm {
+    display: none;
+  }
+
+  h1.bb-heading-widget__heading.px-0.pb-5 {
+    visibility: hidden;
+    content: "Find Us";
+  }
+
+  h1.bb-heading-widget__heading.px-0.pb-5:before {
+    visibility: visible;
+    content: "Find Us";
+  }
+}
+
+bb-places-view-component-extended{
+  h1.bb-heading-widget__heading.px-0.pb-5 {
+    visibility: hidden;
+    content: "Find Us";
+  }
+
+  h1.bb-heading-widget__heading.px-0.pb-5:before {
+    visibility: visible;
+    content: "Find Us";
+  }
+
+}
+
+bb-places-view{
+  h1.bb-heading-widget__heading.px-0.pb-5 {
+    visibility: hidden;
+    content: "Find Us";
+  }
+
+  h1.bb-heading-widget__heading.px-0.pb-5:before {
+    visibility: visible;
+    content: "Find Us";
+  }
+
+}

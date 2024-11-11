@@ -1,0 +1,80 @@
+bb-actions-retail-notification-preferences,
+bb-actions-retail-notification-preferences-view-custom {
+  .h1 {
+    font-size: 2.5rem;
+  }
+
+  h1 {
+    font-size: 2.25rem;
+    padding-bottom: 2rem;
+  }
+
+  h2,
+  .h2 {
+    font-size: 1.7rem;
+  }
+
+  .bb-heading-widget {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1rem 1rem;
+    border-radius: 1rem;
+  }
+
+  .bb-product-summary-balance {
+    content-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  h2.bb-heading-widget__heading {
+    visibility: hidden;
+    content: 'Select Your Account';
+  }
+
+  h2.bb-heading-widget__heading::before {
+    content: 'Select Your Account';
+    visibility: visible;
+  }
+
+  h1.bb-heading-widget__heading {
+    visibility: hidden;
+    content: 'Manage Notifications';
+  }
+
+  h1.bb-heading-widget__heading::before {
+    visibility: visible;
+    content: 'Manage Notifications';
+  }
+}
+
+bb-product-notifications-settings {
+  h2,
+  .h2 {
+    font-size: 2.2rem;
+  }
+
+  .bb-text-bold {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  h5,
+  .h5 {
+    font-size: 1.3rem;
+  }
+
+  .bb-highlight,
+  .bb-schedule-header__relative-text .bb-schedule-header__text {
+    font-weight: 700;
+    font-size: 1.4rem;
+    line-height: 1.5;
+  }
+
+  .bb-label {
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+  }
+}

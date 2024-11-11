@@ -1,0 +1,34 @@
+{
+  "root": "apps/retail-usa-e2e",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@dot-build/serve-and-run-angular:run",
+      "options": {
+        "devServerTarget": "retail-usa:serve:e2e",
+        "command": "npx",
+        "args": ["playwright", "test", "--config=apps/retail-usa-e2e/playwright.config.ts"]
+      },
+      "configurations": {
+        "production": {}
+      }
+    },
+    "e2e-no-dev": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "command": "npx playwright test --config=apps/retail-usa-e2e/playwright.config.ts"
+      },
+      "configurations": {
+        "production": {}
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["apps/retail-usa-e2e/**/*.ts"]
+      }
+    }
+  },
+  "implicitDependencies": ["retail-usa"],
+  "tags": ["scope:retail", "region:usa", "type:app"]
+}

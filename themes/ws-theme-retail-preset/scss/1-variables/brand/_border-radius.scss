@@ -1,0 +1,27 @@
+/// Border radius default value
+/// Defaults to: 1rem
+// $border-radius:
+
+/// Border radius with exta small modifier. Defaults to 25% of the $border-radius.
+/// Defaults to: $border-radius * 0.25
+// $border-radius-xs:
+
+/// Border radius with small modifier. Defaults to 50% of the $border-radius
+/// Defaults to: $border-radius * 0.5
+// $border-radius-sm:
+
+/// Border radius with medium modifier. Defaults to 100% of $border-radius
+/// Defaults to: $border-radius
+// $border-radius-md:
+
+/// Border radius with large modifier. Defaults to a round border
+/// Defaults to: $border-radius-circle
+// $border-radius-lg:
+
+/// Border radius with a pill modifier. Defaults to 20 * $border-radius
+/// Defaults to: $border-radius * 20
+// $border-radius-pill:
+
+/// Global toggle to enable rounded corners (experimental)
+/// Defaults to: true
+// $border-radius-enabled:

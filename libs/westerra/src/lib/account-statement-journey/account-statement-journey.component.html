@@ -1,0 +1,11 @@
+<div class="bb-heading-widget px-0 pb-4 flex-row align-items-center">
+    <bb-header-ui headingType="h1" headingClasses="bb-heading-widget__heading"
+        [heading]="(title$ | async) || ''"></bb-header-ui>
+    <ng-container *ngIf="(showManageStatementsNavigation$ | async) === true">
+        <ng-container> </ng-container>
+
+        <bb-account-statement-manage-statements-link *bbIfEntitlements="(entitlementsRequired$ | async)!"
+            [url]="(manageStatementsNavigationUrl$ | async)!"></bb-account-statement-manage-statements-link>
+    </ng-container>
+</div>
+<router-outlet></router-outlet>

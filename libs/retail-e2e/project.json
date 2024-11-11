@@ -1,0 +1,16 @@
+{
+  "projectType": "library",
+  "root": "libs/retail-e2e",
+  "sourceRoot": "libs/retail-e2e/src",
+  "prefix": "bb",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/retail-e2e/**/*.ts"]
+      }
+    }
+  },
+  "tags": ["scope:shared", "region:agnostic", "type:util"]
+}

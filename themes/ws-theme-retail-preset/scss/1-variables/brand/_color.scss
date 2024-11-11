@@ -1,0 +1,77 @@
+/// Configures the brand primary color
+/// /// Used to calculate lighter and darker shade variables
+/// Defaults to: #0079c9
+  $color-primary: #E52921;
+
+
+/// Configures the brand secondary color
+/// /// Used to calculate lighter and darker shade variables
+/// Defaults to: #181e41
+  $color-secondary: #821720;
+  $color-secondary-aqua: #004f56;
+
+/// Configures the brand accent color
+/// /// Used to calculate lighter and darker shade variables
+/// Defaults to: #f2780c
+// $color-accent:
+
+/// Configures the semantic success color
+/// /// Used to calculate lighter and darker shade variables
+/// Defaults to: #2e7d32
+// $color-success:
+
+/// Configures the semantic danger color
+/// /// Used to calculate lighter and darker shade variables
+/// Defaults to: #d32f2f
+// $color-danger:
+
+/// Configures the semantic warning color
+/// /// Used to calculate lighter and darker shade variables
+/// Defaults to: #fbc02d
+// $color-warning:
+
+/// Configures the semantic info color
+/// /// Used to calculate lighter and darker shade variables
+/// Defaults to: #1476cc
+// $color-info:
+
+/// Configures the default white color
+/// Defaults to: #fff
+ $color-neutral-white: #FFFFFF;
+
+/// Configures the lightest neutral color
+/// Defaults to: #f5f5f5
+// $color-neutral-lightest:
+
+/// Configures the lighter neutral color
+/// Defaults to: #f2f2f2
+// $color-neutral-lighter:
+
+/// Configures the light neutral color
+/// Defaults to: #e9eaeb
+// $color-neutral-light:
+
+/// Configures the grey neutral color
+/// Defaults to: #dedede
+// $color-neutral-grey:
+
+/// Configures the darker grey neutral color
+/// Defaults to: #c5c5c5
+// $color-neutral-greyer:
+
+/// Configures the darkest grey neutral color
+/// Defaults to: #a2a2a2
+// $color-neutral-greyest:
+
+/// Configures the dark neutral color
+/// Defaults to: #616161
+// $color-neutral-dark:
+
+/// Configures the darker neutral color
+/// Defaults to: #333333
+// $color-neutral-darker:
+
+/// Configures the black neutral color
+/// Defaults to: #000000
+ $color-neutral-black: #101820;
+ $border-color: #dedede

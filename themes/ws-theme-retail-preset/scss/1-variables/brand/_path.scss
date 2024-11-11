@@ -1,0 +1,11 @@
+/// Configures a custom assets path. Defaults to the preset assets folder
+/// Defaults to: "../assets"
+ $path-assets: "../../assets";
+
+/// Configures a custom fonts path. Defaults to the preset $assets/fonts folder
+/// Defaults to: "#{$path-assets}/fonts"
+// $path-fonts:
+
+/// Configures a custom assets path. Defaults to the preset $assets/fonts folder
+/// Defaults to: "#{$path-assets}/images"
+// $path-images:
