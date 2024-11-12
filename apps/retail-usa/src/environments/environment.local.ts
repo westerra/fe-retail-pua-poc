@@ -49,7 +49,7 @@ export const authConfig: (baseUrl: string) => AuthConfig = (_baseUrl: string = '
   // This address for retail is used because the CORS policy there allows local development
   // url <change_this_placeholder_to_your_identity_url_with_realm> is meant to be here
   // issuer: 'http://localhost:8180/auth/realms/retail',
-  issuer: 'https://identity.dev.sdbxaz.azure.backbaseservices.com/auth/realms/backbase',
+  issuer: 'https://identity.bus.sdbxaz.azure.backbaseservices.com/auth/realms/customer',
 
   // URL of the SPA to redirect the user to after login
   redirectUri: document.location.origin + '/select-context',

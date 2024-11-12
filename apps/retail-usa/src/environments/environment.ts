@@ -30,7 +30,7 @@ export const environment: Environment = {
   appVersion: packageJson.version,
   calendarVersion: packageJson.backbase.appVersion,
   accountsUseArrangementViewsApi: false,
-  // identityProvider: 'https://identity.ret-us-l.rnd.live.backbaseservices.com/auth/realms/backbase',
+  // identityProvider: 'https://identity.bus.sdbxaz.azure.backbaseservices.com/auth/realms/customer',
   identityProvider: '',
   authLandingPage: '',
 };
@@ -48,7 +48,7 @@ export const authConfig: (baseUrl: string) => AuthConfig = (_baseUrl: string = '
   // Url of the Identity Provider
   // This address for retail is used because the CORS policy there allows local development
   // url <change_this_placeholder_to_your_identity_url_with_realm> is meant to be here
-  issuer: 'https://identity.dev.sdbxaz.azure.backbaseservices.com/auth/realms/backbase',
+  issuer: 'https://identity.bus.sdbxaz.azure.backbaseservices.com/auth/realms/customer',
 
   // URL of the SPA to redirect the user to after login
   redirectUri: document.location.origin + '/select-context',

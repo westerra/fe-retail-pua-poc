@@ -24,7 +24,6 @@ import {
 import { SelfEnrollmentUserService } from '../../../services/westerra-self-enrollment-user';
 import { WesterraEnrollmentDataService } from '../../services/westerra-enrollment-data/westerra-enrollment-data.service';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-// import { DateTime } from 'luxon';
 
 interface InputTextComponentEl {
   elem: ElementRef;
@@ -44,17 +43,17 @@ const ErrorCode = {
   templateUrl: './identification-view.component.html',
   styleUrls: ['./identification-view.component.scss'],
 })
-export class IdentificationViewComponent implements OnInit, OnDestroy {
+export class IdentificationViewComponent implements OnInit {
   @Input() accountNumberMaxLength = 10;
   @Input() errorStatus!: ErrorState;
   @Input() attempts = 0;
   @Input() duplicatedMessage!: boolean;
-  @Input() isAutoEnrollment: boolean = false;
+  @Input() isAutoEnrollment = false;
   @Input() userData: EnrollmentUserData = null;
   @Output() next: EventEmitter<any> = new EventEmitter<IdentificationFormResponse | any>();
   @Output() navigateToLogin: EventEmitter<any> = new EventEmitter();
 
-  public isAutoIdentification: boolean = false;
+  public isAutoIdentification = false;
 
   public progressSteps = [];
   public selfProgressSteps = [
@@ -100,14 +99,14 @@ export class IdentificationViewComponent implements OnInit, OnDestroy {
 
   public sampleErrorMessages = EnrollmentErrorMessage;
 
-  nav: string = 'select';
+  nav = 'select';
   today = new Date();
   dayArray: Array<string> = [];
   yearArray: Array<string> = [];
   errorLinkStyling = 'text-decoration: underline; color: #fff';
   errorMsg: string | null = null;
   error?: number;
-  isIdentifying: boolean = false;
+  isIdentifying = false;
   dobOptions = {
     month: [
       { label: 'Jan', value: '01' },
@@ -204,7 +203,7 @@ export class IdentificationViewComponent implements OnInit, OnDestroy {
 
   getYearsArray() {
     for (let i = this.today.getFullYear(); i >= this.today.getFullYear() - 120; i--) {
-      let year = i.toString();
+      const year = i.toString();
       this.yearArray.push(year);
     }
   }
@@ -215,7 +214,7 @@ export class IdentificationViewComponent implements OnInit, OnDestroy {
 
   onChanges(): void {
     this.personalInfoForm.valueChanges.subscribe((val) => {
-      let formattedDob = `${val.year}-${val.month.value}-${val.day}T00:00:00`;
+      const formattedDob = `${val.year}-${val.month.value}-${val.day}T00:00:00`;
 
       switch (this.getMonth()) {
         case 'Feb':
@@ -341,7 +340,7 @@ export class IdentificationViewComponent implements OnInit, OnDestroy {
           const ssn = this.autoPersonalInfoForm.get('ssn');
 
           if (ssn && ssn.value) {
-            let ssnValue = ssn.value;
+            const ssnValue = ssn.value;
 
             // TO BE REMOVED
             // let data = {
@@ -380,7 +379,7 @@ export class IdentificationViewComponent implements OnInit, OnDestroy {
           const ssn = this.autoVerificationForm.get('ssn').value;
 
           if (account && dob && ssn) {
-            let savedUser = this.userService.getAutoEnrollmentUser();
+            const savedUser = this.userService.getAutoEnrollmentUser();
             savedUser.accountNumber = account;
             savedUser.dob = dob;
             savedUser.ssn = ssn;
@@ -436,12 +435,12 @@ export class IdentificationViewComponent implements OnInit, OnDestroy {
     const metadata = response.metadata;
     this.userData.firstName = metadata.firstName;
     this.userData.lastName = metadata.lastName;
-    let dob = metadata.dob;
-    let accountNumber = metadata.accountNumber;
+    const dob = metadata.dob;
+    const accountNumber = metadata.accountNumber;
     if (metadata && metadata.DOB) {
-      let dob = metadata.DOB.split('T')[0].concat('T00:00:00');
+      const dob = metadata.DOB.split('T')[0].concat('T00:00:00');
     } else {
-      let dob = metadata.dob.split('T')[0].concat('T00:00:00');
+      const dob = metadata.dob.split('T')[0].concat('T00:00:00');
     }
 
     this.cdr.detectChanges();
@@ -450,12 +449,12 @@ export class IdentificationViewComponent implements OnInit, OnDestroy {
       this.userData.preferredUsername = response.username;
       this.userData.ssn = this.autoPersonalInfoForm.get('ssn').value;
 
-      this.autoVerificationForm.get('ssn')!.setValue(this.userData.ssn);
-      this.autoVerificationForm.get('ssn')!.setErrors(null);
-      this.autoVerificationForm.get('account')!.setValue(accountNumber);
-      this.autoVerificationForm.get('dob')!.setValue(dob);
-      this.autoVerificationForm.get('dob')!.setErrors(null);
-      this.autoVerificationForm.get('dob')!.setErrors({ incorrect: false });
+      this.autoVerificationForm.get('ssn')?.setValue(this.userData.ssn);
+      this.autoVerificationForm.get('ssn')?.setErrors(null);
+      this.autoVerificationForm.get('account')?.setValue(accountNumber);
+      this.autoVerificationForm.get('dob')?.setValue(dob);
+      this.autoVerificationForm.get('dob')?.setErrors(null);
+      this.autoVerificationForm.get('dob')?.setErrors({ incorrect: false });
 
       this.isAutoIdentification = false;
       this.progressSteps = this.autoProgressSteps2;
@@ -464,6 +463,4 @@ export class IdentificationViewComponent implements OnInit, OnDestroy {
       this.cdr.detectChanges();
     }
   }
-
-  ngOnDestroy(): void {}
 }
