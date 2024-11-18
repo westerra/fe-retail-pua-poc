@@ -3,15 +3,12 @@ const devInterface = require('@ng-apimock/dev-interface');
 const express = require('express');
 const app = express();
 
-const appName = process.argv[2];
-if (!appName) throw 'Provide a name of an app you want to start mocks for!';
-
 app.set('port', 9999);
 
 apimock.processor.process({
   src: 'mock-server/mocks',
   patterns: {
-    mocks: 'shared/**/*.json',
+    mocks: `generated/**/*.json`,
     presets: '**/*.preset.json',
   },
   watch: true,
@@ -20,7 +17,7 @@ apimock.processor.process({
 apimock.processor.process({
   src: 'mock-server/mocks',
   patterns: {
-    mocks: `${appName}/**/*.json`,
+    mocks: 'custom/**/*.json',
     presets: '**/*.preset.json',
   },
   watch: true,
