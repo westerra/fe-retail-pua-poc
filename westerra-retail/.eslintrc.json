@@ -72,8 +72,7 @@
               }
             ]
           }
-        ],
-        "import/no-extraneous-dependencies": ["error"]
+        ]
       }
     },
     {
