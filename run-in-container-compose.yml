@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+    bb-retail-app:
+        image: node:14
+        command: [ "bash", "-c", "/home/node/app/run-in-container-entrypoint.sh" ]
+        environment:
+            BB_USER: ${BB_USER}
+            BB_PASS: ${BB_PASS}
+            NODE_ENV: development
+        volumes: 
+            - /home/node/app/src/node_modules
+            - ./:/home/node/app
+        ports:
+            - 4200:4200

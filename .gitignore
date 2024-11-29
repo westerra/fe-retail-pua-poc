@@ -1,26 +1,12 @@
-# Node modules
-/node_modules/
-
-# Angular build output
-/dist/
-/out-tsc/
-/tmp/
-/coverage/
-
-# IDE and editor files
-/.idea/
-/.vscode/
-/*.code-workspace
-
-# Operating system files
+node_modules
+.idea
 .DS_Store
+processed
+dist
+collections
+e2e-tests/src/tests/node_modules
+**/coverage/
+.angular
+# System Files
 Thumbs.db
-
-
-# Angular CLI workspace configuration
-.angular/
-
-
-.nx/cache
-
-nginx-config/
+Dockerfile_copy

@@ -1,0 +1,107 @@
+# Default values for Retail App service.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+namespace: $NAMESPACE
+nodegroup: $EKS_NODE_GROUP
+
+image:
+  repository: 181741612687.dkr.ecr.us-east-2.amazonaws.com/retail-app
+  tag: $TAG
+  pullPolicy: IfNotPresent
+
+imagePullSecrets:
+  - name: ecrcred
+
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: NodePort
+  port: 8080
+
+ingress:
+  enabled: false
+
+
+resources: 
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+   requests:
+     cpu: 512m
+     memory: 1Gi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+podTemplate:
+  annotations: {
+      app.backbase.com/tier: "dbs",
+      app.kubernetes.io/instance: "westerra-retail-app",
+      app.kubernetes.io/name: "retail-app",
+      app.kubernetes.io/part-of: "westerra",
+      app.kubernetes.io/managed-by: "Helm"
+  }
+
+#extraEnv: [
+#  - JAVA_TOOL_OPTIONS: -Djava.security.egd=file:/dev/./urandom -Dspring.cloud.config.server.git.skipSslValidation=true,
+#  - SPRING_CLOUD_CONFIG_SERVER_GIT_DEFAULT_LABEL: develop
+#]
+
+extraEnv:
+  - name: PROTOCOL
+    value: "https:"
+  - name: FALLBACK_LOCALE
+    value: "en"
+  - name: BASE_HREF
+    value: "/retail-app/"
+  - name: AUTH_SCOPE
+    value: "openid"
+  - name: AUTH_CLIENT_ID
+    value: "bb-web-client"
+  - name: BB_CLIENT_SECRET_ID
+    value: "bb-secret"
+  - name: PATHNAME
+    value: "/"
+  - name: experienceName
+    value: "retail-app"
+  - name: responseType
+    value: "code id_token token"
+  - name: entitlementsEnable
+    value: "true"
+  - name: entitlementsUri
+    value: "/access-control/client-api/v2/accessgroups/users/permissions/summary"
+  - name: NOTIFICATION_PREFERENCES_API_MODE
+    value: "actions"
+  - name: maxInactivityDuration
+    value: "300"
+  - name: CSP
+    value: "default-src 'none'; connect-src 'self' * 'unsafe-inline' dev.bbwcu.westerracu.com ; font-src 'self' * 'unsafe-inline' https://fonts.gstatic.com;frame-ancestors *.payrailztest.com;frame-src https://int-widgets.moneydesktop.com *.payrailztest.com; img-src 'self' * 'unsafe-inline' https://content.moneydesktop.com https://content.mx.com https://maps.gstatic.com; script-src-elem  'self' * 'unsafe-inline' https://maps.googleapis.com; style-src 'self' * 'unsafe-inline'; 'self' * 'unsafe-inline' https://test.regrpayverisbp.co; style-src-elem  'self' * 'unsafe-inline' https://fonts.googleapis.com; script-src  'self' * 'unsafe-inline' blob:;"
+
+secrets:
+  AUTH_URL: $AUTH_URL
+  AUTH_REDIRECT_PAGE: $AUTH_REDIRECT_PAGE
+  AUTH_REALM: $AUTH_REALM
+  API_ROOT: $API_ROOT
+  AUTH_LANDING_PAGE: $AUTH_LANDING_PAGE
+  AWS_REGION: $AWS_DEFAULT_REGION
+  EXTERNAL_SIG_SECRET_KEY: $EXTERNAL_SIG_SECRET_KEY
+  EXTERNAL_ENC_SECRET_KEY: $EXTERNAL_ENC_SECRET_KEY
+  identityProvider: $identityProvider
+  HOSTNAME: $HOSTNAME
+
+autoscaling:
+  enabled: $HPA_ENABLED
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPU: 1024m
+  targetMemory: 2048Mi

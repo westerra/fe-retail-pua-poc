@@ -1,0 +1,426 @@
+version: 2.1
+
+orbs:
+  gh: circleci/github-cli@2.2.0
+  git-shallow-clone: guitarrapc/git-shallow-clone@2.5.0
+  maven: circleci/maven@1.1
+  node: circleci/node@5.1.0
+  aws-cli: circleci/aws-cli@2.0.3
+  nx: nrwl/nx@1.6.1
+  aws-ecr: circleci/aws-ecr@7.0.0
+  kubernetes: circleci/kubernetes@0.12.0
+
+jobs:
+  build-and-publish-dev-sit:
+    parameters:
+      path:
+        description: |
+          Specify Dockerfile path
+        type: string
+
+      repo:
+        description: Name of an Amazon ECR repository
+        type: string
+
+      tag:
+        description: A comma-separated string containing docker image tags to build and push (default = latest)
+        type: string
+
+      dockerfile:
+        type: string
+
+      # extra-build-args:
+      #   type: string
+
+    machine:
+      image: ubuntu-2004:2023.04.2
+    resource_class: xlarge
+    steps:
+      - aws-cli/install
+      - checkout
+      - node/install:
+          node-version: "16.19.1"
+      - run:
+          name: Authenticating westerra retail app
+          command: |
+            mv westerra-retail/.npmrc westerra-retail/.npmrc-org
+            sed -e 's@$NPM_AUTH@'"$NPM_AUTH"'@' westerra-retail/.npmrc-org > westerra-retail/.npmrc
+      - run:
+          name: Building Application Bundle
+          command: |
+            cd westerra-retail
+            npm install --legacy-peer-deps
+            npm run build
+
+      - run:
+          name: Authenticate with backbase repo
+          command: |
+            docker login -u $BB_REPO_USER	-p $BB_REPO_PASSWORD $BB_REPO_URL
+
+      - run:
+          name: Build and tag Docker image
+          command: |
+            cd westerra-retail
+              docker build -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/retail-app:dev-${CIRCLE_SHA1:0:7}  .
+              docker tag $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/retail-app:dev-${CIRCLE_SHA1:0:7} $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/retail-app:sit-${CIRCLE_SHA1:0:7}
+              docker images
+
+      - run:
+          name: Authenticate with AWS ECR
+          command: |
+            aws ecr get-login-password --region $AWS_DEFAULT_REGION   | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+
+      - run:
+          name: Push Docker image to ECR
+          command: |
+            cd westerra-retail 
+            docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/retail-app:dev-${CIRCLE_SHA1:0:7}
+            docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/retail-app:sit-${CIRCLE_SHA1:0:7}
+
+  build-and-publish-uat-prod:
+    parameters:
+      path:
+        description: |
+          Specify Dockerfile path
+        type: string
+
+      repo:
+        description: Name of an Amazon ECR repository
+        type: string
+
+      tag:
+        description: A comma-separated string containing docker image tags to build and push (default = latest)
+        type: string
+
+      dockerfile:
+        type: string
+
+      # extra-build-args:
+      #   type: string
+
+    machine:
+      image: ubuntu-2004:2023.04.2
+    resource_class: xlarge
+    steps:
+      - aws-cli/install
+      - checkout
+      - node/install:
+          node-version: "16.19.1"
+      - run:
+          name: Authenticating westerra retail app
+          command: |
+            mv westerra-retail/.npmrc westerra-retail/.npmrc-org
+            sed -e 's@$NPM_AUTH@'"$NPM_AUTH"'@' westerra-retail/.npmrc-org > westerra-retail/.npmrc
+      - run:
+          name: Building Application Bundle
+          command: |
+            cd westerra-retail
+            npm install --legacy-peer-deps
+            npm run build
+
+      - run:
+          name: Authenticate with backbase repo
+          command: |
+            docker login -u $BB_REPO_USER	-p $BB_REPO_PASSWORD $BB_REPO_URL
+
+      - run:
+          name: Build and tag Docker image
+          command: |
+            cd westerra-retail
+              docker build -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/retail-app:uat-${CIRCLE_SHA1:0:7} .
+              docker tag $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/retail-app:uat-${CIRCLE_SHA1:0:7} $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/retail-app:prod-${CIRCLE_SHA1:0:7}
+              docker images
+
+      - run:
+          name: Authenticate with AWS ECR
+          command: |
+            aws ecr get-login-password --region $AWS_DEFAULT_REGION   | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+
+      - run:
+          name: Push Docker image to ECR
+          command: |
+            cd westerra-retail 
+            docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/retail-app:uat-${CIRCLE_SHA1:0:7}
+            docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/retail-app:prod-${CIRCLE_SHA1:0:7}
+
+  deploy:
+    parameters:
+      # npm_version:
+      #   type: string
+      cluster-name:
+        description: |
+          Name of the EKS cluster
+        type: string
+      namespace:
+        description: |
+          Name of the cluster namespace
+        type: string
+      env:
+        description: |
+          Select the environment (dev/sit/uat/prod)
+        type: string
+      # app_folder:
+      #   type: string
+      secrets:
+        type: string
+
+    machine:
+      image: ubuntu-2004:2023.04.2
+    resource_class: xlarge
+
+    steps:
+      - attach_workspace:
+          at: .
+
+      - checkout
+      - kubernetes/install-kubectl:
+          kubectl-version: v1.23.0
+      - aws-cli/install
+      - run:
+          command: |
+            wget https://get.helm.sh/helm-v3.8.1-linux-amd64.tar.gz
+            tar -xvf helm-v3.8.1-linux-amd64.tar.gz
+            sudo mv linux-amd64/helm /usr/local/bin
+            helm version
+          name: Setup helm
+      - run:
+          name: Install OpenVPN
+          no_output_timeout: 30m
+          command: |
+            sudo apt update && sudo apt install -y apt-transport-https
+            sudo wget https://swupdate.openvpn.net/repos/openvpn-repo-pkg-key.pub
+            sudo apt-key add openvpn-repo-pkg-key.pub
+            sudo wget -O /etc/apt/sources.list.d/openvpn3.list https://swupdate.openvpn.net/community/openvpn3/repos/openvpn3-$(sed 's/UBUNTU_CODENAME=//;t;d' /etc/os-release).list
+            sudo apt update && sudo apt install -y openvpn3 openvpn-systemd-resolved
+            java -version
+
+      - run:
+          name: Check IP before VPN connection
+          command: |
+            ip a
+            echo "Public IP before VPN connection is $(curl checkip.amazonaws.com)"
+
+      - run:
+          name: VPN Setup
+          background: true
+          command: |
+            mkdir -m700 -p $HOME/.openvpn3/autoload
+            echo $CIRCLECI_VPN_CONFIG_FILE | base64 -d > $HOME/.openvpn3/autoload/client.ovpn
+            echo $CIRCLECI_VPN_AUTOLOAD | base64 -d > $HOME/.openvpn3/autoload/client.autoload
+            ET_phone_home=$(ss -Hnto state established '( sport = :ssh )' | head -n1 | awk '{ split($4, a, ":"); print a[1] }')
+            echo ET_phone_home: $ET_phone_home
+
+            if [ -n "$ET_phone_home" ]; then
+              echo "route $ET_phone_home 255.255.255.255 net_gateway" >> $HOME/.openvpn3/autoload/client.ovpn
+            fi
+
+            echo "route 169.254.0.0 255.255.0.0 net_gateway" >> $HOME/.openvpn3/autoload/client.ovpn
+
+            for SYS_RES_DNS in $(systemd-resolve --status | grep 'DNS Servers'|awk '{print $3}')
+              do
+                echo "route $SYS_RES_DNS 255.255.0.0 net_gateway" >> $HOME/.openvpn3/autoload/client.ovpn
+                echo SYS_RES_DNS: $SYS_RES_DNS
+            done
+            for IP in $(host runner.circleci.com | awk '{ print $4; }')
+              do
+                echo "route $IP 255.255.255.255 net_gateway" >> $HOME/.openvpn3/autoload/client.ovpn
+                echo IP Addr: $IP
+            done
+            sudo openvpn3-autoload --directory $HOME/.openvpn3/autoload
+            sudo openvpn3 sessions-list
+
+      - run:
+          name: Wait for the connection to be established and check
+          command: |
+            counter=1
+            until sudo openvpn3 sessions-list|grep "Client connected" || [ "$counter" -ge 5 ]; do
+              ((counter++))
+              echo "Attempting to connect to VPN server..."
+              sleep 1;
+            done
+
+            if ( ! sudo openvpn3 sessions-list|grep "Client connected"); then
+              printf "\nUnable to establish connection within the allocated time ---> Giving up.\n"
+            else
+              printf "\nVPN connected\n"
+              printf "\nPublic IP is now %s\n" "$(curl -s https://checkip.amazonaws.com)"
+            fi
+      - run:
+          name: Check VPN IP Address
+          command: |
+            printf "\nPublic IP is now %s\n" "$(curl -s https://checkip.amazonaws.com)"
+
+      - run:
+          command: |
+            export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+            export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+            aws sts get-caller-identity
+            aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name << parameters.cluster-name >>
+            kubectl get pods --namespace << parameters.namespace >>
+            kubectl get svc --namespace << parameters.namespace >>
+          name: Display WCU retail-app pods in << parameters.env >> Cluster
+      - run:
+          command: |
+            export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+            export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+            <<parameters.secrets>> values.yaml-tmpl > values.yaml
+            helm upgrade -f values.yaml retail-app -n << parameters.namespace >> . || helm install -f values.yaml retail-app -n << parameters.namespace >> .
+            kubectl rollout status deployment/retail-app -n << parameters.namespace >>
+          name: Deploy WCU retail-app Server in << parameters.env >> Cluster
+          working_directory: ./helm
+
+  create-pr-from-develop-to-main:
+    docker:
+      - image: "cimg/base:stable"
+    parameters:
+      token:
+        description: |
+          Pass Github token
+        type: env_var_name
+    steps:
+      - gh/setup
+      - git-shallow-clone/checkout_advanced:
+          keyscan_github: true
+          clone_options: --depth 5
+      #      - gh/clone
+      - run:
+          command: |
+            PR_STATUS=$(gh pr view --json state | jq -r .state)
+            if [[ "$PR_STATUS" = "OPEN" ]]; then echo "PR already open" ; else gh pr create --title "PR develop -> main" --body "PR from develop branch to main branch" --reviewer HendrikTredoux --base main; fi
+          name: Create Pull Request
+
+workflows:
+  deployment:
+    jobs:
+      - build-and-publish-dev-sit:
+          name: build-and-publish-for-retail-app-in-dev
+          context:
+            - bb-aws-dev
+            - bb-aws-dev-2
+            - retail-web-app
+          path: ./
+          repo: retail-app
+          dockerfile: Dockerfile
+          tag: dev-${CIRCLE_SHA1:0:7},sit-${CIRCLE_SHA1:0:7}
+          filters:
+            branches:
+              only:
+                - develop
+      - deploy:
+          name: deploy-westerra-retail-app-in-dev
+          context:
+            - bb-aws-dev
+            - bb-aws-dev-2
+            - retail-web-app
+          requires:
+            - build-and-publish-for-retail-app-in-dev
+          cluster-name: westerra-dev-eks
+          namespace: westerra-dev
+          secrets: sed -e 's@$TAG@'"$ENV-${CIRCLE_SHA1:0:7}"'@' -e 's@$NAMESPACE@'"$NAMESPACE"'@' -e 's@$EKS_NODE_GROUP@'"$EKS_NODE_GROUP"'@' -e 's@$AUTH_URL@'"$AUTH_URL"'@' -e 's@$AUTH_REDIRECT_PAGE@'"$AUTH_REDIRECT_PAGE"'@'  -e 's@$AUTH_REALM@'"$AUTH_REALM"'@'  -e 's@$AUTH_LANDING_PAGE@'"$AUTH_LANDING_PAGE"'@' -e 's@$AWS_DEFAULT_REGION@'"$AWS_DEFAULT_REGION"'@' -e 's@$HPA_ENABLED@'"$HPA_ENABLED"'@' -e 's@$identityProvider@'"$identityProvider"'@' -e 's@$HOSTNAME@'"$HOSTNAME"'@' -e 's@$API_ROOT@'"$API_ROOT"'@'
+          env: dev
+          filters:
+            branches:
+              only:
+                - develop
+      - request-to-deploy-in-sit:
+          requires:
+            - deploy-westerra-retail-app-in-dev
+          type: approval
+          filters:
+            branches:
+              only:
+                - develop
+      #####SIT ENV#####
+      - deploy:
+          name: deploy-westerra-retail-app-in-sit
+          context:
+            - bb-aws-sit
+            - bb-aws-sit-2
+            - retail-web-app-sit
+          requires:
+            - request-to-deploy-in-sit
+          cluster-name: westerra-dev-eks
+          namespace: westerra-sit
+          secrets: sed -e 's@$TAG@'"$ENV-${CIRCLE_SHA1:0:7}"'@' -e 's@$NAMESPACE@'"$NAMESPACE"'@' -e 's@$EKS_NODE_GROUP@'"$EKS_NODE_GROUP"'@' -e 's@$AUTH_URL@'"$AUTH_URL"'@' -e 's@$AUTH_REDIRECT_PAGE@'"$AUTH_REDIRECT_PAGE"'@'  -e 's@$AUTH_REALM@'"$AUTH_REALM"'@'  -e 's@$AUTH_LANDING_PAGE@'"$AUTH_LANDING_PAGE"'@' -e 's@$AWS_DEFAULT_REGION@'"$AWS_DEFAULT_REGION"'@' -e 's@$HPA_ENABLED@'"$HPA_ENABLED"'@' -e 's@$identityProvider@'"$identityProvider"'@' -e 's@$HOSTNAME@'"$HOSTNAME"'@' -e 's@$API_ROOT@'"$API_ROOT"'@'
+          env: dev
+          filters:
+            branches:
+              only:
+                - develop
+
+      #######Create_PR_to_Merge_in_MAIN_Branch
+
+      - approval-for-creating-pr-from-develop-to-main:
+          requires:
+            - deploy-westerra-retail-app-in-sit
+          type: approval
+          filters:
+            branches:
+              only:
+                - develop
+
+      - create-pr-from-develop-to-main:
+          requires:
+            - approval-for-creating-pr-from-develop-to-main
+          token: GITHUB_TOKEN
+          filters:
+            branches:
+              only:
+                - develop
+
+      ##########Build and Deploy in UAT ###############
+      - build-and-publish-uat-prod:
+          name: build-and-publish-for-retail-app-in-uat
+          context:
+            - bb-aws-uat
+            - bb-aws-uat-2
+            - retail-web-app-uat
+          path: ./
+          repo: retail-app
+          dockerfile: Dockerfile
+          tag: uat-${CIRCLE_SHA1:0:7},prod-${CIRCLE_SHA1:0:7}
+          filters:
+            branches:
+              only:
+                - main
+      - deploy:
+          name: deploy-westerra-retail-app-in-uat
+          context:
+            - bb-aws-uat
+            - bb-aws-uat-2
+            - retail-web-app-uat
+          requires:
+            - build-and-publish-for-retail-app-in-uat
+          cluster-name: westerra-uat-eks
+          namespace: westerra-uat
+          secrets: sed -e 's@$TAG@'"$ENV-${CIRCLE_SHA1:0:7}"'@' -e 's@$NAMESPACE@'"$NAMESPACE"'@' -e 's@$EKS_NODE_GROUP@'"$EKS_NODE_GROUP"'@' -e 's@$AUTH_URL@'"$AUTH_URL"'@' -e 's@$AUTH_REDIRECT_PAGE@'"$AUTH_REDIRECT_PAGE"'@'  -e 's@$AUTH_REALM@'"$AUTH_REALM"'@'  -e 's@$AUTH_LANDING_PAGE@'"$AUTH_LANDING_PAGE"'@' -e 's@$AWS_DEFAULT_REGION@'"$AWS_DEFAULT_REGION"'@' -e 's@$HPA_ENABLED@'"$HPA_ENABLED"'@' -e 's@$identityProvider@'"$identityProvider"'@' -e 's@$HOSTNAME@'"$HOSTNAME"'@' -e 's@$API_ROOT@'"$API_ROOT"'@'
+          env: dev
+          filters:
+            branches:
+              only:
+                - main
+      - request-to-deploy-in-prod:
+          requires:
+            - deploy-westerra-retail-app-in-uat
+          type: approval
+          filters:
+            branches:
+              only:
+                - main
+      #####Deploy in PROD ENV#####
+      - deploy:
+          name: deploy-westerra-retail-app-in-prod
+          context:
+            - bb-aws-prod
+            - bb-aws-prod-2
+            - retail-web-app-prod
+          requires:
+            - request-to-deploy-in-prod
+          cluster-name: westerra-prod-eks
+          namespace: westerra-prod
+          secrets: sed -e 's@$TAG@'"$ENV-${CIRCLE_SHA1:0:7}"'@' -e 's@$NAMESPACE@'"$NAMESPACE"'@' -e 's@$EKS_NODE_GROUP@'"$EKS_NODE_GROUP"'@' -e 's@$AUTH_URL@'"$AUTH_URL"'@' -e 's@$AUTH_REDIRECT_PAGE@'"$AUTH_REDIRECT_PAGE"'@'  -e 's@$AUTH_REALM@'"$AUTH_REALM"'@'  -e 's@$AUTH_LANDING_PAGE@'"$AUTH_LANDING_PAGE"'@' -e 's@$AWS_DEFAULT_REGION@'"$AWS_DEFAULT_REGION"'@' -e 's@$HPA_ENABLED@'"$HPA_ENABLED"'@' -e 's@$identityProvider@'"$identityProvider"'@' -e 's@$HOSTNAME@'"$HOSTNAME"'@' -e 's@$API_ROOT@'"$API_ROOT"'@'
+          env: dev
+          filters:
+            branches:
+              only:
+                - main
