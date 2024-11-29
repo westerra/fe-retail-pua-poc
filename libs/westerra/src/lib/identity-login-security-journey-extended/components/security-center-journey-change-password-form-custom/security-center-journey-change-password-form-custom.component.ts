@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnDestroy, OnInit } from '@angular/core';
-import { ChangePasswordFormComponent } from '@backbase/identity-login-security-features';
+import { ChangePasswordFormComponent } from '@backbase/identity-login-security-journey-ang';
 
 @Component({
   selector: 'bb-security-center-journey-change-password-form-custom',

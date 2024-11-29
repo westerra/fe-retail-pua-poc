@@ -25,7 +25,7 @@ export class EnrollmentHandlerComponent implements OnInit, OnDestroy {
     uuid: '1234',
   };
 
-  isMobileUser: boolean = false;
+  isMobileUser = false;
 
   constructor(
     private stepsService: EnrollmentChallengeHandlerService,

@@ -1,12 +1,13 @@
-import { SchemeName } from '@backbase/payment-order-options-http-ang';
+
 import {
   CounterPartyFields,
   getConfig,
   getCounterpartySchemeName,
   PaymentBaseFields,
-} from '@backbase/internal-payments-shared-feature-forms';
+} from '@backbase/internal-payments-shared-util';
 import { stripSpaces, isAddressTruthy } from '@backbase/internal-payments-shared-util';
 import { PaymentTypes } from '../constants/initiate-payment.const';
+import { SchemeNames } from '@backbase/payment-order-v3-http-ang';
 /** @internal */
 export const mapPaymentOptionRequest = (formItem, clientServiceAgreementID = '', clientJurisdiction = '') => {
   const { creditorBank } = formItem.counterparty;
@@ -18,12 +19,12 @@ export const mapPaymentOptionRequest = (formItem, clientServiceAgreementID = '',
     ...(clientJurisdiction ? { clientJurisdiction } : null),
     originatorAccount: {
       identification: formItem.initiator.id,
-      schemeName: SchemeName.ID,
+      schemeName: SchemeNames.Id,
     },
     counterpartyAccount: {
       ...(bankBranchCode ? { bankBranchCode } : null),
       identification:
-        creditorScheme === SchemeName.ID
+        creditorScheme === SchemeNames.Id
           ? stripSpaces(formItem.counterparty.id)
           : stripSpaces(formItem.counterparty.accountNumber),
       schemeName: creditorScheme,

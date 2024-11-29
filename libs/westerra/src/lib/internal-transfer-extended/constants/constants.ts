@@ -1,3 +1,4 @@
+/* eslint-disable no-var */
 export const USStates = [
     { id: 'AL', name: 'Alabama' },
     { id: 'AK', name: 'Alaska' },

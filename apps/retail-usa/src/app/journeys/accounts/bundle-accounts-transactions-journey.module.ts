@@ -17,12 +17,15 @@ import {
   ACCOUNTS_TRANSACTIONS_JOURNEY_PAYMENT_BATCH_BASE_PATH,
   ACCOUNTS_TRANSACTIONS_JOURNEY_EXTERNAL_ACCOUNT_AGGREGATOR_BASE_PATH,
   AccountsManageComponent,
-  AccountsManageGuardService,
+  canActivateManageAccountsGuard,
   AccountsTransactionsJourneyComponent,
-  TransactionsListComponent,
-  AccountsDetailsTabComponent,
-  TransactionDetailsComponent,
+  ProductKindUri,
+  ProductSummaryService,
   AccountInfoViewComponent,
+  AccountsDetailsTabComponent,
+  TransactionsListComponent,
+  AccountsListComponent,
+  TransactionDetailsComponent
 } from '@backbase/accounts-transactions-journey-ang';
 import { PubSubService } from '@backbase/foundation-ang/web-sdk';
 import {
@@ -40,15 +43,6 @@ import {
   APP_EXTERNAL_ACCOUNT_AGGREGATOR_BASE_PATH,
 } from '../../service-paths.module';
 import { environment } from '../../../environments/environment';
-import {
-  AccountDetailsTabExtendedComponent,
-  AccountInfoViewExtendedComponent,
-  AccountsListExtendedViewComponent,
-  ProductSummaryService,
-  TransactionsDetailWrapperComponent,
-  TransactionsListViewExtendedComponent,
-  customAccountInfoConfiguration,
-} from '@backbase/westerra';
 
 const AccountsTransactionsConfigProvider: Provider = {
   provide: AccountsTransactionsJourneyConfigurationToken,
@@ -62,10 +56,10 @@ const AccountsTransactionsConfigProvider: Provider = {
     itemsPerPage: 100,
     showChangeCategory: true,
     enableDisputeAndInquiry: false,
-    // productKindsWithExternalDetailsPage: ProductKindUri.LOAN,
+    productKindsWithExternalDetailsPage: ProductKindUri.LOAN,
     accountAliasDisplayLevel: AccountAliasDisplayingLevel.USER,
     arrangementViewsName: 'legacy-summary',
-    accountInfoProperties: customAccountInfoConfiguration,
+    // accountInfoProperties: customAccountInfoConfiguration,
   } as Partial<AccountsTransactionsJourneyConfiguration>,
 };
 
@@ -93,39 +87,40 @@ const routeCustomConfiguration: Route = {
     },
     {
       path: 'list',
-      component: AccountsListExtendedViewComponent,
+      component: AccountsListComponent,
+      // component: AccountsListExtendedViewComponent,
       data: { title: tabTitles.myAccounts() },
     },
     {
       path: 'manage',
       component: AccountsManageComponent,
       data: { title: tabTitles.manageAccounts() },
-      canActivate: [AccountsManageGuardService],
+      canActivate: [canActivateManageAccountsGuard],
     },
     {
       path: 'transactions',
-      // component: AccountsDetailsTabComponent,
-      component: AccountDetailsTabExtendedComponent,
+      component: AccountsDetailsTabComponent,
+      // component: AccountDetailsTabExtendedComponent,
       data: { title: tabTitles.transactions() },
       children: [
         { path: '', redirectTo: 'list', pathMatch: 'full' },
         {
           path: 'list',
-          // component: TransactionsListComponent,
-          component: TransactionsListViewExtendedComponent,
+          component: TransactionsListComponent,
+          // component: TransactionsListViewExtendedComponent,
           data: { title: tabTitles.transactionsList() },
           children: [
             {
               path: 'detail',
-              // component: TransactionDetailsComponent,
-              component: TransactionsDetailWrapperComponent,
+              component: TransactionDetailsComponent,
+              // component: TransactionsDetailWrapperComponent,
             },
           ],
         },
         {
           path: 'details',
-          // component: AccountInfoViewComponent,
-          component: AccountInfoViewExtendedComponent,
+          component: AccountInfoViewComponent,
+          // component: AccountInfoViewExtendedComponent,
           data: { title: tabTitles.accountDetails() },
         },
       ],

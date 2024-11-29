@@ -1,4 +1,4 @@
-export var WeekDay;
+export let WeekDay;
 (function (WeekDay) {
   WeekDay[(WeekDay['Monday'] = 1)] = 'Monday';
   WeekDay[(WeekDay['Tuesday'] = 2)] = 'Tuesday';
@@ -9,7 +9,7 @@ export var WeekDay;
   WeekDay[(WeekDay['Sunday'] = 7)] = 'Sunday';
 })(WeekDay || (WeekDay = {}));
 
-export var GoogleMapsScriptProtocol;
+export let GoogleMapsScriptProtocol;
 (function (GoogleMapsScriptProtocol) {
   GoogleMapsScriptProtocol[(GoogleMapsScriptProtocol['HTTP'] = 1)] = 'HTTP';
   GoogleMapsScriptProtocol[(GoogleMapsScriptProtocol['HTTPS'] = 2)] = 'HTTPS';

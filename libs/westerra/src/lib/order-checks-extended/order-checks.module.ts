@@ -1,3 +1,4 @@
+/* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { Routes, provideRoutes } from '@angular/router';
 import { OrderChecksViewComponent } from './components/order-checks-view/order-checks-view.component';
@@ -9,7 +10,6 @@ import { AccountsTransactionsJourneyModule } from '@backbase/accounts-transactio
 import { DropdownSingleSelectModule } from '@backbase/ui-ang/dropdown-single-select';
 import { DropdownMultiSelectModule } from '@backbase/ui-ang/dropdown-multi-select';
 
-import { SharedFeatureFormsModule } from '@backbase/internal-payments-shared-feature-forms';
 import { WesterraUiModule } from '@westerra-ui';
 
 const customOrderCheckRoutes: Routes = [
@@ -24,7 +24,6 @@ const customOrderCheckRoutes: Routes = [
   imports: [
     HeaderModule,
     CommonModule,
-    SharedFeatureFormsModule,
     DropdownSingleSelectModule,
     DropdownMultiSelectModule,
     WesterraUiModule,

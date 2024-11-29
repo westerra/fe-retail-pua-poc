@@ -1,17 +1,17 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, NonNullableFormBuilder } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { ContactFormComponent } from '@backbase/contact-manager-journey-ui';
+import { ContactFormComponent } from '@backbase/internal-contact-manager-journey-ui';
 
 @Component({
   selector: 'bb-contact-form-custom',
   templateUrl: './contact-form-custom.component.html',
 })
-export class ContactFormCustomComponent extends ContactFormComponent implements OnInit, OnChanges {
+export class ContactFormCustomComponent extends ContactFormComponent implements OnInit {
   public emailSample = 'E.g. sarawilliams@backbase.com';
   public editMode = false;
 
-  constructor(private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute) {
+  constructor(private formBuilder: NonNullableFormBuilder, private activatedRoute: ActivatedRoute) {
     super(formBuilder);
   }
 
@@ -21,9 +21,9 @@ export class ContactFormCustomComponent extends ContactFormComponent implements 
     this.fetchQueryParams();
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    super.ngOnChanges(changes);
-  }
+  // ngOnChanges(changes: SimpleChanges) {
+  //   // super.ngOnChanges(changes);
+  // }
 
   fetchQueryParams() {
     this.activatedRoute.paramMap.subscribe((params: ParamMap) => {

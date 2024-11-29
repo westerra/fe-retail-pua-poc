@@ -11,9 +11,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   templateUrl: './order-checks-view.component.html',
 })
 export class OrderChecksViewComponent implements OnInit, OnDestroy {
-  showError: boolean = false;
-  errorMessage: string = '';
-  submitted: boolean = false;
+  showError = false;
+  errorMessage = '';
+  submitted = false;
   accountsList: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   orderCheckForm: FormGroup;
 

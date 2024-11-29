@@ -7,7 +7,7 @@ import {
   PaymentComponents,
   RemittanceInfoFields,
   sanctionedCountryValidator,
-} from '@backbase/internal-payments-shared-feature-forms';
+} from '@backbase/internal-payments-shared-util';
 /** @internal */
 export const counterPartyConfig = {
   name: PaymentBaseFields.counterparty,

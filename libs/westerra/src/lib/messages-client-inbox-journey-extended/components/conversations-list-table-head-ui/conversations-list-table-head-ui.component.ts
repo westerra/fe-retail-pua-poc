@@ -1,6 +1,8 @@
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable @angular-eslint/component-selector */
 import { Component } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
-import { ConversationsListTableHeadComponent } from '@backbase/messages-client-inbox-journey-feature';
+import { ConversationsListTableHeadComponent } from '@backbase/internal-messages-client-inbox-journey-feature';
 
 @Component({
   selector: 'tr[bb-conversations-list-table-head-ui-custom]',

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-types */
+/* eslint-disable @typescript-eslint/adjacent-overload-signatures */
 import {
   ChangeDetectionStrategy,
   Component,
@@ -21,7 +23,7 @@ import { MapUiCustomComponent } from '../map-ui-custom/map-ui-custom.component';
   styleUrls: ['./map-wrapper-custom.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MapWrapperCustomComponent implements OnInit, OnChanges {
+export class MapWrapperCustomComponent implements  OnChanges {
   /**
    * API key need for the google maps to work.
    */
@@ -62,6 +64,12 @@ export class MapWrapperCustomComponent implements OnInit, OnChanges {
       this.drawMarkers();
     }
   }
+    /**
+   * Selected place id.
+   */
+    get selectedPlaceId(): string | undefined {
+      return this.selectedId;
+    }
   /**
    * EventEmitter for triggering a update event.
    */
@@ -91,12 +99,7 @@ export class MapWrapperCustomComponent implements OnInit, OnChanges {
   get locations(): Place[] {
     return this.places || [];
   }
-  /**
-   * Selected place id.
-   */
-  get selectedPlaceId(): string | undefined {
-    return this.selectedId;
-  }
+
 
   constructor() {
     /**
@@ -145,8 +148,6 @@ export class MapWrapperCustomComponent implements OnInit, OnChanges {
     this.mapReady = new EventEmitter();
     this.markers = [];
   }
-
-  ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (!this.mapHelpers) {

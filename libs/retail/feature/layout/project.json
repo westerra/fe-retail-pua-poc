@@ -1,6 +1,7 @@
 {
+  "name": "layout",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "root": "libs/retail/feature/layout",
   "sourceRoot": "libs/retail/feature/layout/src",
   "prefix": "bb",
   "targets": {

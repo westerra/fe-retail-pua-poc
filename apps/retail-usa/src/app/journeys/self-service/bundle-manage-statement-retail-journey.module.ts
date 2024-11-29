@@ -4,7 +4,7 @@ import {
   MANAGE_STATEMENTS_JOURNEY_CONFIG_TOKEN,
   ManageStatementsJourneyConfiguration,
   ManageStatementsJourneyModule,
-} from '@backbase/manage-statements-journey-ang';
+} from '@backbase/manage-statements-retail-journey-ang';
 import { APP_ACCOUNT_STATEMENT_BASE_PATH } from '../../service-paths.module';
 
 @NgModule({

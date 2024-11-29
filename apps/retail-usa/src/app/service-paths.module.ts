@@ -1,5 +1,6 @@
+/* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import { InjectionToken, NgModule } from '@angular/core';
-import { LOANS_JOURNEY_LOANS_BASE_PATH } from '@backbase/loans-journey-ang';
+import { RETAIL_LOANS_JOURNEY_LOANS_BASE_PATH } from '@backbase/loans-retail-journey';
 import { environment } from '../environments/environment';
 import { WESTERRA_SSO_DATA_CONFIG } from '@backbase/westerra';
 
@@ -7,13 +8,19 @@ export const APP_NOTIFICATIONS_BASE_PATH = new InjectionToken<string>(
   'ServicePathsModule::APP_NOTIFICATIONS_BASE_PATH',
 );
 export const APP_ENGAGEMENT_BASE_PATH = new InjectionToken<string>('ServicePathsModule::APP_ENGAGEMENT_BASE_PATH');
-export const APP_ACTIONS_BASE_PATH = new InjectionToken<string>('ServicePathsModule::APP_ACTIONS_BASE_PATH');
+export const APP_METRIC_BASE_PATH = new InjectionToken<string>('ServicePathsModule::APP_METRIC_BASE_PATH');
+export const APP_ENROLLMENT_MANAGER_BASE_PATH = new InjectionToken<string>(
+  'ServicePathsModule::APP_ENROLLMENT_MANAGER_BASE_PATH',
+);
 export const APP_ARRANGEMENT_BASE_PATH = new InjectionToken<string>('ServicePathsModule::APP_ARRANGEMENT_BASE_PATH');
 export const APP_FINANCIAL_INSTITUTION_MANAGER_BASE_PATH = new InjectionToken<string>(
   'ServicePathsModule::APP_FINANCIAL_INSTITUTION_MANAGER_BASE_PATH',
 );
 export const APP_ACCESS_CONTROL_BASE_PATH = new InjectionToken<string>(
   'ServicePathsModule::APP_ACCESS_CONTROL_BASE_PATH',
+);
+export const APP_ACCOUNT_RECOVERY_BASE_PATH = new InjectionToken<string>(
+  'ServicePathsModule::APP_ACCOUNT_RECOVERY_BASE_PATH',
 );
 export const APP_ACCOUNT_STATEMENT_BASE_PATH = new InjectionToken<string>(
   'ServicePathsModule::APP_ACCOUNT_STATEMENT_BASE_PATH',
@@ -67,6 +74,28 @@ export const APP_POCKET_TAILOR_BASE_PATH = new InjectionToken<string>(
   'ServicePathsModule::APP_POCKET_TAILOR_BASE_PATH',
 );
 export const APP_LOANS_JOURNEY_BASE_PATH = new InjectionToken<string>('ServicePathsModule::APP_LOANS_BASE_PATH');
+export const APP_CREDIT_SCORE_BASE_PATH = new InjectionToken<string>('ServicePathsModule::APP_CREDIT_SCORE_BASE_PATH');
+export const APP_INCOME_EXPENSE_ANALYSER_BASE_PATH = new InjectionToken<string>(
+  'ServicePathsModule::APP_INCOME_EXPENSE_ANALYSER_BASE_PATH',
+);
+export const APP_USER_BASE_PATH = new InjectionToken<string>('ServicePathsModule::APP_USER_BASE_PATH');
+export const APP_DEVICE_BASE_PATH = new InjectionToken<string>('ServicePathsModule::APP_DEVICE_BASE_PATH');
+export const APP_DEVICE_MANAGEMENT_V2_BASE_PATH = new InjectionToken<string>(
+  'ServicePathsModule::APP_DEVICE_MANAGEMENT_V2_BASE_PATH',
+);
+export const APP_ADDRESS_AUTOCOMPLETE_BASE_PATH = new InjectionToken<string>(
+  'ServicePathsModule::APP_ADDRESS_AUTOCOMPLETE_BASE_PATH',
+);
+
+export const APP_INITIATE_PAYMENT_JOURNEY_BANK_CALENDAR_BASE_PATH = new InjectionToken<string>(
+  'ServicePathsModule::APP_INITIATE_PAYMENT_JOURNEY_BANK_CALENDAR_BASE_PATH',
+);
+
+export const APP_INITIATE_PAYMENT_JOURNEY_BENEFICIARY_VALIDATION_V1_BASE_PATH = new InjectionToken<string>(
+  'ServicePathsModule::APP_INITIATE_PAYMENT_JOURNEY_BENEFICIARY_VALIDATION_V1_BASE_PATH',
+);
+
+export const APP_DASHBOARD_BASE_PATH = new InjectionToken<string>('ServicePathsModule::APP_DASHBOARD_BASE_PATH');
 
 @NgModule({
   providers: [
@@ -77,10 +106,6 @@ export const APP_LOANS_JOURNEY_BASE_PATH = new InjectionToken<string>('ServicePa
     {
       provide: APP_NOTIFICATIONS_BASE_PATH,
       useValue: `${environment.apiRoot}/notifications-service`,
-    },
-    {
-      provide: APP_ACTIONS_BASE_PATH,
-      useValue: `${environment.apiRoot}/action`,
     },
     {
       provide: APP_ARRANGEMENT_BASE_PATH,
@@ -119,8 +144,20 @@ export const APP_LOANS_JOURNEY_BASE_PATH = new InjectionToken<string>('ServicePa
       useValue: `${environment.apiRoot}/engagement`,
     },
     {
+      provide: APP_METRIC_BASE_PATH,
+      useValue: `${environment.apiRoot}/metric`,
+    },
+    {
+      provide: APP_ENROLLMENT_MANAGER_BASE_PATH,
+      useValue: `${environment.apiRoot}/enrollment-manager`,
+    },
+    {
       provide: APP_ACCESS_CONTROL_BASE_PATH,
       useValue: `${environment.apiRoot}/access-control`,
+    },
+    {
+      provide: APP_ACCOUNT_RECOVERY_BASE_PATH,
+      useValue: `${environment.apiRoot}/account-recovery-manager`,
     },
     {
       provide: APP_ACCOUNT_STATEMENT_BASE_PATH,
@@ -176,7 +213,7 @@ export const APP_LOANS_JOURNEY_BASE_PATH = new InjectionToken<string>('ServicePa
       useValue: `${environment.apiRoot}/loan`,
     },
     {
-      provide: LOANS_JOURNEY_LOANS_BASE_PATH,
+      provide: RETAIL_LOANS_JOURNEY_LOANS_BASE_PATH,
       useExisting: APP_LOANS_JOURNEY_BASE_PATH,
     },
     {
@@ -184,7 +221,43 @@ export const APP_LOANS_JOURNEY_BASE_PATH = new InjectionToken<string>('ServicePa
       useValue: {
         apiRoot: `${environment.apiRoot}`
       }
-    }
+    },
+    {
+      provide: APP_USER_BASE_PATH,
+      useValue: `${environment.apiRoot}/user-manager`,
+    },
+    {
+      provide: APP_CREDIT_SCORE_BASE_PATH,
+      useValue: `${environment.apiRoot}/savvy-money-credit-scorer`,
+    },
+    {
+      provide: APP_DEVICE_BASE_PATH,
+      useValue: `${environment.apiRoot}/device-management-service`,
+    },
+    {
+      provide: APP_DEVICE_MANAGEMENT_V2_BASE_PATH,
+      useValue: `${environment.apiRoot}/device-management-service`,
+    },
+    {
+      provide: APP_ADDRESS_AUTOCOMPLETE_BASE_PATH,
+      useValue: `${environment.apiRoot}/address-autocomplete`,
+    },
+    {
+      provide: APP_INCOME_EXPENSE_ANALYSER_BASE_PATH,
+      useValue: `${environment.apiRoot}/income-expense-analyzer`,
+    },
+    {
+      provide: APP_INITIATE_PAYMENT_JOURNEY_BANK_CALENDAR_BASE_PATH,
+      useValue: `${environment.apiRoot}/bank-calendar`,
+    },
+    {
+      provide: APP_INITIATE_PAYMENT_JOURNEY_BENEFICIARY_VALIDATION_V1_BASE_PATH,
+      useValue: `${environment.apiRoot}/beneficiary-validation-service`,
+    },
+    {
+      provide: APP_DASHBOARD_BASE_PATH,
+      useValue: `${environment.apiRoot}/dashboard`,
+    },
   ],
 })
 export class ServicePathsModule {}

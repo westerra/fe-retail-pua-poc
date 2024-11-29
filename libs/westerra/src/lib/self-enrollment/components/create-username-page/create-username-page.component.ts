@@ -27,7 +27,7 @@ import { SelfEnrollmentJourneyConfigurationToken } from '../../../services/api/a
 })
 export class CreateUsernamePageComponent implements OnInit {
   @Output() nextStep = new EventEmitter();
-  @Input() isAutoEnrollment: boolean = false;
+  @Input() isAutoEnrollment = false;
   @Input() userData: EnrollmentUserData = null;
 
   data: IdUser;

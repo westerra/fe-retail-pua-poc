@@ -23,7 +23,7 @@ import { OAuthService } from 'angular-oauth2-oidc';
 })
 export class IdentificationPageComponent implements OnInit {
   @Output() nextStep = new EventEmitter();
-  @Input() isAutoEnrollment: boolean = false;
+  @Input() isAutoEnrollment = false;
   @Input() userData: EnrollmentUserData = null;
   @Input() uuid!: string;
 
@@ -33,7 +33,7 @@ export class IdentificationPageComponent implements OnInit {
   identificationAttempts = 0;
 
   duplicatedMessage = false;
-  enableAutoEnrollmentVerification: boolean = false;
+  enableAutoEnrollmentVerification = false;
 
   constructor(
     // protected readonly service: EnrollmentsService,

@@ -1,23 +1,24 @@
 import '@angular/localize/init';
 import { Validators } from '@angular/forms';
-import { DefaultPaymentDates, Frequencies } from '@backbase/internal-payments-shared-util';
-import { ScheduleEndType } from '@backbase/internal-payments-shared-ui';
-import {
-  scheduleFrequencyToggleDependants,
+import { A2ALimitErrorKeys, 
+  AccountBalances, 
+  DefaultPaymentDates, 
+  Frequencies, 
+  internalTransferEndTypeOnInitHook, 
+  internalTransferOnDestroyHook, 
+  internalTransferRepeatOnInitHook, 
+  internalTransferScheduleAlertOnInitHook, 
+  internalTransferScheduleFreqOnInitHook, 
+  internalTransScheduleStartDateOnInitHook, 
+  maxValueTwoHundredValidator, 
+  minValueTwoValidator, 
+  scheduleEndDateOnInitHook, 
+  ScheduleEndType, 
+  scheduleEndTypeToggleDependants, 
+  scheduleFrequencyToggleDependants, 
   scheduleStartDateOnDestroyHook,
-  scheduleEndTypeToggleDependants,
-  scheduleEndDateOnInitHook,
-  toggleForAmountOptions,
-  internalTransferScheduleFreqOnInitHook,
-  internalTransferOnDestroyHook,
-  internalTransferScheduleAlertOnInitHook,
-  internalTransAmountOptToggleDependants,
-  internalTransScheduleStartDateOnInitHook,
-  internalTransferEndTypeOnInitHook,
-  internalTransferRepeatOnInitHook,
-  AccountBalances,
-  A2ALimitErrorKeys,
-} from '@backbase/internal-payments-shared-feature-forms';
+  endDateValidator
+} from '@backbase/internal-payments-shared-util';
 import {
   A2A_INVALID_DATE_ERROR_KEY,
   CounterPartyFields,
@@ -28,12 +29,7 @@ import {
   RemittanceInfoFields,
   ScheduleFields,
 } from '@backbase/initiate-payment-journey-ang';
-import {
-  endDateAfterStartDateValidator,
-  maxValueTwoHundredValidator,
-  minValueTwoValidator,
-} from '@backbase/internal-payments-shared-feature-forms';
-import { CreditDebitIndicator } from '@backbase/data-ang/transactions';
+import { CreditDebitIndicator } from '@backbase/transactions-http-ang';
 import { PaymentCardNumberFormat } from '@backbase/ui-ang/payment-card-number-pipe';
 
 const numbersFormat: PaymentCardNumberFormat = { length: 0, segments: 4, maskRange: [0, 0] };
@@ -78,7 +74,7 @@ const initiator = {
             },
           },
           {
-            productKind: CreditDebitIndicator.DBIT ? ProductKinds.loanAccount : '',
+            productKind: CreditDebitIndicator.Dbit ? ProductKinds.loanAccount : '',
             balance: {
               label: $localize`:@@internal-config.beneficiary.loan-balance-label:Available Balance`,
               apiField: AccountBalances.available,
@@ -449,7 +445,7 @@ const schedule = {
       name: ScheduleFields.endDate,
       options: {
         cssClasses: ['d-inline-block', 'col-md-10', 'align-top', 'bb-schedule__end-date'],
-        validators: [endDateAfterStartDateValidator],
+        validators: [endDateValidator],
         validationMessages: [
           {
             name: 'required',

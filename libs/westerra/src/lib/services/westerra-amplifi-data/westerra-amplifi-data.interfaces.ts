@@ -11,6 +11,7 @@ export interface TraitsBadRequestError extends Customizable {
 export interface ErrorItem extends Customizable {
   message?: string;
   key?: string;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   context?: {};
 }
 export interface TraitsInternalServerError extends Customizable {

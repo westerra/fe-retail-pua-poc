@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { AccountStatementRetailJourneyComponent, AccountStatementRetailViewComponent } from '@backbase/account-statement-retail-journey-ang';
+import { Route, RouterModule, Routes } from '@angular/router';
+import {  AccountStatementRetailViewComponent } from '@backbase/account-statement-retail-journey-ang';
 import { EntitlementsGuard } from '@backbase/foundation-ang/entitlements';
 import { AccountStatementJourneyComponent } from './account-statement-journey.component';
-import { CommonModule } from '@angular/common';
+
 
 const routes: Routes = [];
 
-export const accountStatementRetailJourney = {
+export const accountStatementRetailJourney: Route = {
   path: '',
   component: AccountStatementJourneyComponent,
   canActivate: [EntitlementsGuard],

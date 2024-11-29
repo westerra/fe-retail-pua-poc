@@ -1,4 +1,7 @@
-import { ɵNoopAnimationDriver, AnimationDriver, ɵWebAnimationsDriver } from '@angular/animations/browser';
+/* eslint-disable prefer-spread */
+/* eslint-disable prefer-rest-params */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { AnimationDriver, NoopAnimationDriver, ɵWebAnimationsDriver } from '@angular/animations/browser';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { Injectable, OnDestroy, Optional } from '@angular/core';
 import { Configurations } from './api/configurations';
@@ -13,45 +16,72 @@ interface MediaQueryEvent {
 })
 export class AppAnimationDriver implements AnimationDriver, OnDestroy {
   matcher!: MediaQueryList;
-  driver: ɵNoopAnimationDriver | ɵWebAnimationsDriver;
+  driver: AnimationDriver;
   private _animation = true;
+
   constructor(public mediaMatcher: MediaMatcher, @Optional() config?: Configurations) {
     if (config) {
       this._animation = config.animation;
     }
+
+    // Check media query for reduced motion
     this.matcher = this.mediaMatcher.matchMedia('(prefers-reduced-motion: reduce)');
+    
+    // Listen for changes in the media query
     this.matcher.addEventListener('change', (event: MediaQueryEvent) => {
       this.reducedMotionListener(event);
     });
-    this.driver = !this._animation || this.matcher.matches ? new ɵNoopAnimationDriver() : new ɵWebAnimationsDriver();
+
+    // Initialize animation driver based on reduced motion preference
+    this.driver = !this._animation || this.matcher.matches ? new NoopAnimationDriver() : new ɵWebAnimationsDriver();
   }
 
   ngOnDestroy() {
+    // Cleanup event listener
     this.matcher.removeEventListener('change', (event: MediaQueryEvent) => {
       this.reducedMotionListener(event);
     });
   }
 
   reducedMotionListener(event: MediaQueryEvent) {
-    this.driver = !this._animation || event.matches ? new ɵNoopAnimationDriver() : new ɵWebAnimationsDriver();
+    // Switch driver based on reduced motion preference
+    this.driver = !this._animation || event.matches ? new NoopAnimationDriver() : new ɵWebAnimationsDriver();
   }
 
   validateStyleProperty() {
-    return this.driver.validateStyleProperty.apply(this.driver, <any>arguments);
+    // Forward the call to the driver
+    return this.driver.validateStyleProperty.apply(this.driver, arguments as any);
   }
+
   matchesElement() {
-    return this.driver.matchesElement.apply(this.driver, <any>arguments);
+    // Forward the call to the driver
+    return this.driver.matchesElement.apply(this.driver, arguments as any);
   }
+
   containsElement() {
-    return this.driver.containsElement.apply(this.driver, <any>arguments);
+    // Forward the call to the driver
+    return this.driver.containsElement.apply(this.driver, arguments as any);
   }
+
   query() {
-    return this.driver.query.apply(this.driver, <any>arguments);
+    // Forward the call to the driver
+    return this.driver.query.apply(this.driver, arguments as any);
   }
+
   computeStyle() {
-    return this.driver.computeStyle.apply(this.driver, <any>arguments);
+    // Forward the call to the driver
+    return this.driver.computeStyle.apply(this.driver, arguments as any);
   }
+
   animate() {
-    return this.driver.animate.apply(this.driver, <any>arguments);
+    // Forward the call to the driver
+    return this.driver.animate.apply(this.driver, arguments as any);
+  }
+
+  /**
+   * Implementing `getParentElement` method required by the `AnimationDriver` interface.
+   */
+  getParentElement(element: any): Promise<any> {
+    return Promise.resolve(element.parentElement);
   }
 }

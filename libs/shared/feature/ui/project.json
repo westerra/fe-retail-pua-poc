@@ -1,6 +1,7 @@
 {
+  "name": "ui",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "root": "libs/shared/feature/ui",
   "sourceRoot": "libs/shared/feature/ui/src",
   "prefix": "bb",
   "targets": {
@@ -19,5 +20,5 @@
       }
     }
   },
-  "tags": []
+  "tags": ["scope:retail", "region:agnostic", "type:feature"]
 }

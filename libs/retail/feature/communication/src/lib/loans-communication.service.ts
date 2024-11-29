@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
-import { IdentifiedPaymentOrder } from '@backbase/data-ang/payment-order';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LoanCommunicationService, loanIdParamKey } from '@backbase/retail-loans-journey-ang';
+import { LoanRetailCommunicationService, loanIdParamKey } from '@backbase/loans-retail-journey';
 import {
   InitiatePaymentJourneyCommunicationService,
   InitiatePaymentJourneyComponentApi,
   TriggerInitiatePaymentPayload,
+  IdentifiedPaymentOrder,
 } from '@backbase/initiate-payment-journey-ang';
 
 @Injectable({ providedIn: 'root' })
-export class LoansCommunicationService implements LoanCommunicationService, InitiatePaymentJourneyCommunicationService {
+export class LoansCommunicationService
+  implements LoanRetailCommunicationService, InitiatePaymentJourneyCommunicationService
+{
   private paymentData?: TriggerInitiatePaymentPayload;
 
   constructor(private readonly router: Router, private activatedRoute: ActivatedRoute) {}

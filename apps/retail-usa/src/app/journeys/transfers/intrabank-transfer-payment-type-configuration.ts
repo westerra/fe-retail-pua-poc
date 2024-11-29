@@ -16,7 +16,7 @@ import {
   minValueTwoValidator,
   maxValueTwoHundredValidator,
   scheduleEndDateOnInitHook,
-  endDateAfterStartDateValidator,
+  endDateValidator,
   scheduleEndTypeToggleDependants,
   scheduleFrequencyToggleDependants,
   scheduleStartDateOnDestroyHook,
@@ -24,7 +24,7 @@ import {
   internalTransferScheduleAlertOnInitHook,
   intrabankCheckboxOnInitHook,
   ContactScheme,
-} from '@backbase/internal-payments-shared-feature-forms';
+} from '@backbase/internal-payments-shared-util';
 
 const initiator = {
   name: PaymentBaseFields.initiator,
@@ -280,7 +280,7 @@ const schedule = {
       name: ScheduleFields.endDate,
       options: {
         cssClasses: ['d-inline-block', 'col-md-10', 'align-top', 'bb-schedule__end-date'],
-        validators: [endDateAfterStartDateValidator],
+        validators: [endDateValidator],
         validationMessages: [
           {
             name: 'required',

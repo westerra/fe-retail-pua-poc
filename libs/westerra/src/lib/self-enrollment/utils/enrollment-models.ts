@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-namespace */
 export namespace Verification {
   /**
    * Type of Verification
@@ -44,6 +45,7 @@ export enum EnrollmentVerifyType {
 
 export enum EnrollmentErrorMessage {
   default = 'Unfortunately we could not verify your information. Please contact us for assistance at 303-321-4209.',
+  // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
   ssnMessage = 'Unfortunately we could not verify your information. Please contact us for assistance at 303-321-4209.',
 }
 
@@ -232,7 +234,7 @@ export interface TraitsBadRequestError extends Customizable {
 export interface ErrorItem extends Customizable {
   message?: string;
   key?: string;
-  context?: {};
+  context?: object;
 }
 export interface TraitsInternalServerError extends Customizable {
   message: string;

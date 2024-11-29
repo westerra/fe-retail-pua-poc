@@ -11,11 +11,10 @@ import { DatePipe } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [DatePipe],
 })
-export class PlacesDetailsCustomComponent implements OnInit {
+export class PlacesDetailsCustomComponent {
   @Input() place: PlaceItem | undefined;
-  constructor() {}
+  
 
-  ngOnInit(): void {}
 
   // This returns array of weekDay numbers based on the WeekDay enum
   get weekDay(): number[] {

@@ -1,6 +1,7 @@
 {
+  "name": "routable-modal",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "root": "libs/shared/feature/routable-modal",
   "sourceRoot": "libs/shared/feature/routable-modal/src",
   "prefix": "bb",
   "targets": {

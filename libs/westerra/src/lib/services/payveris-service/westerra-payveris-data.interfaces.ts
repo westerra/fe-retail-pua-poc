@@ -11,7 +11,7 @@ export interface TraitsBadRequestError extends Customizable {
 export interface ErrorItem extends Customizable {
   message?: string;
   key?: string;
-  context?: {};
+  context?: object;
 }
 export interface TraitsInternalServerError extends Customizable {
   message: string;

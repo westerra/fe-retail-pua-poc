@@ -8,36 +8,33 @@
  */
 import { InjectionToken, NgModule } from '@angular/core';
 import { ACCOUNT_RECOVERY_MANAGER_BASE_PATH } from '@backbase/account-recovery-manager-v1-client-ang';
-import { ACCESS_CONTROL_BASE_PATH } from '@backbase/data-ang/accesscontrol';
+import { ACCESS_CONTROL_BASE_PATH } from '@backbase/accesscontrol-v3-http-ang';
 import { ACCESS_CONTROL_BASE_PATH as ACCESS_CONTROL_V3_BASE_PATH } from '@backbase/accesscontrol-v3-http-ang';
-import { ACCOUNT_STATEMENT_BASE_PATH } from '@backbase/data-ang/account-statements';
-import { ACTIONS_BASE_PATH } from '@backbase/data-ang/actions';
-import { ARRANGEMENT_MANAGER_BASE_PATH } from '@backbase/data-ang/arrangements';
-import { AUTHORIZED_USER_BASE_PATH } from '@backbase/data-ang/authorized-users';
-import { BILLPAY_BASE_PATH } from '@backbase/data-ang/billpay';
-import { BUDGETING_BASE_PATH } from '@backbase/data-ang/budgeting';
-import { CARDS_BASE_PATH } from '@backbase/data-ang/cards';
-import { CASH_FLOW_BASE_PATH } from '@backbase/data-ang/cash-flow';
-import { CATEGORIES_MANAGEMENT_BASE_PATH } from '@backbase/data-ang/categories-management';
-import { CONSENT_BASE_PATH } from '@backbase/data-ang/consent';
-import { CONTACT_MANAGER_BASE_PATH } from '@backbase/data-ang/contact-manager';
-import { DEVICE_BASE_PATH } from '@backbase/data-ang/device';
-import { ENGAGEMENT_BASE_PATH } from '@backbase/data-ang/engagement';
-import { FINANCIAL_INSTITUTION_MANAGER_BASE_PATH } from '@backbase/data-ang/financial-institution-manager';
-import { IMPERSONATION_BASE_PATH } from '@backbase/data-ang/impersonation-v1';
-import { LOANS_BASE_PATH } from '@backbase/data-ang/loans';
-import { PAYMENT_ORDER_BASE_PATH } from '@backbase/data-ang/payment-order';
-import { PAYMENT_ORDER_A2A_BASE_PATH } from '@backbase/data-ang/payment-order-a2a';
-import { PLACES_BASE_PATH } from '@backbase/data-ang/places';
-import { POCKET_TAILOR_BASE_PATH } from '@backbase/data-ang/pocket-tailor';
-import { SAVING_GOALS_BASE_PATH } from '@backbase/data-ang/saving-goals';
-import { STOP_CHECKS_BASE_PATH } from '@backbase/data-ang/stop-checks';
-import { TRANSACTIONS_BASE_PATH } from '@backbase/data-ang/transactions';
-import { USER_BASE_PATH } from '@backbase/data-ang/user';
+import { ACCOUNT_STATEMENT_BASE_PATH } from '@backbase/account-statements-http-ang';
+import { ARRANGEMENT_MANAGER_BASE_PATH } from '@backbase/arrangement-manager-http-ang';
+import { AUTHORIZED_USER_BASE_PATH } from '@backbase/authorized-user-http-ang';
+import { BILLPAY_BASE_PATH } from '@backbase/billpay-http-ang';
+import { CARDS_BASE_PATH } from '@backbase/cards-http-ang';
+import { CATEGORIES_MANAGEMENT_BASE_PATH } from '@backbase/categories-management-http-ang';
+import { CONSENT_BASE_PATH } from '@backbase/consent-http-ang';
+import { CONTACT_MANAGER_BASE_PATH } from '@backbase/contact-manager-http-ang';
+import { DEVICE_BASE_PATH } from '@backbase/device-http-ang';
+import { ENGAGEMENT_BASE_PATH } from '@backbase/engagement-http-ang';
+import { FINANCIAL_INSTITUTION_MANAGER_BASE_PATH } from '@backbase/financial-institution-manager-http-ang';
+import { IMPERSONATION_BASE_PATH } from '@backbase/impersonation-v1-client-ang';
+import { LOANS_BASE_PATH } from '@backbase/loans-http-ang';
+import { PAYMENT_ORDER_BASE_PATH } from '@backbase/payment-order-v3-http-ang';
+import { PAYMENT_ORDER_A2A_BASE_PATH } from '@backbase/payment-order-a2a-http-ang';
+import { PLACES_BASE_PATH } from '@backbase/places-http-ang';
+import { POCKET_TAILOR_BASE_PATH } from '@backbase/pocket-tailor-http-ang';
+import { STOP_CHECKS_BASE_PATH } from '@backbase/stop-checks-http-ang';
+import { TRANSACTIONS_BASE_PATH } from '@backbase/transactions-http-ang';
+import { USER_BASE_PATH } from '@backbase/user-http-ang';
 import { ENROLLMENT_MANAGER_BASE_PATH } from '@backbase/enrollment-manager-v1-client-ang';
 import { environment } from '../environments/environment';
 import { RTC_V1_BASE_PATH } from '@backbase/rtc-v1-client-ang';
 import { MaintenanceComponent } from './maintenance/maintenance.component';
+import { BUDGET_JOURNEY_BUDGETING_BASE_PATH } from '@backbase/budget-journey-ang';
 
 /**
  * Service paths for the individual data modules.
@@ -58,13 +55,11 @@ const dataModulePaths: [InjectionToken<string>, string][] = [
   [ACCESS_CONTROL_BASE_PATH, '/access-control'],
   [ACCESS_CONTROL_V3_BASE_PATH, '/access-control'],
   [ACCOUNT_STATEMENT_BASE_PATH, '/account-statement'],
-  [ACTIONS_BASE_PATH, '/action'],
   [ARRANGEMENT_MANAGER_BASE_PATH, '/arrangement-manager'],
   [AUTHORIZED_USER_BASE_PATH, '/authorized-user'],
   [BILLPAY_BASE_PATH, '/billpay-integrator'],
-  [BUDGETING_BASE_PATH, '/budget-planner'],
+  [BUDGET_JOURNEY_BUDGETING_BASE_PATH, '/budget-planner'],
   [CARDS_BASE_PATH, '/cards-presentation-service'],
-  [CASH_FLOW_BASE_PATH, '/cashflow-service'],
   [CATEGORIES_MANAGEMENT_BASE_PATH, '/transaction-category-collector'],
   [CONSENT_BASE_PATH, '/consent'],
   [CONTACT_MANAGER_BASE_PATH, '/contact-manager'],
@@ -75,7 +70,6 @@ const dataModulePaths: [InjectionToken<string>, string][] = [
   [PAYMENT_ORDER_BASE_PATH, '/payment-order-service'],
   [PAYMENT_ORDER_A2A_BASE_PATH, '/payment-order-a2a'],
   [PLACES_BASE_PATH, '/places-presentation-service'],
-  [SAVING_GOALS_BASE_PATH, '/saving-goal-planner'],
   [STOP_CHECKS_BASE_PATH, '/stop-checks'],
   [TRANSACTIONS_BASE_PATH, '/transaction-manager'],
   [USER_BASE_PATH, '/user-manager'],

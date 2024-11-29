@@ -23,7 +23,8 @@ export class WesterraPayverisDataService {
   ) {}
 
   createUserSession(headers: HttpHeaders = new HttpHeaders({})): Observable<HttpResponse<PayverisResponse>> {
-    const uri = `${this.config.apiRoot}${this.config.servicePath}/sso/client-api/v1/applications?name=payveris&autoenroll=true`;
+    console.log(this.config)
+    const uri = `${this.config.apiRoot}${this.config.servicePath ?? '/api'}/sso/client-api/v1/applications?name=payveris&autoenroll=true`;
     return this.http.request<PayverisResponse>('get', uri, {
       headers,
       observe: 'response',

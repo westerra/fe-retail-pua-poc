@@ -181,22 +181,8 @@
         </context-group>
         <note priority="1" from="description">OTP email channel item heading text</note>
       </trans-unit>
-      <trans-unit id="bb-identity.mfa.two-factor-selection.channel.information-text.sms" datatype="html">
-        <source> You'll get a verification code sent to <x id="INTERPOLATION" equiv-text="esend attempt r"/> </source><target state="new"> You'll get a verification code sent to <x id="INTERPOLATION" equiv-text="esend attempt r"/> </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../../../libs/shared/public/feature/multi-factor-authentication/src/lib/two-factor-selection/two-factor-selection.component.html</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <note priority="1" from="description">OTP SMS channel item information text</note>
-      </trans-unit>
-      <trans-unit id="bb-identity.mfa.two-factor-selection.channel.information-text.email" datatype="html">
-        <source> You'll get a verification code sent to <x id="INTERPOLATION" equiv-text="d attempt remai"/> </source><target state="new"> You'll get a verification code sent to <x id="INTERPOLATION" equiv-text="d attempt remai"/> </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../../../libs/shared/public/feature/multi-factor-authentication/src/lib/two-factor-selection/two-factor-selection.component.html</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <note priority="1" from="description">OTP email channel item information text</note>
-      </trans-unit>
+    
+     
       <trans-unit id="bb-identity.contact-advisor.body" datatype="html">
         <source> If you're having problems, call us on <x id="INTERPOLATION" equiv-text="ole=&quot;contact-ad"/> and one of our advisors will help you with your issue.
 </source><target state="new"> If you're having problems, call us on <x id="INTERPOLATION" equiv-text="ole=&quot;contact-ad"/> and one of our advisors will help you with your issue.
@@ -41860,36 +41846,8 @@ export const reviewI"/>" has been saved</target>
         </context-group>
         <note priority="1" from="description">Loan item payment info text</note>
       </trans-unit>
-      <trans-unit id="loans.loan-item.next-payment.date" datatype="html">
-        <source> on <x id="INTERPOLATION" equiv-text="ole=&quot;bb-loans-l"/> </source><target state="new"> on <x id="INTERPOLATION" equiv-text="ole=&quot;bb-loans-l"/> </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../libs/loans-business-journey/ui/src/lib/components/loan-item-payment-info/loan-item-payment-info.component.html</context>
-          <context context-type="linenumber">2</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../libs/shared/feature-details/src/lib/components/loan-summary-blue-banner-payment-info/loan-summary-blue-banner-payment-info.component.html</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <note priority="1" from="description">Loan item next payment date</note>
-      </trans-unit>
-      <trans-unit id="loans.retail-loan-summary.overdue-banner.payments-count" datatype="html">
-        <source> <x id="INTERPOLATION" equiv-text="edByIds&quot;
-  [att"/> missed payment<x id="INTERPOLATION_1" equiv-text="tle&quot;
->
-  &lt;div c"/> <x id="START_TAG_SPAN" ctype="x-span" equiv-text="ck--wrap&quot;>
-    &lt;div class=&quot;bb-stac"/>since <x id="INTERPOLATION_2" equiv-text="lign-top bb-stack"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="-bold bb-text-default&quot;>
-      &lt;ng-co"/></source><target state="new"> <x id="INTERPOLATION" equiv-text="edByIds&quot;
-  [att"/> missed payment<x id="INTERPOLATION_1" equiv-text="tle&quot;
->
-  &lt;div c"/> <x id="START_TAG_SPAN" ctype="x-span" equiv-text="ck--wrap&quot;>
-    &lt;div class=&quot;bb-stac"/>since <x id="INTERPOLATION_2" equiv-text="lign-top bb-stack"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="-bold bb-text-default&quot;>
-      &lt;ng-co"/></target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../libs/loans-retail-journey/feature-details/src/lib/components/retail-loan-summary-overdue-banner/retail-loan-summary-overdue-banner.component.html</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <note priority="1" from="description">Loan summary overdue banner payments count</note>
-      </trans-unit>
+    
+    
       <trans-unit id="loans.retail-loan-summary.overdue-banner.overdue-amount" datatype="html">
         <source><x id="START_TAG_BB_AMOUNT_UI" ctype="x-bb_amount_ui" equiv-text="ribedByIds&quot;
   [a"/><x id="CLOSE_TAG_BB_AMOUNT_UI" ctype="x-bb_amount_ui" equiv-text="ntIds.title&quot;

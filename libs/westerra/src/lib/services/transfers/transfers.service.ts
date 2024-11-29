@@ -1,9 +1,10 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { ProductSummaryHttpService, ProductSummaryItem } from '@backbase/data-ang/arrangements';
-import { PaymentOrdersHttpService } from '@backbase/payment-order-http-ang';
+
 import { BehaviorSubject, EMPTY, Subject } from 'rxjs';
 import { catchError, takeUntil } from 'rxjs/operators';
 import { GetProductsResponse } from './models';
+import { ProductSummaryHttpService, ProductSummaryItem } from '@backbase/arrangement-manager-http-ang';
+import { PaymentOrdersHttpService } from '@backbase/payment-order-v3-http-ang';
 
 @Injectable({
     providedIn: 'root',

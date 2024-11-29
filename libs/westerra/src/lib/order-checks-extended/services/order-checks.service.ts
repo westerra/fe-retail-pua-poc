@@ -25,7 +25,7 @@ export class OrderChecksService {
     // Returns a list of arrangements/products that can be used for order checks
     return this.productHttpService.getArrangementsByBusinessFunction(params).pipe(
       map((data: any) => {
-        let accountList = [];
+        const accountList = [];
         data.forEach((account) => {
           if (this.displayOrderChecks(account.productKindName, account.productNumber)) {
             accountList.push(account);

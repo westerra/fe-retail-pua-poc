@@ -2,6 +2,12 @@
   "extends": "../../tsconfig.base.json",
   "files": [],
   "include": [],
+  "compilerOptions": {
+
+    "types": [
+        "google.maps"
+      ],
+  },
   "references": [
     {
       "path": "./tsconfig.lib.json"

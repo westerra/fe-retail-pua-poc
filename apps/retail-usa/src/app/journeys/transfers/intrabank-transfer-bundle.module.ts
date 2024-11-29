@@ -1,5 +1,5 @@
+/* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import { NgModule } from '@angular/core';
-import { IdentityManagementServiceMocksProvider } from '@backbase/data-ang/user';
 import {
   INITIATE_PAYMENT_CONFIG,
   INITIATE_PAYMENT_JOURNEY_COMMUNICATOR,
@@ -8,12 +8,13 @@ import {
   // INTRABANK_TRANSFER,
   PayordOmniPaymentConfigProvider,
   ReviewPaymentContainerComponent,
+  CreatePaymentFormComponent,
   Routes,
 } from '@backbase/initiate-payment-journey-ang';
 import { ReviewScreens } from '@backbase/initiate-payment-journey-ang';
 import { PaymentsCommunicationService } from '@backbase/retail/feature/communication';
 import { initiatePaymentProviders } from './initiate-payment-providers.util';
-import { CreatePaymentFormExtendedComponent, InitiatePaymentJourneyExtendedComponent } from '@backbase/westerra';
+import { InitiatePaymentJourneyExtendedComponent } from '@backbase/westerra';
 import { INTRABANK_TRANSFER } from './intrabank-transfer-payment-type-configuration';
 
 const InitiatePaymentCustomRoute = {
@@ -22,15 +23,14 @@ const InitiatePaymentCustomRoute = {
   component: InitiatePaymentJourneyExtendedComponent,
   children: [
     { path: '', redirectTo: Routes.FORM, pathMatch: 'full' },
-    { path: Routes.FORM, component: CreatePaymentFormExtendedComponent },
+    { path: Routes.FORM, component:   CreatePaymentFormComponent,    },
     { path: Routes.REVIEW, component: ReviewPaymentContainerComponent },
   ],
 };
 @NgModule({
-  imports: [InitiatePaymentJourneyModule.forRoot({ route: InitiatePaymentCustomRoute })],
+  imports: [InitiatePaymentJourneyModule.forRoot({ routes: InitiatePaymentCustomRoute })],
   providers: [
     PayordOmniPaymentConfigProvider,
-    IdentityManagementServiceMocksProvider,
     ...initiatePaymentProviders,
     {
       provide: INITIATE_PAYMENT_CONFIG,

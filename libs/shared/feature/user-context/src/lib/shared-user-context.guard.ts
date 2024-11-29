@@ -7,7 +7,7 @@ import {
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
-import { ServiceAgreementHttpService } from '@backbase/data-ang/accesscontrol';
+import { ServiceAgreementsHttpService } from '@backbase/accesscontrol-v3-http-ang';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
@@ -18,7 +18,7 @@ export class SharedUserContextGuard implements CanActivate, CanActivateChild {
   private targetUrl: string | undefined;
   private isContextValid = false;
 
-  constructor(private readonly router: Router, private readonly serviceAgreementService: ServiceAgreementHttpService) {}
+  constructor(private readonly router: Router, private readonly serviceAgreementService: ServiceAgreementsHttpService) {}
 
   canActivate(
     _next: ActivatedRouteSnapshot,

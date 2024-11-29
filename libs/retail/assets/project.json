@@ -1,6 +1,7 @@
 {
+  "name": "retail-assets",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "root": "libs/retail/assets",
   "sourceRoot": "libs/retail/assets/src",
   "targets": {},
   "tags": ["type:assets", "scope:retail", "region:agnostic"]

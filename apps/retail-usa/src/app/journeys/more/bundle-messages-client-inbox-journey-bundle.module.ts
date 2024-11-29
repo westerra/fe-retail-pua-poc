@@ -1,3 +1,4 @@
+/* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import { NgModule, Provider } from '@angular/core';
 import {
   MessagesClientInboxJourneyModule,

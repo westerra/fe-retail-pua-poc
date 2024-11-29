@@ -1,5 +1,5 @@
 import { map } from 'rxjs';
-import { ProductKinds, Scheme } from '@backbase/internal-payments-shared-feature-forms';
+import { ProductKinds, Scheme } from '@backbase/internal-payments-shared-util';
 /**
  * @deprecated scheme: string literal 'IBAN' and 'BBAN' are deprecated, use Scheme.BBAN or Scheme.IBAN instead
  * @internal

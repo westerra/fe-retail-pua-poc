@@ -1,3 +1,4 @@
+/* eslint-disable @nrwl/nx/enforce-module-boundaries */
 /*
  *
  * The content of this file can be edited freely, but to maintain upgradability
@@ -24,8 +25,6 @@ import remoteConfigProjectDetails from './remote-config/release-template/project
 import packageJson from '../../../../package.json';
 import { SelfEnrollmentShellModule, WesterraModule } from '@backbase/westerra';
 import { InterceptorsModule } from './interceptors/interceptors.module';
-import { RouterModule } from '@angular/router';
-import { PayverisWidgetComponent } from '@backbase/westerra';
 
 
 /**

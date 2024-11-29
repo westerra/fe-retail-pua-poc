@@ -9,7 +9,7 @@ import { Hour } from '@backbase/places-http-ang';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [DatePipe],
 })
-export class WorkTimesCustomComponent implements OnInit {
+export class WorkTimesCustomComponent  {
   private readonly datePipe;
   /**
    * The day number based on WeekDay enum
@@ -32,7 +32,6 @@ export class WorkTimesCustomComponent implements OnInit {
     this.hours = [];
   }
 
-  ngOnInit(): void {}
 
   toLocaleTime(hour: string): string {
     return this.datePipe.transform(new Date('2000-01-01T' + hour), 'shortTime') || hour;

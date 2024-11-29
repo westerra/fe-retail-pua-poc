@@ -5,11 +5,5 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   templateUrl: './cards-management-journey.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CardsManagementJourneyComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+export class CardsManagementJourneyComponent{
 }

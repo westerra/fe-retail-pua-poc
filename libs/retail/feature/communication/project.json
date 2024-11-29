@@ -1,6 +1,7 @@
 {
+  "name": "communication",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "root": "libs/retail/feature/communication",
   "sourceRoot": "libs/retail/feature/communication/src",
   "prefix": "bb",
   "targets": {

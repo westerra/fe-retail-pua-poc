@@ -1,6 +1,6 @@
-import { fromResponse } from '@backbase/internal-payments-shared-feature-forms';
-import { SchemeNames } from '@backbase/payment-order-http-ang';
+
 import { stripSpaces } from '@backbase/internal-payments-shared-util';
+import { SchemeNames } from '@backbase/payment-order-v3-http-ang';
 /** @internal */
 export function mapContactAccounts(contact) {
   return contact.accounts.map((account) => ({
@@ -25,19 +25,19 @@ export function mapContactAccounts(contact) {
   }));
 }
 /** @internal */
-export function contactListFromService(response, isLoadMore = false) {
-  const responseValue: any = fromResponse(response);
-  const items = responseValue.reduce((acc, contact) => {
-    acc.push(...mapContactAccounts(contact));
-    return acc;
-  }, []);
-  return {
-    items,
-    itemsCount: responseValue.length,
-    count: parseInt(response.headers.get('x-total-count'), 10),
-    isLoadMore,
-  };
-}
+// export function contactListFromService(response, isLoadMore = false) {
+//   const responseValue: any = fromResponse(response);
+//   const items = responseValue.reduce((acc, contact) => {
+//     acc.push(...mapContactAccounts(contact));
+//     return acc;
+//   }, []);
+//   return {
+//     items,
+//     itemsCount: responseValue.length,
+//     count: parseInt(response.headers.get('x-total-count'), 10),
+//     isLoadMore,
+//   };
+// }
 /** @internal */
 export function getBankDetails({ bankBranchCode: bankCode, bic: BIC, bankName, postalAddress }) {
   return {
@@ -58,13 +58,13 @@ export function contactItemToService(counterparty) {
   const { name, accountNumber, schemeName, creditorBank = {}, postalAddress = {} } = counterparty;
   let schemeValue;
   switch (schemeName) {
-    case SchemeNames.EMAIL:
+    case SchemeNames.Email:
       schemeValue = { email: stripSpaces(accountNumber) };
       break;
-    case SchemeNames.MOBILE:
+    case SchemeNames.Mobile:
       schemeValue = { phoneNumber: stripSpaces(accountNumber) };
       break;
-    case SchemeNames.IBAN:
+    case SchemeNames.Iban:
       schemeValue = { IBAN: stripSpaces(accountNumber) };
       break;
     default:

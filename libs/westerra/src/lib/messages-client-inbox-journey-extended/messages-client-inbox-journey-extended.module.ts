@@ -1,10 +1,9 @@
-import { ModuleWithProviders, NgModule, Provider } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, provideRoutes } from '@angular/router';
 import {
   MessagesClientInboxJourneyComponent,
   MessagesClientInboxJourneyConfigService,
-  MessagesClientInboxJourneyConfigurationProvider,
   MessagesClientInboxThreadComponent,
   MessagesManageConversationsComponent,
 } from '@backbase/messages-client-inbox-journey-ang';
@@ -14,20 +13,15 @@ import {
   SharedMethodsService,
   BaseConversationsListPropertiesService,
   SharedMethodsModule,
-} from '@backbase/messages-shared-data-access';
+} from '@backbase/internal-messages-shared-data-access';
 
-import { MessagesEncodingService } from '@backbase/messages-shared-util';
+import { MessagesEncodingService } from '@backbase/internal-messages-shared-util';
 
 import {
-  MessagesConversationsListWidgetService,
-  MessagesConversationThreadWidgetService,
-} from '@backbase/messages-client-inbox-journey-data-access';
-
-import { MessagesUploadAttachmentsService, BaseConversationsListWidgetModule } from '@backbase/messages-shared-feature';
-import { MessagesClientInboxListCustomComponent } from './components/messages-client-inbox-list-custom/messages-client-inbox-list-custom.component';
-import { MessagesConversationsListWidgetAngCustomComponent } from './components/messages-conversations-list-widget-ang-custom/messages-conversations-list-widget-ang-custom.component';
-
-import { ConversationsListTableUiCustomComponent } from './components/conversations-list-table-ui-custom/conversations-list-table-ui-custom.component';
+  MessagesConversationsListFeatureService,
+  MessagesConversationThreadFeatureService
+} from '@backbase/internal-messages-client-inbox-journey-data-access';
+import { MessagesUploadAttachmentsService,  BaseConversationsListFeatureModule } from '@backbase/internal-messages-shared-feature';
 import { BadgeModule } from '@backbase/ui-ang/badge';
 import { ButtonModule } from '@backbase/ui-ang/button';
 import { CheckboxGroupModule } from '@backbase/ui-ang/checkbox-group';
@@ -39,16 +33,19 @@ import { LoadButtonModule } from '@backbase/ui-ang/load-button';
 import { LoadingIndicatorModule } from '@backbase/ui-ang/loading-indicator';
 import { ModalModule } from '@backbase/ui-ang/modal';
 import { FormsModule } from '@angular/forms';
-import { ConversationsListTableHeadUiComponent } from './components/conversations-list-table-head-ui/conversations-list-table-head-ui.component';
-import { ConversationsListTableRowUiComponent } from './components/conversations-list-table-row-ui/conversations-list-table-row-ui.component';
 import {
   PreventBubbleDownModule,
   MessagesRequestErrorModule,
   MessagesConversationMessageModule,
-} from '@backbase/messages-shared-ui';
+} from '@backbase/internal-messages-shared-ui';
 import { MessagecenterHttpService } from '@backbase/messages-v5-http-ang';
 import { KeyboardClickModule } from '@backbase/ui-ang/keyboard-click-directive';
 import { TooltipModule } from '@backbase/ui-ang/tooltip-directive';
+import { ConversationsListTableRowUiComponent } from './components/conversations-list-table-row-ui/conversations-list-table-row-ui.component';
+import { ConversationsListTableHeadUiComponent } from './components/conversations-list-table-head-ui/conversations-list-table-head-ui.component';
+import { ConversationsListTableUiCustomComponent } from './components/conversations-list-table-ui-custom/conversations-list-table-ui-custom.component';
+import { MessagesConversationsListWidgetAngCustomComponent } from './components/messages-conversations-list-widget-ang-custom/messages-conversations-list-widget-ang-custom.component';
+import { MessagesClientInboxListCustomComponent } from './components/messages-client-inbox-list-custom/messages-client-inbox-list-custom.component';
 
 const uiModules = [
   FormsModule,
@@ -64,7 +61,7 @@ const uiModules = [
   LoadingIndicatorModule,
   TooltipModule,
   KeyboardClickModule,
-  BaseConversationsListWidgetModule,
+  BaseConversationsListFeatureModule,
 ];
 
 const innerModules = [
@@ -86,11 +83,11 @@ const serviceDependencies = [
   MessagesClientInboxJourneyConfigService,
   SharedMethodsService,
   MessagesEncodingService,
-  MessagesConversationsListWidgetService,
+  MessagesConversationsListFeatureService,
+  MessagesConversationThreadFeatureService,
   MessagesManipulationConfirmModalService,
   MessagesUploadAttachmentsService,
   BaseConversationsListPropertiesService,
-  MessagesConversationThreadWidgetService,
   MessagecenterHttpService,
 ];
 
@@ -106,7 +103,7 @@ export const internalMessageJourneyRoutes: Routes = [
     path: '',
     component: MessagesClientInboxJourneyComponent,
     children: [
-      { path: '', redirectTo: 'inbox/list' },
+      { path: '', redirectTo: 'inbox/list', pathMatch: 'full' },
       {
         path: 'inbox',
         data: { title: mailboxTypeTitles.inbox },

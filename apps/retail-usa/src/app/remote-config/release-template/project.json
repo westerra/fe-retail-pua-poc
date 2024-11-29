@@ -1,6 +1,7 @@
 {
-  "title": "Backbase R&D retail prototype apps",
   "name": "backbase-retail-prototypes",
+  "$schema": "../../../../../../node_modules/nx/schemas/project-schema.json",
+  "title": "Backbase R&D retail prototype apps",
   "applications": [
     {
       "title": "Retail Banking Web App",

@@ -1,6 +1,7 @@
 {
+  "name": "user-context",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "root": "libs/shared/feature/user-context",
   "sourceRoot": "libs/shared/feature/user-context/src",
   "prefix": "bb",
   "targets": {

@@ -1,3 +1,4 @@
+/* eslint-disable no-var */
 export var AccessContextScope;
 (function (AccessContextScope) {
     AccessContextScope["USER"] = "USER";

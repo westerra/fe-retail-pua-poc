@@ -3,3 +3,4 @@
 /dist
 /coverage
 silent-refresh.htm
+/.nx/cache

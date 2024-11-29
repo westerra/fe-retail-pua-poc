@@ -13,7 +13,7 @@ import { WesterraPayverisDataService } from '../services/payveris-service/wester
 export class PayverisWidgetComponent implements OnInit {
   payverisWidgetUrl?: SafeResourceUrl;
   error: any;
-  restricted: boolean = false;
+  restricted = false;
   isLoading: boolean | undefined;
   payverisWidgetUrls: SafeResourceUrl | SafeUrl = null;
   path: string | any = this.route.snapshot.routeConfig?.path;
@@ -30,8 +30,8 @@ export class PayverisWidgetComponent implements OnInit {
     const artifactId = sessionResponse?.ssourl;
     if (artifactId) {
       this.isLoading = false;
-      let snapshot: any = this.route.snapshot;
-      let payverisPage = snapshot._routerState.url?.split('/');
+      const snapshot: any = this.route.snapshot;
+      const payverisPage = snapshot._routerState.url?.split('/');
       this.payverisWidgetUrls = this.sanitizer.bypassSecurityTrustResourceUrl(
         `${this.payverisWidgetUrl}/${payverisPage?.pop()}?artifactId=${artifactId}`,
       );
@@ -42,8 +42,8 @@ export class PayverisWidgetComponent implements OnInit {
   }
 
   ngOnInit() {
-    let snapshot: any = this.route.snapshot;
-    let activePath = snapshot._routerState.url;
+    const snapshot: any = this.route.snapshot;
+    const activePath = snapshot._routerState.url;
 
     // switch (this.route.snapshot.routeConfig?.path) {
     switch (activePath) {

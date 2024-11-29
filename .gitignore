@@ -20,3 +20,7 @@ Thumbs.db
 # Angular CLI workspace configuration
 .angular/
 
+
+.nx/cache
+
+nginx-config/

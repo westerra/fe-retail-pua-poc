@@ -31,7 +31,7 @@ import {
   ],
 })
 // extends InitiatePaymentJourneyComponent
-export class InitiatePaymentJourneyExtendedComponent implements OnInit, OnDestroy, AfterContentChecked {
+export class InitiatePaymentJourneyExtendedComponent implements  OnDestroy, AfterContentChecked {
   public timeoutInterval1: any = null;
   public mortgageAccountExternalTypeIds = mortgageAccountProductExternalTypeIds;
   errorMessage = '';
@@ -65,24 +65,23 @@ export class InitiatePaymentJourneyExtendedComponent implements OnInit, OnDestro
     }
   }
 
-  ngOnInit(): void {}
 
   ngAfterContentChecked() {
-    let alertContainer: any = document.querySelectorAll(
+    const alertContainer: any = document.querySelectorAll(
       'bb-adapted-review-container > fieldset > bb-alert-ui > ngb-alert > div.alert-body > div.alert-content > div',
     )?.[0];
 
-    let amountContainer = document.querySelectorAll('bb-adapted-review-container > fieldset > div:nth-of-type(2)')?.[0];
+    const amountContainer = document.querySelectorAll('bb-adapted-review-container > fieldset > div:nth-of-type(2)')?.[0];
     if (amountContainer) {
       this.setupCustomAlerts(amountContainer);
     }
 
-    let successTextContainer: any = document.querySelectorAll(
+    const successTextContainer: any = document.querySelectorAll(
       "bb-adapted-review-container > div.bb-text-align-center > div[data-role='adapted-success-message'] > div.bb-text-support > span:nth-of-type(2)",
     );
     successTextContainer?.[0]?.innerHTML ? (successTextContainer[0].innerHTML = ' to ') : '';
 
-    let scheduleSuccessTextContainer: any = document.querySelectorAll(
+    const scheduleSuccessTextContainer: any = document.querySelectorAll(
       "bb-adapted-review-container > div.bb-text-align-center > div[data-role='adapted-success-message'] > span.bb-text-support",
     );
     scheduleSuccessTextContainer?.[0]?.innerHTML
@@ -105,13 +104,13 @@ export class InitiatePaymentJourneyExtendedComponent implements OnInit, OnDestro
   }
 
   updateErrorAlert() {
-    let errorAlertContainer: any = this.customErrorContainer.getValue();
-    let data = this.api.sso.errorStatePaymentOrder.getValue();
+    const errorAlertContainer: any = this.customErrorContainer.getValue();
+    const data = this.api.sso.errorStatePaymentOrder.getValue();
     if (data.error && errorAlertContainer !== null && errorAlertContainer !== undefined) {
-      let paymentScheduleContainer: any = document.getElementsByTagName('bb-payment-schedule-details')[0];
-      let paymentReviewData = paymentScheduleContainer?.['__ngContext__']?.[8]?.['$implicit'];
-      let initiatorData = paymentReviewData?.initiator;
-      let scheduleData = paymentReviewData?.schedule;
+      const paymentScheduleContainer: any = document.getElementsByTagName('bb-payment-schedule-details')[0];
+      const paymentReviewData = paymentScheduleContainer?.['__ngContext__']?.[8]?.['$implicit'];
+      const initiatorData = paymentReviewData?.initiator;
+      const scheduleData = paymentReviewData?.schedule;
 
       if (
         scheduleData?.frequency?.toLowerCase() !== 'once' &&
@@ -148,7 +147,7 @@ export class InitiatePaymentJourneyExtendedComponent implements OnInit, OnDestro
   }
 
   setCustomAlertDiv(type: 'info' | 'warning' | 'danger', message: string): any {
-    let iconTypeToBeUsed = type;
+    const iconTypeToBeUsed = type;
 
     const customAlertDiv = document.createElement('div');
     customAlertDiv.className = `bb-block bb-block--lg ng-star-inserted custom-special-alerts badge-${iconTypeToBeUsed}`;
@@ -182,28 +181,28 @@ export class InitiatePaymentJourneyExtendedComponent implements OnInit, OnDestro
   }
 
   setupCustomAlerts(previousContainer: any) {
-    let customAlertsContainer = document.querySelectorAll(
+    const customAlertsContainer = document.querySelectorAll(
       'bb-adapted-review-container > fieldset > div.custom-special-alerts',
     )?.[0];
 
     if (!customAlertsContainer) {
       let customAlertMessage = '';
-      let paymentScheduleContainer: any = document.getElementsByTagName('bb-payment-schedule-details')[0];
-      let paymentReviewData = paymentScheduleContainer?.['__ngContext__']?.[8]?.['$implicit'];
-      let initiatorData =
+      const paymentScheduleContainer: any = document.getElementsByTagName('bb-payment-schedule-details')[0];
+      const paymentReviewData = paymentScheduleContainer?.['__ngContext__']?.[8]?.['$implicit'];
+      const initiatorData =
         paymentReviewData.initiator.accountData.defaultRecord ?? paymentReviewData.initiator.accountData;
-      let counterPartyData =
+      const counterPartyData =
         paymentReviewData.counterparty?.accountData?.defaultRecord ?? paymentReviewData.counterparty.accountData;
 
       // Setup custom alert for transfers from Credit card
-      let initiatorPartyProductKindName = initiatorData.productKindName;
+      const initiatorPartyProductKindName = initiatorData.productKindName;
       if (initiatorPartyProductKindName.includes('Credit Card')) {
         customAlertMessage = 'Standard cash advance rates and fees apply';
         previousContainer.after(this.setCustomAlertDiv('info', customAlertMessage));
       }
 
       // Setup custom alert for transfer to Mortgage accounts
-      let isCounterPartyMortgage = this.mortgageAccountExternalTypeIds.includes(
+      const isCounterPartyMortgage = this.mortgageAccountExternalTypeIds.includes(
         counterPartyData?.product?.externalTypeId,
       );
       if (isCounterPartyMortgage) {

@@ -34,7 +34,7 @@ import { WesterraEnrollmentDataService } from '../../services/westerra-enrollmen
 export class CreateUsernameViewComponent implements OnInit {
   @Input() errorStatus!: SelfEnrollmentErrorState;
   @Input() isLoading!: boolean;
-  @Input() isAutoEnrollment: boolean = false;
+  @Input() isAutoEnrollment = false;
   @Input() userData: EnrollmentUserData = null;
   @Input() data!: IdUser;
   @Output() continue: EventEmitter<any> = new EventEmitter<SelfEnrollmentUsernamePasswordForm | any>();
@@ -42,15 +42,15 @@ export class CreateUsernameViewComponent implements OnInit {
 
   user: IdUser = this.userService.getUser();
   autoEnrolledUser: any = this.userService.getAutoEnrollmentUser();
-  errorTitle: string = 'Unfortunately we could not create a new account for you';
+  errorTitle = 'Unfortunately we could not create a new account for you';
   errorMsg: string | null = null;
-  attempts: number = 0;
-  attemptsTitle: string = 'Call Us at (518) 445-2730';
-  attemptsMsg: string = 'Or email us at help@westerracu.com';
+  attempts = 0;
+  attemptsTitle = 'Call Us at (518) 445-2730';
+  attemptsMsg = 'Or email us at help@westerracu.com';
   isCreating = false;
-  minUsernameLength: number = 6;
-  passwordsMatch: boolean = false;
-  minPasswordLength: number = 9;
+  minUsernameLength = 6;
+  passwordsMatch = false;
+  minPasswordLength = 9;
   selectedEntities: Array<string> = [];
 
   public isSubmitted = false;
@@ -107,7 +107,7 @@ export class CreateUsernameViewComponent implements OnInit {
       this.progressSteps = this.autoProgressSteps;
     }
 
-    let termsAndConditionsDiv = document.getElementById('terms-and-conditions');
+    const termsAndConditionsDiv = document.getElementById('terms-and-conditions');
     termsAndConditionsDiv.innerHTML = termsAndConditions;
 
     this.createAccountForm = this.formBuilder.group({
@@ -116,7 +116,7 @@ export class CreateUsernameViewComponent implements OnInit {
         Validators.compose([
           Validators.required,
           Validators.minLength(this.minUsernameLength),
-          Validators.pattern(/^(?=[a-zA-Z0-9!*$@_.-]*$)(?!.*[~#^()+={}|\\,<>'"\/;`%?: ]).{6,30}$/),
+          Validators.pattern(/^(?=[a-zA-Z0-9!*$@_.-]*$)(?!.*[~#^()+={}|\\,<>'"\\/;`%?: ]).{6,30}$/),
         ]),
       ],
       password: [
@@ -234,7 +234,7 @@ export class CreateUsernameViewComponent implements OnInit {
     return /[0-9]/.test(this.createAccountForm.value.password);
   }
   hasSpecialChar() {
-    return /[{}()<>~@#$^*+=|,';\"`%?!:_.-]/.test(this.createAccountForm.value.password);
+    return /[{}()<>~@#$^*+=|,';"`%?!:_.-]/.test(this.createAccountForm.value.password);
   }
 
   handleError(error: HttpErrorResponse | any) {

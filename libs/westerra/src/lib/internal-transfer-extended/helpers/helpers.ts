@@ -1,4 +1,4 @@
-import { InitiatePaymentHeaderStates, normalizePaymentType } from '@backbase/internal-payments-shared-feature-forms';
+import { InitiatePaymentHeaderStates, normalizePaymentType } from '@backbase/internal-payments-shared-util';
 /** @internal */
 export function getPaymentTypeTitle(paymentType) {
   switch (normalizePaymentType(paymentType)) {

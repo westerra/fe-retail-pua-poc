@@ -1,31 +1,35 @@
 import { NgModule } from '@angular/core';
 import {
-  newLoansOptions,
-  InitiateLoansPaymentDefaultRoute,
-  InitiateLoansPaymentJourneyModule,
-  PayordOmniLoansPaymentConfigProvider,
-  INITIATE_LOANS_PAYMENT_CONFIG,
-  destroyHook,
-} from '@backbase/initiate-loans-payment-journey';
-import { ReviewScreens } from '@backbase/initiate-payment-journey-ang';
-import { RETAIL_LOANS_ADVANCE } from '@backbase/retail-loans-journey-ang';
+  InitiatePaymentDefaultRoute,
+  InitiatePaymentJourneyModule,
+  INITIATE_PAYMENT_CONFIG,
+  PayordOmniPaymentConfigProvider,
+  ReviewScreens,
+  InitiatePaymentConfig,
+} from '@backbase/initiate-payment-journey-ang';
+import { destroyHook, newLoansOptions, RETAIL_LOANS_ADVANCE } from '@backbase/loans-retail-journey';
 import { loanPaymentProviders } from '../loan-payment-providers.util';
 
 @NgModule({
-  imports: [InitiateLoansPaymentJourneyModule.forRoot({ route: InitiateLoansPaymentDefaultRoute })],
+  imports: [InitiatePaymentJourneyModule.forRoot({ route: InitiatePaymentDefaultRoute })],
   providers: [
-    PayordOmniLoansPaymentConfigProvider,
+    PayordOmniPaymentConfigProvider,
     ...loanPaymentProviders,
     {
-      provide: INITIATE_LOANS_PAYMENT_CONFIG,
+      provide: INITIATE_PAYMENT_CONFIG,
       useValue: {
         paymentTypes: [RETAIL_LOANS_ADVANCE],
         businessFunctions: [RETAIL_LOANS_ADVANCE.businessFunction],
-        options: { ...newLoansOptions, reviewScreenType: ReviewScreens.ADAPTED, header: () => '' },
+        options: {
+          ...newLoansOptions,
+          reviewScreenType: ReviewScreens.ADAPTED,
+          header: () => '',
+          enableCalendarService: true,
+        },
         hooks: {
           onDestroy: destroyHook,
         },
-      },
+      } as InitiatePaymentConfig,
     },
   ],
 })

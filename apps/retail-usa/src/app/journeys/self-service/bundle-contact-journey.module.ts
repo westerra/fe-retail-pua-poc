@@ -1,13 +1,15 @@
 import { NgModule, Provider } from '@angular/core';
 import {
-  CanDeactivateGuard,
   ContactManagerDetailViewComponent,
   ContactManagerJourneyComponent,
   ContactManagerJourneyConfig,
   ContactManagerJourneyConfigurationToken,
   ContactManagerJourneyModule,
+  ContactManagerListViewComponent,
   ContactManagerTypeListViewComponent,
+  DiscardChangesGuard,
 } from '@backbase/contact-manager-journey-ang';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { ContactManagerFormViewCustomComponent } from '@backbase/westerra';
 
 const ContactManagerConfigProviders: Provider = {
@@ -25,35 +27,40 @@ const ContactManagerConfigProviders: Provider = {
   } as Partial<ContactManagerJourneyConfig>,
 };
 
-const ContactJourneyCustomRoutes = [
+const contactManagerDefaultRoutes = [
   {
-    path: '',
-    component: ContactManagerJourneyComponent,
-    children: [
-      {
-        path: '',
-        component: ContactManagerDetailViewComponent,
-      },
-      {
-        path: 'select',
-        component: ContactManagerTypeListViewComponent,
-      },
-      {
-        path: ':id',
-        component: ContactManagerDetailViewComponent,
-      },
-
-      {
-        path: 'edit/:id/:type',
-        canDeactivate: [CanDeactivateGuard],
-        component: ContactManagerFormViewCustomComponent,
-      },
-    ],
+      path: '',
+      component: ContactManagerJourneyComponent,
+      children: [
+          {
+              path: '',
+              component: ContactManagerListViewComponent,
+              children: [
+                  {
+                      path: '',
+                      component: ContactManagerDetailViewComponent,
+                  },
+                  {
+                      path: 'select',
+                      component: ContactManagerTypeListViewComponent,
+                  },
+                  {
+                      path: ':id',
+                      component: ContactManagerDetailViewComponent,
+                  },
+                  {
+                      path: 'edit/:id/:type',
+                      canDeactivate: [DiscardChangesGuard],
+                      component: ContactManagerFormViewCustomComponent,
+                  },
+              ],
+          },
+      ],
   },
 ];
 
 @NgModule({
-  imports: [ContactManagerJourneyModule.forRoot({ routes: ContactJourneyCustomRoutes })],
+  imports: [ContactManagerJourneyModule.forRoot({ routes: contactManagerDefaultRoutes })],
   providers: [ContactManagerConfigProviders],
 })
 export class ContactManagerJourneyBundleModule {}

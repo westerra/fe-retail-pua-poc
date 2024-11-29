@@ -16,11 +16,11 @@ export class CheckEnrollmentStatusPageComponent implements OnInit {
   // enrollmentStatus: ProvisioningStatusEnum;
   @Input() phoneNumber: string;
   @Input() enrollmentStatus: ProvisioningStatusEnum;
-  @Input() isMobileUser: boolean = false;
+  @Input() isMobileUser = false;
   @Output() readonly navigateToLogin = new EventEmitter();
 
-  googlePlayURL: string = 'https://play.google.com/store';
-  appStoreURL: string = 'https://www.apple.com/ios/app-store';
+  googlePlayURL = 'https://play.google.com/store';
+  appStoreURL = 'https://www.apple.com/ios/app-store';
 
   constructor(
     public readonly userService: EnrollmentUserService,

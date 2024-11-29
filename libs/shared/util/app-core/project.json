@@ -1,6 +1,7 @@
 {
+  "name": "app-core",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "root": "libs/shared/util/app-core",
   "sourceRoot": "libs/shared/util/app-core/src",
   "prefix": "bb",
   "targets": {

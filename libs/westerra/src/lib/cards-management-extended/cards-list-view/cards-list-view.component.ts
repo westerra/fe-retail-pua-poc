@@ -7,7 +7,7 @@ import { CardsManagementJourneyConfigService } from '@backbase/cards-management-
   templateUrl: './cards-list-view.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CardsListViewComponent implements OnInit {
+export class CardsListViewComponent{
   router: Router;
   route: ActivatedRoute;
   configService: CardsManagementJourneyConfigService;
@@ -17,9 +17,6 @@ export class CardsListViewComponent implements OnInit {
     this.route = route;
     this.configService = configService;
   }
-
-
-  ngOnInit(): void { }
 
   selectedCard(id) {
     this.router.navigate(['../details', { selectedCard: id }], {

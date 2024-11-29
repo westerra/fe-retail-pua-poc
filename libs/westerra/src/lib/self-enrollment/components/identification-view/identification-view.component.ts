@@ -11,7 +11,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Validators, FormBuilder, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
-import { ErrorState } from '@backbase/retail-loans-journey-ang';
+import { ErrorState } from '@backbase/loans-retail-journey';
 import { EMPTY, Subject, catchError, merge, pluck, takeUntil } from 'rxjs';
 import {
   EnrollmentErrorMessage,
@@ -209,12 +209,12 @@ export class IdentificationViewComponent implements OnInit {
   }
 
   getMonth() {
-    return this.personalInfoForm.value.month.label;
+    return this.personalInfoForm.value.month;
   }
 
   onChanges(): void {
     this.personalInfoForm.valueChanges.subscribe((val) => {
-      const formattedDob = `${val.year}-${val.month.value}-${val.day}T00:00:00`;
+      const formattedDob = `${val.year}-${val.month}-${val.day}T00:00:00`;
 
       switch (this.getMonth()) {
         case 'Feb':

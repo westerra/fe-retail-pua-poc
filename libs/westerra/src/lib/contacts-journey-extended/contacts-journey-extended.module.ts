@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ContactManagerFormViewCustomComponent } from './contact-manager-form-view-custom/contact-manager-form-view-custom.component';
-
-import { ContactManagerJourneyFeatureModule } from '@backbase/contact-manager-journey-feature';
 import { ContactManagerJourneyModule } from '@backbase/contact-manager-journey-ang';
 import { ContactsFormContainerCustomComponent } from './contacts-form-container-custom/contacts-form-container-custom.component';
 import { ContactFormCustomComponent } from './contact-form-custom/contact-form-custom.component';
@@ -17,14 +15,11 @@ import { InputTextModule } from '@backbase/ui-ang/input-text';
 import { InputValidationMessageModule } from '@backbase/ui-ang/input-validation-message';
 import { LoadingIndicatorModule } from '@backbase/ui-ang/loading-indicator';
 import { InputEmailModule } from '@backbase/ui-ang/input-email';
-import {
-  ConfirmActionDialogModule,
-  EmailDomainModule,
-  IbanValidatorModule,
-  NoWhiteSpaceModule,
-} from '@backbase/contact-shared-ui';
+import { ContactFormModule, ContactHeaderModule } from '@backbase/internal-contact-manager-journey-ui';
+import { ContactManagerJourneyFeatureModule } from '@backbase/internal-contact-manager-journey-feature';
+import { ConfirmActionDialogModule} from '@backbase/internal-contact-shared-ui';
 
-import { ContactFormModule, ContactHeaderModule } from '@backbase/contact-manager-journey-ui';
+
 
 const innerDependencyModules = [
   ContactManagerJourneyFeatureModule,
@@ -32,7 +27,6 @@ const innerDependencyModules = [
   ConfirmActionDialogModule,
   ContactFormModule,
   ContactHeaderModule,
-
   LoadingIndicatorModule,
   InputValidationMessageModule,
   InputTextModule,
@@ -44,9 +38,6 @@ const uiModules = [
   IconModule,
   HeaderModule,
   BbIbanPipeModule,
-  EmailDomainModule,
-  IbanValidatorModule,
-  NoWhiteSpaceModule,
 ];
 
 @NgModule({

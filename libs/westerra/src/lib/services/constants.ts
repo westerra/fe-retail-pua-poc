@@ -1,5 +1,5 @@
 import '@angular/localize/init';
-import { Status } from '@backbase/payment-order-http-ang';
+import { GetPaymentOrdersRequestParams, IdentifiedPaymentOrder, Status } from '@backbase/payment-order-v3-http-ang';
 
 export const P2P_PAYMENT_TYPE = 'P2P_TRANSFER';
 
@@ -1142,7 +1142,7 @@ export const countryList = [
   },
 ];
 
-export const customMapStatusText = (payment) => {
+export const customMapStatusText = (payment: IdentifiedPaymentOrder) => {
   const DEFAULT_REJECTED_PAYMENT_STATUSTEXT = {
     text: $localize`:@@upcoming-payments-list-item-badge.rejectedText:Rejected`,
     color: 'danger',
@@ -1187,12 +1187,12 @@ export const customMapStatusText = (payment) => {
     },
   };
   switch (payment?.status) {
-    case Status.ACCEPTED:
+    case Status.Accepted:
       if (payment?.paymentType && payment?.reasonCode) {
         return reasonCodeMap[payment.paymentType]?.[payment.reasonCode];
       }
       return undefined;
-    case Status.REJECTED:
+    case Status.Rejected:
       // if (payment?.paymentType && payment?.reasonCode) {
       //   const statusText = reasonCodeMap[payment.paymentType]?.[payment.reasonCode];
       //   return statusText ? statusText : DEFAULT_REJECTED_PAYMENT_STATUSTEXT;
@@ -1200,15 +1200,15 @@ export const customMapStatusText = (payment) => {
       // return undefined;
 
       return DEFAULT_REJECTED_PAYMENT_STATUSTEXT;
-    case Status.CANCELLED:
-    case 'CANCELLATION_PENDING':
+    case Status.Cancelled:
+    case Status.CancellationPending:
       return {
         text: $localize`:@@upcoming-payments-list-item-badge.cancelled-text:Cancelled`,
         color: 'secondary',
         showOnListView: true,
         shownOnDetailsView: true,
       };
-    case Status.PROCESSED:
+    case Status.Processed:
       return {
         text: $localize`:@@upcoming-payments-list-item-badge.processed-text:Sent`,
         color: 'success',

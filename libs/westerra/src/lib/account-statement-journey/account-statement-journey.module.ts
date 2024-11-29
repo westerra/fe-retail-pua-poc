@@ -1,14 +1,11 @@
 import { NgModule } from '@angular/core';
 import {
-  AccountStatementRetailJourneyComponent,
   AccountStatementRetailJourneyModule,
-  AccountStatementRetailViewComponent,
   AccountStatementRetailJourneyConfiguration,
   ACCOUNT_STATEMENT_RETAIL_JOURNEY_CONFIGURATION_TOKEN,
   ACCOUNT_STATEMENT_TABLE_CONFIG_TOKEN,
 } from '@backbase/account-statement-retail-journey-ang';
-import { EntitlementsGuard } from '@backbase/foundation-ang/entitlements';
-import { ACCOUNT_STATEMENT_CATEGORIES_TOKEN, accountStatementCategories, MIME_TYPE_EXTENSIONS_TOKEN, mimeTypeExtensions, } from '@backbase/account-statement-shared-util';
+import { ACCOUNT_STATEMENT_CATEGORIES_TOKEN, accountStatementCategories, MIME_TYPE_EXTENSIONS_TOKEN, mimeTypeExtensions, PaginationType, } from '@backbase/internal-account-statement-shared-util';
 import { AccountStatementJourneyComponent } from './account-statement-journey.component';
 import { HeaderModule } from '@backbase/ui-ang/header';
 import { CommonModule } from '@angular/common';
@@ -52,7 +49,7 @@ const tableConfigProvider = {
         absoluteDateLimit: '',
         notificationDismissTime: 5,
         pageSize: 24,
-        paginationType: 'LOAD_MORE',
+        paginationType: PaginationType.loadMore,
         relativeDateLimit: 0,
         sortingDirection: 'DESC',
         sortingOrder: 'date',

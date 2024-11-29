@@ -7,9 +7,10 @@ import {
   PaymentMode,
   TriggerInitiatePaymentPayload,
   ReviewScreens,
+  IdentifiedPaymentOrder,
 } from '@backbase/initiate-payment-journey-ang';
 import { ManageUpcomingAndHistoricalPaymentsCommunicationService } from '@backbase/manage-upcoming-and-historical-payments-journey-ang';
-import { IdentifiedPaymentOrder } from '@backbase/data-ang/payment-order';
+import { PocketTransferCommunicationService, PocketTransferItem } from '@backbase/manage-pockets-journey-ang';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +19,7 @@ export class PaymentsCommunicationService
   implements
     ManageUpcomingAndHistoricalPaymentsCommunicationService,
     ConnectExternalAccontsCommunicationService,
+    PocketTransferCommunicationService,
     InitiatePaymentJourneyCommunicationService
 {
   isEditMode?: boolean;
@@ -29,7 +31,7 @@ export class PaymentsCommunicationService
     api.setupData(this.paymentData);
   }
 
-  navigateToEditPayment(payment: IdentifiedPaymentOrder) {
+  async navigateToEditPayment(payment: IdentifiedPaymentOrder) {
     if (!payment) {
       return;
     }
@@ -51,11 +53,42 @@ export class PaymentsCommunicationService
     };
     this.isEditMode = true;
 
-    this.router.navigate(['transfers', route]);
+    await this.router.navigate(route);
   }
 
-  navigateToMakeTransfer(id: string) {
-    this.router.navigate(['transfers', 'make-a-transfer', { transferFrom: id }]);
+  async navigateToMakeTransfer(id: string) {
+    await this.router.navigate(['transfers', 'make-a-transfer', { transferFrom: id }]);
+  }
+
+  async navigateToPocketTransfer(pocketTransferItem: PocketTransferItem) {
+    this.isEditMode = false;
+    this.paymentData = {
+      template: {
+        id: '',
+        createdAt: '',
+        serviceAgreementId: '',
+        details: {
+          instructionPriority: 'NORM',
+          transferTransactionInformation: {
+            counterparty: {
+              name: pocketTransferItem.pocket.name,
+              role: 'CREDITOR',
+            },
+            counterpartyAccount: {
+              arrangementId: pocketTransferItem.pocket.arrangementId,
+              identification: {
+                identification: 'Pocket',
+                schemeName: 'ID',
+              },
+            },
+          },
+        },
+      },
+      options: {
+        skipTemplateFormValidation: true,
+      },
+    };
+    await this.router.navigate(['pockets', 'pocket-transfer']);
   }
 
   reset() {
@@ -64,13 +97,18 @@ export class PaymentsCommunicationService
   }
 
   private getPaymentRoute(paymentType) {
+    const basePaymentsUrl = 'transfers';
+    const basePocketsUrl = 'pockets';
+
     switch (paymentType) {
       case 'INTRABANK_TRANSFER':
-        return 'money-to-member';
+        return [basePaymentsUrl, 'money-to-member'];
       case 'P2P_TRANSFER':
-        return 'money-to-someone';
+        return [basePaymentsUrl, 'money-to-someone'];
+      case 'POCKET_TRANSFER':
+        return [basePocketsUrl, 'edit-pocket-schedule'];
       default:
-        return 'make-a-transfer';
+        return [basePaymentsUrl, 'make-a-transfer'];
     }
   }
 
@@ -78,11 +116,31 @@ export class PaymentsCommunicationService
     // Required by InitiatePaymentJourneyCommunicationService Api
   }
 
-  closeEvent(): void {
-    this.navigateToScheduledTransfers();
+  async closeEvent() {
+    if (this.activatedFromPockets()) {
+      await this.navigateToPockets();
+    } else {
+      await this.navigateToScheduledTransfers();
+    }
   }
 
-  private navigateToScheduledTransfers(): void {
-    this.router.navigate(['transfers', 'activity']);
+  async afterSuccess?(): Promise<void> {
+    if (this.activatedFromPockets()) {
+      await this.navigateToPockets();
+    }
+  }
+
+  private async navigateToScheduledTransfers(): Promise<void> {
+    await this.router.navigate(['transfers', 'activity']);
+  }
+
+  private async navigateToPockets(): Promise<void> {
+    await this.router.navigate(['pockets']);
+  }
+
+  private activatedFromPockets(): boolean {
+    const url = this.router.url;
+
+    return url.includes('pocket-transfer');
   }
 }

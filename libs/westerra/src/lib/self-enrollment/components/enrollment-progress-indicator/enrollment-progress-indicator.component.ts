@@ -10,10 +10,8 @@ interface IDisplayStep {
   templateUrl: './enrollment-progress-indicator.component.html',
   styleUrls: ['./enrollment-progress-indicator.component.scss'],
 })
-export class EnrollmentProgressIndicatorComponent implements OnInit {
+export class EnrollmentProgressIndicatorComponent {
 
   @Input() steps: IDisplayStep[];
-  constructor() {}
 
-  ngOnInit(): void {}
 }

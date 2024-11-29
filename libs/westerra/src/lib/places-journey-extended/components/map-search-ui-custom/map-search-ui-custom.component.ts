@@ -1,3 +1,4 @@
+/// <reference types="@types/google.maps" />
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MapAPILoaderService, MapsAPIConfig } from '../../services/map-api-loader.service';
 import { SearchBoxComponent } from '@backbase/ui-ang/search-box';

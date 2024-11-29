@@ -1,6 +1,7 @@
 {
+  "name": "retail-usa",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "root": "apps/retail-usa",
   "sourceRoot": "apps/retail-usa/src",
   "prefix": "bb",
   "i18n": {

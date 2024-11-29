@@ -12165,18 +12165,7 @@
         </context-group>
         <note priority="1" from="description">Loan item payment info text</note>
       </trans-unit>
-      <trans-unit id="loans.loan-item.next-payment.date" datatype="html">
-        <source> on <x id="INTERPOLATION" equiv-text="ole=&quot;bb-loans-l"/> </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../libs/loans-business-journey/ui/src/lib/components/loan-item-payment-info/loan-item-payment-info.component.html</context>
-          <context context-type="linenumber">2</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../libs/shared/feature-details/src/lib/components/loan-summary-blue-banner-payment-info/loan-summary-blue-banner-payment-info.component.html</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <note priority="1" from="description">Loan item next payment date</note>
-      </trans-unit>
+     
       <trans-unit id="loans.retail-loan-summary.overdue-banner.payments-count" datatype="html">
         <source> <x id="INTERPOLATION" equiv-text="edByIds&quot;
   [att"/> missed payment<x id="INTERPOLATION_1" equiv-text="tle&quot;
@@ -48551,22 +48540,8 @@ export const reviewI"/>" has been saved</source>
         </context-group>
         <note priority="1" from="description">OTP email channel item heading text</note>
       </trans-unit>
-      <trans-unit id="bb-identity.mfa.two-factor-selection.channel.information-text.sms" datatype="html">
-        <source> You'll get a verification code sent to <x id="INTERPOLATION" equiv-text="esend attempt r"/> </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../../../libs/shared/public/feature/multi-factor-authentication/src/lib/two-factor-selection/two-factor-selection.component.html</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <note priority="1" from="description">OTP SMS channel item information text</note>
-      </trans-unit>
-      <trans-unit id="bb-identity.mfa.two-factor-selection.channel.information-text.email" datatype="html">
-        <source> You'll get a verification code sent to <x id="INTERPOLATION" equiv-text="d attempt remai"/> </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">../../../libs/shared/public/feature/multi-factor-authentication/src/lib/two-factor-selection/two-factor-selection.component.html</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <note priority="1" from="description">OTP email channel item information text</note>
-      </trans-unit>
+   
+    
     </body>
   </file>
 </xliff>

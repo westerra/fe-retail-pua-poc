@@ -1,41 +1,35 @@
-import { NgModule, Provider } from '@angular/core';
+/* eslint-disable @nrwl/nx/enforce-module-boundaries */
+import { NgModule } from '@angular/core';
 import {
-  ActionsRetailNotificationPreferencesJourneyModule,
-  ActionsRetailNotificationPreferencesJourneyConfiguration,
-  ActionsRetailNotificationPreferencesJourneyToken,
-  ACTIONS_RETAIL_NOTIFICATION_PREFERENCES_JOURNEY_ACTIONS_BASE_PATH,
-  ACTIONS_RETAIL_NOTIFICATION_PREFERENCES_JOURNEY_ARRANGEMENT_MANAGER_BASE_PATH,
-  ACTIONS_RETAIL_NOTIFICATION_PREFERENCES_JOURNEY_ENGAGEMENT_BASE_PATH,
-  ACTIONS_RETAIL_NOTIFICATION_PREFERENCES_JOURNEY_FINANCIAL_INSTITUTION_MANAGER_BASE_PATH,
-} from '@backbase/actions-retail-notification-preferences-journey-ang';
-import { ACCESS_CONTROL_BASE_PATH } from '@backbase/data-ang/accesscontrol';
-import { environment } from '../../../environments/environment';
+  RetailNotificationPreferencesJourneyModule,
+  RetailNotificationPreferencesJourneyConfiguration,
+  RetailNotificationPreferencesJourneyToken,
+  RETAIL_NOTIFICATION_PREFERENCES_JOURNEY_ARRANGEMENT_MANAGER_BASE_PATH,
+  RETAIL_NOTIFICATION_PREFERENCES_JOURNEY_ENGAGEMENT_BASE_PATH,
+  RETAIL_NOTIFICATION_PREFERENCES_JOURNEY_FINANCIAL_INSTITUTION_MANAGER_BASE_PATH,
+  RetailNotificationPreferencesViewComponent,
+  ProductNotificationsSettingsComponent,
+  ProductSettingsPageComponent,
+} from '@backbase/retail-notification-preferences-journey-ang';
+import { ACCESS_CONTROL_BASE_PATH } from '@backbase/accesscontrol-v3-http-ang';
+
 import {
-  APP_ACTIONS_BASE_PATH,
   APP_ENGAGEMENT_BASE_PATH,
   APP_ARRANGEMENT_BASE_PATH,
   APP_FINANCIAL_INSTITUTION_MANAGER_BASE_PATH,
   APP_ACCESS_CONTROL_BASE_PATH,
 } from '../../service-paths.module';
-import {
-  ActionsRetailNotificationPreferencesViewCustomComponent,
-  ProductNotificationsSettingsCustomComponent,
-} from '@backbase/westerra';
+import { Route } from '@angular/router';
 export const apiModeTypeGuard = (value: string | undefined) => {
   if (value === 'actions' || value === 'engagements') return value;
   return 'engagements';
 };
 
-export const RetailActionsConfigProvider: Provider = {
-  provide: ActionsRetailNotificationPreferencesJourneyToken,
-  useValue: {
-    notificationDismissTime: 5,
-    specificationIDs: '1, 4',
-    apiMode: apiModeTypeGuard(environment.notificationPreferencesApiMode),
-  } as ActionsRetailNotificationPreferencesJourneyConfiguration,
+const retailNotificationPreferencesJourneyConfiguration: RetailNotificationPreferencesJourneyConfiguration = {
+  notificationDismissTime: 5,
+  generalNotificationIds: 'account-balance-low, new-transaction-occurred',
 };
-
-export const customNotificationRoutes = {
+export const customNotificationRoutes: Route = {
   path: '',
   children: [
     {
@@ -45,33 +39,34 @@ export const customNotificationRoutes = {
     },
     {
       path: 'manage-notifications',
-      component: ActionsRetailNotificationPreferencesViewCustomComponent,
+      component: RetailNotificationPreferencesViewComponent,
     },
     {
       path: 'notification-details',
-      component: ProductNotificationsSettingsCustomComponent,
+      component: ProductNotificationsSettingsComponent,
+      children: [{ path: "", component: ProductSettingsPageComponent }],
+
     },
   ],
 };
 
 @NgModule({
-  imports: [ActionsRetailNotificationPreferencesJourneyModule.forRoot({ routes: customNotificationRoutes })],
+  imports: [RetailNotificationPreferencesJourneyModule.forRoot({routes: customNotificationRoutes})],
   providers: [
-    RetailActionsConfigProvider,
     {
-      provide: ACTIONS_RETAIL_NOTIFICATION_PREFERENCES_JOURNEY_ACTIONS_BASE_PATH,
-      useExisting: APP_ACTIONS_BASE_PATH,
+      provide: RetailNotificationPreferencesJourneyToken,
+      useValue: retailNotificationPreferencesJourneyConfiguration,
     },
     {
-      provide: ACTIONS_RETAIL_NOTIFICATION_PREFERENCES_JOURNEY_ENGAGEMENT_BASE_PATH,
+      provide: RETAIL_NOTIFICATION_PREFERENCES_JOURNEY_ENGAGEMENT_BASE_PATH,
       useExisting: APP_ENGAGEMENT_BASE_PATH,
     },
     {
-      provide: ACTIONS_RETAIL_NOTIFICATION_PREFERENCES_JOURNEY_ARRANGEMENT_MANAGER_BASE_PATH,
+      provide: RETAIL_NOTIFICATION_PREFERENCES_JOURNEY_ARRANGEMENT_MANAGER_BASE_PATH,
       useExisting: APP_ARRANGEMENT_BASE_PATH,
     },
     {
-      provide: ACTIONS_RETAIL_NOTIFICATION_PREFERENCES_JOURNEY_FINANCIAL_INSTITUTION_MANAGER_BASE_PATH,
+      provide: RETAIL_NOTIFICATION_PREFERENCES_JOURNEY_FINANCIAL_INSTITUTION_MANAGER_BASE_PATH,
       useExisting: APP_FINANCIAL_INSTITUTION_MANAGER_BASE_PATH,
     },
     {
@@ -80,4 +75,4 @@ export const customNotificationRoutes = {
     },
   ],
 })
-export class ActionsRetailNotificationPreferencesJourneyBundleModule {}
+export class RetailNotificationPreferencesJourneyBundleModule {}

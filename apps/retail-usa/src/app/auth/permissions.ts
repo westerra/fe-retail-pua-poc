@@ -9,12 +9,8 @@ export const setNotificationPreference = (preference: string) => {
   return preference === 'actions' ? canViewManageNotificationsForActions : canViewManageNotificationsForEngagements;
 };
 
-const canViewManageNotificationPermission =
-  environment.notificationPreferencesApiMode === 'engagements'
-    ? canViewManageNotificationsForEngagements
-    : canViewManageNotificationsForActions;
-
 export const PERMISSIONS = {
+  canViewBillPaySso: 'Billpay.BillpaySSO.create',
   canCreateA2A: 'Payments.A2ATransfer.create',
   canViewMyAccounts: 'ProductSummary.ProductSummary.view OR ProductSummary.ProductSummary.edit',
   canViewTransfers:

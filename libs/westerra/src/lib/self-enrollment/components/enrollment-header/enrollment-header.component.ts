@@ -7,12 +7,10 @@ import { EnrollmentUserData } from '../../utils/enrollment-models';
   templateUrl: './enrollment-header.component.html',
   styleUrls: ['./enrollment-header.component.scss'],
 })
-export class EnrollmentHeaderComponent implements OnInit {
-  @Input() isAutoEnrollment: boolean = false;
+export class EnrollmentHeaderComponent{
+  @Input() isAutoEnrollment = false;
   @Input() userData: EnrollmentUserData = null;
   constructor(private oAuthService: OAuthService) {}
-
-  ngOnInit(): void {}
 
   onNavigateToLogin() {
     this.oAuthService.initLoginFlow();

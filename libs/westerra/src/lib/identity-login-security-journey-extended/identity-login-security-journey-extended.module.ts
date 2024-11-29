@@ -5,10 +5,7 @@ import { RouterModule } from '@angular/router';
 import {
   IdentityLoginSecurityJourneyComponent,
   IdentityLoginSecurityJourneyConfigurationService,
-  LoginSecurityFeaturesModule,
-  SecuritySettingsPasswordComponent,
-} from '@backbase/identity-login-security-features';
-
+} from '@backbase/identity-login-security-journey-ang';
 import { IdentityLoginSecurityJourneyModule } from '@backbase/identity-login-security-journey-ang';
 import { HeaderModule } from '@backbase/ui-ang/header';
 import { SecurityCenterJourneyChangePasswordFormCustomComponent } from './components/security-center-journey-change-password-form-custom/security-center-journey-change-password-form-custom.component';
@@ -20,15 +17,9 @@ import { LoadingIndicatorModule } from '@backbase/ui-ang/loading-indicator';
 import { ErrorCommonStateModule } from '@backbase/ui-ang/common-error-state';
 import { ButtonModule } from '@backbase/ui-ang/button';
 import { AlertModule } from '@backbase/ui-ang/alert';
-
-import { ChangePasswordFormModule } from '@backbase/identity-login-security-features';
 import { IdentityManagementService } from '@backbase/user-http-ang';
 import { NotificationService } from '@backbase/ui-ang/notification';
-import {
-  UserProfileWrapperService,
-  UserProfileDataService,
-  AdminManageProfileService,
-} from '@backbase/identity-user-profile-features';
+import { ChangePasswordFormModule, LoginSecurityFeaturesModule } from '@backbase/identity-login-security-journey-ang';
 
 export const loginSecurityShellRoutesExtended = {
   path: '',
@@ -60,7 +51,6 @@ export const loginSecurityShellRoutesExtended = {
     ModalModule,
     InputPasswordModule,
     InputValidationMessageModule,
-
     LoginSecurityFeaturesModule,
     IdentityLoginSecurityJourneyModule.forRoot({ route: loginSecurityShellRoutesExtended }),
   ],
@@ -69,9 +59,6 @@ export const loginSecurityShellRoutesExtended = {
     IdentityLoginSecurityJourneyConfigurationService,
     IdentityManagementService,
     NotificationService,
-    UserProfileWrapperService,
-    UserProfileDataService,
-    AdminManageProfileService,
   ],
 })
 export class IdentityLoginSecurityJourneyExtendedModule {}

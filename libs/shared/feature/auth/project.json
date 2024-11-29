@@ -1,6 +1,7 @@
 {
+  "name": "auth",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "root": "libs/shared/feature/auth",
   "sourceRoot": "libs/shared/feature/auth/src",
   "prefix": "bb",
   "targets": {

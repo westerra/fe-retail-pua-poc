@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/adjacent-overload-signatures */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { PlacesJourneyConfigService, PlacesMeasurementSystem, PlacesService } from '@backbase/places-journey-ang';
 import { MapAPILoaderService, MapsAPIConfig } from '../../services/map-api-loader.service';

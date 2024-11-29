@@ -21,7 +21,7 @@ import { Hour } from '@backbase/places-http-ang';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [DatePipe],
 })
-export class PlacesListCustomComponent implements OnInit {
+export class PlacesListCustomComponent  {
   private readonly datePipe;
   /**
    * Map radius.
@@ -90,8 +90,6 @@ export class PlacesListCustomComponent implements OnInit {
     this.selected = new EventEmitter();
     this.places = [];
   }
-
-  ngOnInit(): void {}
 
   /**
    * Uses Google geometry library to calculate distance between two points

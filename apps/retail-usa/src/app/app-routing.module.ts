@@ -1,3 +1,4 @@
+/* eslint-disable @nrwl/nx/enforce-module-boundaries */
 /*
  *
  * The content of this file can be edited freely, but to maintain upgradability
@@ -15,7 +16,7 @@ import { PERMISSIONS } from './auth/permissions';
 import { IdentityJourneyWrapperComponent } from './journeys/wrapper-component/journey-wrapper.component';
 import { LayoutComponent } from './layout/layout.component';
 import { CardsRewardsComponent, EnrollmentWrapperComponent } from '@backbase/westerra';
-import { MaintenanceComponent } from './maintenance/maintenance.component';
+
 
 //TODO: Find a more elegant solution to decide what landing page to choose
 // in the event that the default one is not available due to entitlements
@@ -41,7 +42,7 @@ const routes: Routes = [
     },
     canActivate: [AuthGuard],
   },
-  
+
   {
     path: '',
     component: LayoutComponent,
@@ -134,18 +135,6 @@ const routes: Routes = [
             },
           },
           {
-            path: 'ShowDashboard',
-            loadChildren: () =>
-              import('./journeys/bill-pay/bundle-manage-bill-pay-showdashboard.module').then(
-                (m) => m.BundleManageBillPayShowdashboardModule,
-              ),
-            data: {
-              title: $localize`:@@pay-bill-dashboard.nav.item.title:Pay a bill - Dashboard - Westerra`,
-              entitlements: PERMISSIONS.canViewTransfers,
-              cssClasses: ['container--fixed-width-2 mx-auto'],
-            },
-          },
-          {
             path: 'OneTimePayment',
             loadChildren: () =>
               import('./journeys/bill-pay/bundle-manage-bill-pay-showdashboard.module').then(
@@ -193,60 +182,79 @@ const routes: Routes = [
           },
         ],
       },
+      // {
+      //   path: 'billpay',
+      //   children: [
+      //     {/
+      //       path: 'pay-bills',
+      //       loadChildren: () =>
+      //         import('./journeys/bill-pay/bundle-pay-bills-journey.module').then((m) => m.PayBillsJourneyBundleModule),
+      //       data: {
+      //         title: $localize`:@@pay-bill.nav.item.title:Pay a bill - Bill Pay - Westerra`,
+      //         entitlements: PERMISSIONS.canViewPayABill,
+      //         cssClasses: ['container-fluid', 'container'],
+      //         redirectTo: 'pending-bills',
+      //       },
+      //     },
+      //     {/
+      //       path: 'pending-bills',
+      //       loadChildren: () =>
+      //         import('./journeys/bill-pay/bundle-manage-bill-payments-journey.module').then(
+      //           (m) => m.ManageBillPaymentsJourneyBundleModule,
+      //         ),
+      //       data: {
+      //         title: $localize`:@@pending-bills.nav.item.title:Pending payments - Bill Pay - Westerra`,
+      //         entitlements: PERMISSIONS.canViewPendingPayments,
+      //         cssClasses: ['container--fixed-width mx-auto'],
+      //         redirectTo: 'history-bills',
+      //       },
+      //     },
+      //     {
+      //       path: 'history-bills',
+      //       loadChildren: () =>
+      //         import('./journeys/bill-pay/bundle-manage-bill-payments-history-journey.module').then(
+      //           (m) => m.ManageBillPaymentsHistoryJourneyBundleModule,
+      //         ),
+      //       data: {
+      //         title: $localize`:@@history-bills.nav.item.title:History payments - Bill Pay - Westerra`,
+      //         entitlements: PERMISSIONS.canViewHistoryPayments,
+      //         cssClasses: ['container--fixed-width mx-auto'],
+      //         redirectTo: 'manage-payees',
+      //       },
+      //     },
+      //     {/
+      //       path: 'manage-payees',
+      //       loadChildren: () =>
+      //         import('./journeys/bill-pay/bundle-manage-payees-journey.module').then(
+      //           (m) => m.ManagePayeesJourneyBundleModule,
+      //         ),
+      //       data: {
+      //         title: $localize`:@@manage-payees.nav.item.title:Manage payee - Bill Pay - Westerra`,
+      //         entitlements: PERMISSIONS.canViewPendingPayments,
+      //         cssClasses: ['container--fixed-width mx-auto'],
+      //         redirectTo: 'insights',
+      //       },
+      //     },
+      //   ],
+      // },
       {
-        path: 'billpay',
-        children: [
-          {
-            path: 'pay-bills',
-            loadChildren: () =>
-              import('./journeys/bill-pay/bundle-pay-bills-journey.module').then((m) => m.PayBillsJourneyBundleModule),
-            data: {
-              title: $localize`:@@pay-bill.nav.item.title:Pay a bill - Bill Pay - Westerra`,
-              entitlements: PERMISSIONS.canViewPayABill,
-              cssClasses: ['container-fluid', 'container'],
-              redirectTo: 'pending-bills',
-            },
-          },
-          {
-            path: 'pending-bills',
-            loadChildren: () =>
-              import('./journeys/bill-pay/bundle-manage-bill-payments-journey.module').then(
-                (m) => m.ManageBillPaymentsJourneyBundleModule,
-              ),
-            data: {
-              title: $localize`:@@pending-bills.nav.item.title:Pending payments - Bill Pay - Westerra`,
-              entitlements: PERMISSIONS.canViewPendingPayments,
-              cssClasses: ['container--fixed-width mx-auto'],
-              redirectTo: 'history-bills',
-            },
-          },
-          {
-            path: 'history-bills',
-            loadChildren: () =>
-              import('./journeys/bill-pay/bundle-manage-bill-payments-history-journey.module').then(
-                (m) => m.ManageBillPaymentsHistoryJourneyBundleModule,
-              ),
-            data: {
-              title: $localize`:@@history-bills.nav.item.title:History payments - Bill Pay - Westerra`,
-              entitlements: PERMISSIONS.canViewHistoryPayments,
-              cssClasses: ['container--fixed-width mx-auto'],
-              redirectTo: 'manage-payees',
-            },
-          },
-          {
-            path: 'manage-payees',
-            loadChildren: () =>
-              import('./journeys/bill-pay/bundle-manage-payees-journey.module').then(
-                (m) => m.ManagePayeesJourneyBundleModule,
-              ),
-            data: {
-              title: $localize`:@@manage-payees.nav.item.title:Manage payee - Bill Pay - Westerra`,
-              entitlements: PERMISSIONS.canViewPendingPayments,
-              cssClasses: ['container--fixed-width mx-auto'],
-              redirectTo: 'insights',
-            },
-          },
-        ],
+        path: 'transfers/ShowDashboard',
+        redirectTo: 'billpay-sso',
+        pathMatch: 'full'
+      },
+     
+    
+
+      {
+        path: 'billpay-sso',
+        loadChildren: () =>
+          import('./journeys/bill-pay/bundle-billpay-sso-journey.module').then((m) => m.BillpaySsoJourneyBundleModule),
+        data: {
+          // entitlements: PERMISSIONS.canViewBillPaySso,
+          cssClasses: ['container-fluid container'],
+          redirectTo: 'billpay-sso',
+        },
+        title: $localize`:@@billpay-sso.nav.item.title:Bill Pay`,
       },
       {
         path: 'insights',
@@ -318,7 +326,7 @@ const routes: Routes = [
             path: 'product-list',
             loadChildren: () =>
               import('./journeys/self-service/bundle-actions-retail-notification-preferences-journey.module').then(
-                (m) => m.ActionsRetailNotificationPreferencesJourneyBundleModule,
+                (m) => m.RetailNotificationPreferencesJourneyBundleModule,
               ),
             data: {
               title: $localize`:@@manage-notifications.nav.item.title:Manage notifications - Self services - Westerra`,
@@ -463,6 +471,9 @@ const routes: Routes = [
     redirectTo: 'my-accounts',
   },
 
+
+
+
   // To be used for and commented after maintenance
   // { path: 'maintenance', component: MaintenanceComponent },
 ];
@@ -476,4 +487,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

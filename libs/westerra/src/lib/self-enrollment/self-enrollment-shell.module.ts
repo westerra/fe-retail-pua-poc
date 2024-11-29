@@ -41,7 +41,6 @@ import {
   SelfEnrollmentJourneyConfigurationToken,
   WESTERRA_ENROLLMENT_DATA_CONFIG,
 } from '../services/api/api.models';
-import { environment } from 'apps/retail-usa/src/environments/environment';
 
 export function createWesterraEnrollmentDataServieDataHttpConfig(
   globalConfig: ServiceDataHttpConfig,
@@ -88,7 +87,7 @@ export function createWesterraEnrollmentDataServieDataHttpConfig(
       provide: DATA_HTTP_CONFIG,
       useExisting: WESTERRA_ENROLLMENT_DATA_CONFIG,
       useValue: {
-        apiRoot: `${environment.apiRoot}`,
+        apiRoot: `/api`,
       },
     },
     {

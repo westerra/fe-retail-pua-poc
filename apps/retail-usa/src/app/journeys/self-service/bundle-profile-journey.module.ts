@@ -1,105 +1,94 @@
-import { NgModule, Provider } from '@angular/core';
-import { DeepPartial } from '@backbase/identity-common-ang';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import {
   IdentitySelfServiceJourneyModule,
   IdentitySelfServiceJourneyConfiguration,
   IdentitySelfServiceJourneyConfigurationToken,
-  UserLocalizationCommunicationsViewComponent,
-  // IdentitySelfServiceJourneyComponent,
-  UserLocalizationChangeLanguageViewComponent,
-  UserLocalizationComponent,
+  SELF_SERVICE_ACCESS_CONTROL_BASE_PATH,
+  SELF_SERVICE_ADDRESS_AUTOCOMPLETE_BASE_PATH,
+  SELF_SERVICE_DEVICE_BASE_PATH,
+  SELF_SERVICE_DEVICE_MANAGEMENT_V2_BASE_PATH,
+  SELF_SERVICE_USER_MANAGER_BASE_PATH,
+  IdentitySelfServiceJourneyComponent,
 } from '@backbase/identity-self-service-journey-ang';
 import {
   defaultRoute as deviceManagementDefaultRoutes,
-  IdentityDeviceManagementJourneyConfigurationToken,
-  IdentityDeviceManagementJourneyModule,
 } from '@backbase/identity-device-management-journey-ang';
 import {
-  IdentityLoginSecurityJourneyConfigurationToken,
-  IdentityLoginSecurityJourneyModule,
-  loginSecurityShellRoutes,
-} from '@backbase/identity-login-security-journey-ang';
-import {
-  defaultRoute as userProfileDefaultRoutes,
-  IdentityUserProfileJourneyConfigurationToken,
-  IdentityUserProfileJourneyModule,
-} from '@backbase/identity-user-profile-journey-ang';
-import {
-  IdentitySelfServiceJourneyComponent,
-  AddAddressViewCustomComponent,
-  EditAddressViewCustomComponent,
-  AddPhoneViewCustomComponent,
-  EditPhoneViewCustomComponent,
-  UserProfileViewCustomComponent,
-  AddEmailViewCustomComponent,
-  EditEmailViewCustomComponent,
-} from '@backbase/westerra';
-import {
-  IdentityUserProfileJourneyComponent,
-  ViewUserProfileViewComponent,
-  AddEmailViewComponent,
-  EditEmailViewComponent,
-  AddPhoneViewComponent,
-  EditPhoneViewComponent,
   AddAddressViewComponent,
   EditAddressViewComponent,
-} from '@backbase/identity-user-profile-features';
+  IdentityUserProfileJourneyComponent,
+  ViewUserProfileViewComponent,
+} from '@backbase/identity-user-profile-journey-ang';
+// import {
+//   IdentitySelfServiceJourneyComponent,
+//   AddAddressViewCustomComponent,
+//   EditAddressViewCustomComponent,
+//   AddPhoneViewCustomComponent,
+//   EditPhoneViewCustomComponent,
+//   UserProfileViewCustomComponent,
+//   AddEmailViewCustomComponent,
+//   EditEmailViewCustomComponent,
+// } from '@backbase/westerra';
+import { Route } from '@angular/router';
+import { APP_ACCESS_CONTROL_BASE_PATH, APP_USER_BASE_PATH, APP_DEVICE_BASE_PATH, APP_DEVICE_MANAGEMENT_V2_BASE_PATH, APP_ADDRESS_AUTOCOMPLETE_BASE_PATH } from '../../service-paths.module';
+import { environment } from '../../../environments/environment';
+import { HeaderModule } from '@backbase/ui-ang/header';
+import { AddEmailViewComponent, AddPhoneViewComponent, EditEmailViewComponent, EditPhoneViewComponent } from '@backbase/internal-identity-user-profile-ui';
 
-export const userProfileDefaultRoutesCustom = {
+
+const userProfileDefaultRoutesCustomtRoute: Route = {
   path: '',
   component: IdentityUserProfileJourneyComponent,
   children: [
     {
       path: '',
-      // component: ViewUserProfileViewComponent,
-      component: UserProfileViewCustomComponent,
+      component: ViewUserProfileViewComponent,
     },
     {
       path: 'email/add',
-      // component: AddEmailViewComponent,
-      component: AddEmailViewCustomComponent,
+      component: AddEmailViewComponent,
     },
     {
       path: 'email/:emailAddressKey/edit',
-      // component: EditEmailViewComponent,
-      component: EditEmailViewCustomComponent,
+      // component: EditEmailViewCustomComponent,
+      component: EditEmailViewComponent,
     },
     {
       path: 'phone/add',
-      // component: AddPhoneViewComponent,
-      component: AddPhoneViewCustomComponent,
+      // component: AddPhoneViewCustomComponent,
+      component: AddPhoneViewComponent,
     },
     {
       path: 'phone/:phoneAddressKey/edit',
-      // component: EditPhoneViewComponent,
-      component: EditPhoneViewCustomComponent,
+      // component: EditPhoneViewCustomComponent,
+      component: EditPhoneViewComponent
     },
     {
       path: 'address/add',
-      // component: AddAddressViewComponent,
-      component: AddAddressViewCustomComponent,
+      // component: AddAddressViewCustomComponent,
+      component: AddAddressViewComponent,
     },
     {
       path: 'address/:postalAddressKey/edit',
-      // component: EditAddressViewComponent,
-      component: EditAddressViewCustomComponent,
+      // component: EditAddressViewCustomComponent,
+      component: EditAddressViewComponent,
     },
     { path: '**', redirectTo: '' },
   ],
 };
 
-const defaultRoute = {
+const defaultRoute : Route = {
   path: '',
+  // component: IdentitySelfServiceJourneyComponent,
   component: IdentitySelfServiceJourneyComponent,
   children: [
     { path: '', redirectTo: 'profile', pathMatch: 'full' },
     {
       path: 'profile',
       data: {
-        title: $localize`:Tab label for managing user profile@@bb-identity-self-service-journey.tab-user-manage-profile:Profile`,
+              title: $localize `:Tab label for managing user profile@@bb-identity-self-service-journey.tab-user-manage-profile:Profile`,
       },
-      // children: [userProfileDefaultRoutes],
-      children: [userProfileDefaultRoutesCustom],
+          children: [userProfileDefaultRoutesCustomtRoute],
     },
     // {
     //   path: 'user-localization',
@@ -122,22 +111,21 @@ const defaultRoute = {
     {
       path: 'login-security',
       data: {
-        title: $localize`:Tab label for login and security settings@@bb-identity-self-service-journey.tab-login-security:Login & Security`,
+              title: $localize `:Tab label for login and security settings@@bb-identity-self-service-journey.tab-login-security:Login & Security`,
       },
-      // children: [loginSecurityShellRoutes],
       loadChildren: () => import('@backbase/westerra').then((m) => m.IdentityLoginSecurityJourneyExtendedModule),
+    
     },
     {
       path: 'devices',
-      data: { title: $localize`:Tab label for managing devices@@bb-identity-self-service-journey.tab-devices:Devices` },
+          data: { title: $localize `:Tab label for managing devices@@bb-identity-self-service-journey.tab-devices:Devices` },
       children: [deviceManagementDefaultRoutes],
     },
   ],
 };
 
-const ProfileConfigProvider: Provider = {
-  provide: IdentitySelfServiceJourneyConfigurationToken,
-  useValue: {
+export function profileConfigProvider(locale: string): DeepPartial<IdentitySelfServiceJourneyConfiguration> {
+  const identitySelfServiceJourneyConfiguration: DeepPartial<IdentitySelfServiceJourneyConfiguration> = {
     userManageProfile: {
       maxEmailAddresses: 1,
       maxPhoneNumbers: 3,
@@ -153,11 +141,41 @@ const ProfileConfigProvider: Provider = {
       phoneNumberIsPrimaryEditable: false,
       phoneNumberIsTypeEditable: true,
     },
-  } as DeepPartial<IdentitySelfServiceJourneyConfiguration>,
+    userIdentitySecurityCenter: {
+      changeUsernameEnabled: true,
+      changeUsernameSuccessPath: `${environment.baseHref}${locale}/logout/username-success`,
+    },
 };
+  return identitySelfServiceJourneyConfiguration;
+}
+
 
 @NgModule({
-  imports: [IdentitySelfServiceJourneyModule.forRoot({ route: defaultRoute })],
-  providers: [ProfileConfigProvider],
+  imports: [IdentitySelfServiceJourneyModule.forRoot({ routes: defaultRoute }), HeaderModule],
+  providers: [ {
+    provide: IdentitySelfServiceJourneyConfigurationToken,
+    useFactory: profileConfigProvider,
+    deps: [LOCALE_ID],
+  },
+  {
+    provide: SELF_SERVICE_ACCESS_CONTROL_BASE_PATH,
+    useExisting: APP_ACCESS_CONTROL_BASE_PATH,
+  },
+  {
+    provide: SELF_SERVICE_USER_MANAGER_BASE_PATH,
+    useExisting: APP_USER_BASE_PATH,
+  },
+  {
+    provide: SELF_SERVICE_DEVICE_BASE_PATH,
+    useExisting: APP_DEVICE_BASE_PATH,
+  },
+  {
+    provide: SELF_SERVICE_DEVICE_MANAGEMENT_V2_BASE_PATH,
+    useExisting: APP_DEVICE_MANAGEMENT_V2_BASE_PATH,
+  },
+  {
+    provide: SELF_SERVICE_ADDRESS_AUTOCOMPLETE_BASE_PATH,
+    useExisting: APP_ADDRESS_AUTOCOMPLETE_BASE_PATH,
+  },],
 })
 export class SelfServiceJourneyBundleModule {}

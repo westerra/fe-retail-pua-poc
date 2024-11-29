@@ -16,7 +16,7 @@ export interface CreateContactPostRequest {
   providedIn: 'root'
 })
 export class ManageContactsService {
-  contactsServiceURI:string = 'contact-manager/client-api/v2/contacts'
+  contactsServiceURI = 'contact-manager/client-api/v2/contacts'
 
   constructor(
     private readonly http: HttpClient,
@@ -50,6 +50,9 @@ export class ManageContactsService {
     })
   }
 
-  editContact() { }
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  editContact() { 
+    
+  }
 }
 
